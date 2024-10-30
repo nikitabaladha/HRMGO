@@ -1,5 +1,12 @@
 import React from "react";
 
+import { IoIosArrowDown } from "react-icons/io";
+import { FiUser } from "react-icons/fi";
+import { IoPower } from "react-icons/io5";
+import { FaRegCommentDots } from "react-icons/fa";
+import { TbMessage2 } from "react-icons/tb";
+import { LuGlobe } from "react-icons/lu";
+
 const Header = () => {
   const handleLogout = (event) => {
     event.preventDefault();
@@ -40,7 +47,7 @@ const Header = () => {
                 </span>
                 <span className="hide-mob ms-2">
                   Hi, Rajodiya Infotech!
-                  <i className="ti ti-chevron-down drp-arrow nocolor hide-mob"></i>
+                  <IoIosArrowDown className="drp-arrow nocolor hide-mob" />
                 </span>
               </a>
               <div className="dropdown-menu dash-h-dropdown">
@@ -48,7 +55,7 @@ const Header = () => {
                   href="https://demo.workdo.io/hrmgo/profile"
                   className="dropdown-item"
                 >
-                  <i className="ti ti-user"></i>
+                  <FiUser />
                   <span>My Profile</span>
                 </a>
 
@@ -57,7 +64,8 @@ const Header = () => {
                   className="dropdown-item"
                   onClick={handleLogout}
                 >
-                  <i className="ti ti-power"></i>
+                  {/* <i className="ti ti-power"></i> */}
+                  <IoPower />
                   <span>Logout</span>
                 </a>
                 <form
@@ -85,7 +93,9 @@ const Header = () => {
                 className="dash-head-link me-0"
                 href="https://demo.workdo.io/hrmgo/chats"
               >
-                <i className="ti ti-message-circle"></i>
+                <i>
+                  <FaRegCommentDots />
+                </i>
                 <span className="bg-danger dash-h-badge message-counter custom_messanger_counter">
                   0<span className="sr-only"></span>
                 </span>
@@ -101,7 +111,9 @@ const Header = () => {
                 aria-haspopup="false"
                 aria-expanded="false"
               >
-                <i className="ti ti-message-2"></i>
+                <i>
+                  <TbMessage2 />
+                </i>
                 <span className="bg-danger dash-h-badge message-counter custom_messanger_counter">
                   0<span className="sr-only"></span>
                 </span>
@@ -143,6 +155,9 @@ const Header = () => {
                 id="dropdownLanguage"
               >
                 <i className="ti ti-world nocolor"></i>
+                <i>
+                  <LuGlobe className="nocolor" />
+                </i>
                 <span className="drp-text hide-mob">English</span>
                 <i className="ti ti-chevron-down drp-arrow nocolor"></i>
               </a>
