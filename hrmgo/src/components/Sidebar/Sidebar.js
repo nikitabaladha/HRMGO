@@ -23,6 +23,7 @@ import { LuMessagesSquare } from "react-icons/lu";
 import { GoBell } from "react-icons/go";
 import { FiTable } from "react-icons/fi";
 import { IoSettingsOutline } from "react-icons/io5";
+import "./Sidebar.css";
 
 const menuConfig = [
   // dashboard
@@ -505,7 +506,18 @@ const Sidebar = () => {
               onClick={() => toggleSubMenu(item.id)}
             >
               <span className="dash-mtext">{item.label}</span>
-              <span className="dash-arrow">
+              <span
+                className={`dash-arrow ${
+                  activeSubMenu === item.id ? "active" : ""
+                }`}
+                style={{
+                  transform:
+                    activeSubMenu === item.id
+                      ? "rotate(90deg)"
+                      : "rotate(0deg)",
+                  transition: "transform 0.3s ease",
+                }}
+              >
                 <IoIosArrowForward />
               </span>
             </a>
@@ -577,7 +589,18 @@ const Sidebar = () => {
                             <span className="dash-micon">{menu.iconClass}</span>
                             <span className="dash-mtext">{menu.label}</span>
                             {menu.subMenu && (
-                              <span className="dash-arrow">
+                              <span
+                                className={`dash-arrow ${
+                                  activeMenu === menu.id ? "active" : ""
+                                }`}
+                                style={{
+                                  transform:
+                                    activeMenu === menu.id
+                                      ? "rotate(90deg)"
+                                      : "rotate(0deg)",
+                                  transition: "transform 0.3s ease",
+                                }}
+                              >
                                 <IoIosArrowForward />
                               </span>
                             )}
@@ -626,5 +649,3 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
-
-// ================================================
