@@ -1,12 +1,35 @@
 import React, { useState } from "react";
 import { IoIosArrowForward } from "react-icons/io";
+import { AiOutlineHome } from "react-icons/ai";
+import { TbUsers } from "react-icons/tb";
+import { LuUser } from "react-icons/lu";
+import { TbReceipt } from "react-icons/tb";
+import { FaRegClock } from "react-icons/fa6";
+import { HiCubeTransparent } from "react-icons/hi";
+import { LuWallet } from "react-icons/lu";
+import { TbSchool } from "react-icons/tb";
+import { LuUserPlus } from "react-icons/lu";
+import { TbLicense } from "react-icons/tb";
+import { TbDeviceFloppy } from "react-icons/tb";
+import { LuTicket } from "react-icons/lu";
+import { TbCalendarEvent } from "react-icons/tb";
+import { MdOutlineCalendarMonth } from "react-icons/md";
+import { CiVideoOn } from "react-icons/ci";
+import { TbMedicalCross } from "react-icons/tb";
+import { CiFileOn } from "react-icons/ci";
+import { TbTemplate } from "react-icons/tb";
+import { TbPray } from "react-icons/tb";
+import { LuMessagesSquare } from "react-icons/lu";
+import { GoBell } from "react-icons/go";
+import { FiTable } from "react-icons/fi";
+import { IoSettingsOutline } from "react-icons/io5";
 
 const menuConfig = [
   // dashboard
   {
     id: "dashboard",
     label: "Dashboard",
-    iconClass: "ti ti-home",
+    iconClass: <AiOutlineHome />,
     link: "#!",
     subMenu: [
       {
@@ -57,7 +80,7 @@ const menuConfig = [
   {
     id: "staff",
     label: "Staff",
-    iconClass: "ti ti-users",
+    iconClass: <TbUsers />,
     link: "#!",
     subMenu: [
       {
@@ -82,7 +105,7 @@ const menuConfig = [
   {
     id: "employee",
     label: "Employee",
-    iconClass: "ti ti-user",
+    iconClass: <LuUser />,
     link: "https://demo.workdo.io/hrmgo/employee",
   },
 
@@ -90,7 +113,7 @@ const menuConfig = [
   {
     id: "payroll",
     label: "Payroll",
-    iconClass: "ti ti-users",
+    iconClass: <TbReceipt />,
     link: "#!",
     subMenu: [
       {
@@ -110,7 +133,7 @@ const menuConfig = [
   {
     id: "timeSheet",
     label: "Timesheet",
-    iconClass: "ti ti-home",
+    iconClass: <FaRegClock />,
     link: "#!",
     subMenu: [
       {
@@ -146,7 +169,7 @@ const menuConfig = [
   {
     id: "performance",
     label: "Performance",
-    iconClass: "ti ti-users",
+    iconClass: <HiCubeTransparent />,
     link: "#!",
     subMenu: [
       {
@@ -171,7 +194,7 @@ const menuConfig = [
   {
     id: "finance",
     label: "Finance",
-    iconClass: "ti ti-users",
+    iconClass: <LuWallet />,
     link: "#!",
     subMenu: [
       {
@@ -217,7 +240,7 @@ const menuConfig = [
   {
     id: "training",
     label: "Training",
-    iconClass: "ti ti-users",
+    iconClass: <TbSchool />,
     link: "#!",
     subMenu: [
       {
@@ -237,7 +260,7 @@ const menuConfig = [
   {
     id: "hrAdminSetup",
     label: "Hr Admin Setup",
-    iconClass: "ti ti-users",
+    iconClass: <LuUserPlus />,
     link: "#!",
     subMenu: [
       {
@@ -298,7 +321,7 @@ const menuConfig = [
   {
     id: "recruitment",
     label: "Recruitment",
-    iconClass: "ti ti-license",
+    iconClass: <TbLicense />,
     link: "#!",
     subMenu: [
       {
@@ -349,7 +372,7 @@ const menuConfig = [
   {
     id: "contract",
     label: "Contracts",
-    iconClass: "ti ti-device-floppy",
+    iconClass: <TbDeviceFloppy />,
     link: "https://demo.workdo.io/hrmgo/contract",
   },
 
@@ -357,7 +380,7 @@ const menuConfig = [
   {
     id: "ticket",
     label: "Ticket",
-    iconClass: "ti ti-ticket",
+    iconClass: <LuTicket />,
     link: "https://demo.workdo.io/hrmgo/ticket",
   },
 
@@ -365,7 +388,7 @@ const menuConfig = [
   {
     id: "event",
     label: "Event",
-    iconClass: "ti ti-calendar-event",
+    iconClass: <TbCalendarEvent />,
     link: "https://demo.workdo.io/hrmgo/event",
   },
 
@@ -373,7 +396,7 @@ const menuConfig = [
   {
     id: "meeting",
     label: "Meeting",
-    iconClass: "ti ti-calendar-time",
+    iconClass: <MdOutlineCalendarMonth />,
     link: "https://demo.workdo.io/hrmgo/meeting",
   },
 
@@ -381,7 +404,7 @@ const menuConfig = [
   {
     id: "zoomMeeting",
     label: "Zoom Meeting",
-    iconClass: "ti ti-video",
+    iconClass: <CiVideoOn />,
     link: "https://demo.workdo.io/hrmgo/zoom-meeting",
   },
 
@@ -389,7 +412,7 @@ const menuConfig = [
   {
     id: "assets",
     label: "Assets",
-    iconClass: "ti ti-medical-cross",
+    iconClass: <TbMedicalCross />,
     link: "https://demo.workdo.io/hrmgo/account-assets",
   },
 
@@ -397,7 +420,7 @@ const menuConfig = [
   {
     id: "document",
     label: "Document",
-    iconClass: "ti ti-file",
+    iconClass: <CiFileOn />,
     link: "https://demo.workdo.io/hrmgo/document-upload",
   },
 
@@ -405,7 +428,7 @@ const menuConfig = [
   {
     id: "emailTemplates",
     label: "Email Templates",
-    iconClass: "ti ti-template",
+    iconClass: <TbTemplate />,
     link: "https://demo.workdo.io/hrmgo/email_template_lang/1/en",
   },
 
@@ -413,7 +436,7 @@ const menuConfig = [
   {
     id: "companyPolicy",
     label: "Company Policy",
-    iconClass: "ti ti-pray",
+    iconClass: <TbPray />,
     link: "https://demo.workdo.io/hrmgo/company-policy",
   },
 
@@ -421,7 +444,7 @@ const menuConfig = [
   {
     id: "messenger",
     label: "Messenger",
-    iconClass: "ti ti-messages",
+    iconClass: <LuMessagesSquare />,
     link: "https://demo.workdo.io/hrmgo/chats",
   },
 
@@ -429,7 +452,7 @@ const menuConfig = [
   {
     id: "notificationTemplate",
     label: "Notification Template",
-    iconClass: "ti ti-bell",
+    iconClass: <GoBell />,
     link: "https://demo.workdo.io/hrmgo/notification-templates",
   },
 
@@ -437,7 +460,7 @@ const menuConfig = [
   {
     id: "hrmSystemSetup",
     label: "HRM System Setup",
-    iconClass: "ti ti-table",
+    iconClass: <FiTable />,
     link: "https://demo.workdo.io/hrmgo/branch",
   },
 
@@ -445,7 +468,7 @@ const menuConfig = [
   {
     id: "landingPage",
     label: "Landing Page",
-    iconClass: "ti ti-license",
+    iconClass: <TbLicense />,
     link: "https://demo.workdo.io/hrmgo/landingpage",
   },
 
@@ -453,7 +476,7 @@ const menuConfig = [
   {
     id: "systemSetting",
     label: "System Setting",
-    iconClass: "ti ti-settings",
+    iconClass: <IoSettingsOutline />,
     link: "https://demo.workdo.io/hrmgo/settings",
   },
 ];
@@ -551,9 +574,7 @@ const Sidebar = () => {
                             className="dash-link"
                             onClick={() => toggleMenu(menu.id)}
                           >
-                            <span className="dash-micon">
-                              <i className={menu.iconClass} />
-                            </span>
+                            <span className="dash-micon">{menu.iconClass}</span>
                             <span className="dash-mtext">{menu.label}</span>
                             {menu.subMenu && (
                               <span className="dash-arrow">
