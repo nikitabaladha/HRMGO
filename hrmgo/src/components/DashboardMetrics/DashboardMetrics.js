@@ -1,166 +1,110 @@
 import React from "react";
 
+import { TbUsers } from "react-icons/tb";
+import { LuWallet } from "react-icons/lu";
+import { LuTicket } from "react-icons/lu";
+import { FaChromecast } from "react-icons/fa";
+
 const DashboardMetrics = () => {
+  const cardsData = [
+    {
+      title: "Staff",
+      subtitle: "Total",
+      icon: <TbUsers />,
+      value: "24",
+      color: "primary",
+    },
+    {
+      title: "Ticket",
+      subtitle: "Total",
+      icon: <LuTicket />,
+      value: "9",
+      color: "info",
+    },
+    {
+      title: "Account Balance",
+      subtitle: "Total",
+      icon: <LuWallet />,
+      value: "₹2,045,619.00",
+      color: "warning",
+    },
+    {
+      title: "Jobs",
+      subtitle: "Total",
+      icon: <FaChromecast />,
+      value: "4",
+      color: "primary",
+    },
+    {
+      title: "Active Jobs",
+      subtitle: "Total",
+      icon: <FaChromecast />,
+      value: "4",
+      color: "info",
+    },
+    {
+      title: "Inactive Jobs",
+      subtitle: "Total",
+      icon: <FaChromecast />,
+      value: "0",
+      color: "warning",
+    },
+  ];
+
   return (
-    <>
-      <section className="dash-container">
-        <div className="dash-content">
-          <div className="page-header">
-            <div className="page-block">
-              <div className="row align-items-center">
-                <div className="col-auto">
-                  <div className="page-header-title">
-                    <h4 className="m-b-10">Dashboard</h4>
-                  </div>
-                  <ul className="breadcrumb"></ul>
+    <section className="dash-container">
+      <div className="dash-content">
+        <div className="page-header">
+          <div className="page-block">
+            <div className="row align-items-center">
+              <div className="col-auto">
+                <div className="page-header-title">
+                  <h4 className="m-b-10">Dashboard</h4>
                 </div>
-                <div className="col">
-                  <div className="float-end "></div>
-                </div>
+                <ul className="breadcrumb"></ul>
               </div>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-xxl-12">
-              <div className="row">
-                <div className="col-lg-4 col-md-6">
-                  <div className="card">
-                    <div className="card-body">
-                      <div className="row align-items-center justify-content-between">
-                        <div className="col-auto mb-3 mb-sm-0">
-                          <div className="d-flex align-items-center">
-                            <div className="theme-avtar bg-primary">
-                              <i className="ti ti-users" />
-                            </div>
-                            <div className="ms-3">
-                              <small className="text-muted">Total</small>
-                              <h6 className="m-0">Staff</h6>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-auto text-end">
-                          <h4 className="m-0 text-primary">24</h4>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-lg-4 col-md-6">
-                  <div className="card">
-                    <div className="card-body">
-                      <div className="row align-items-center justify-content-between">
-                        <div className="col-auto mb-3 mb-sm-0">
-                          <div className="d-flex align-items-center">
-                            <div className="theme-avtar bg-info">
-                              <i className="ti ti-ticket" />
-                            </div>
-                            <div className="ms-3">
-                              <small className="text-muted">Total</small>
-                              <h6 className="m-0">Ticket</h6>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-auto text-end">
-                          <h4 className="m-0 text-info"> 9</h4>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-lg-4 col-md-6">
-                  <div className="card">
-                    <div className="card-body">
-                      <div className="row align-items-center justify-content-between">
-                        <div className="col-auto mb-3 mb-sm-0">
-                          <div className="d-flex align-items-center">
-                            <div className="theme-avtar bg-warning">
-                              <i className="ti ti-wallet" />
-                            </div>
-                            <div className="ms-3">
-                              <small className="text-muted">Total</small>
-                              <h6 className="m-0">Account Balance</h6>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-auto text-end">
-                          <h6 className="m-0 text-warning">$2,045,619.00</h6>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-4 col-md-6">
-              <div className="card">
-                <div className="card-body">
-                  <div className="row align-items-center justify-content-between">
-                    <div className="col-auto mb-3 mb-sm-0">
-                      <div className="d-flex align-items-center">
-                        <div className="theme-avtar bg-primary">
-                          <i className="ti ti-cast" />
-                        </div>
-                        <div className="ms-3">
-                          <small className="text-muted">Total</small>
-                          <h6 className="m-0">Jobs</h6>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-auto text-end">
-                      <h4 className="m-0 text-primary">4</h4>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-4 col-md-6">
-              <div className="card">
-                <div className="card-body">
-                  <div className="row align-items-center justify-content-between">
-                    <div className="col-auto mb-3 mb-sm-0">
-                      <div className="d-flex align-items-center">
-                        <div className="theme-avtar bg-info">
-                          <i className="ti ti-cast" />
-                        </div>
-                        <div className="ms-3">
-                          <small className="text-muted">Total</small>
-                          <h6 className="m-0">Active Jobs</h6>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-auto text-end">
-                      <h4 className="m-0 text-info"> 4</h4>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-4 col-md-6">
-              <div className="card">
-                <div className="card-body">
-                  <div className="row align-items-center justify-content-between">
-                    <div className="col-auto mb-3 mb-sm-0">
-                      <div className="d-flex align-items-center">
-                        <div className="theme-avtar bg-warning">
-                          <i className="ti ti-cast" />
-                        </div>
-                        <div className="ms-3">
-                          <small className="text-muted">Total</small>
-                          <h6 className="m-0">Inactive Jobs</h6>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-auto text-end">
-                      <h4 className="m-0 text-warning">0</h4>
-                    </div>
-                  </div>
-                </div>
+              <div className="col">
+                <div className="float-end"></div>
               </div>
             </div>
           </div>
         </div>
-      </section>
-    </>
+        <div className="row">
+          <div className="col-xxl-12">
+            <div className="row">
+              {cardsData.map((card, index) => (
+                <div className="col-lg-4 col-md-6" key={index}>
+                  <div className="card">
+                    <div className="card-body">
+                      <div className="row align-items-center justify-content-between">
+                        <div className="col-auto mb-3 mb-sm-0">
+                          <div className="d-flex align-items-center">
+                            <div className={`theme-avtar bg-${card.color}`}>
+                              {card.icon}
+                            </div>
+                            <div className="ms-3">
+                              <small className="text-muted">
+                                {card.subtitle}
+                              </small>
+                              <h6 className="m-0">{card.title}</h6>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="col-auto text-end">
+                          <h4 className={`m-0 text-${card.color}`}>
+                            {card.value}
+                          </h4>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 };
 
