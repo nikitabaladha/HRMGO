@@ -23,7 +23,6 @@ import { LuMessagesSquare } from "react-icons/lu";
 import { GoBell } from "react-icons/go";
 import { FiTable } from "react-icons/fi";
 import { IoSettingsOutline } from "react-icons/io5";
-import "./Sidebar.css";
 
 const menuConfig = [
   // dashboard
