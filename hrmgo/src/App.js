@@ -12,6 +12,9 @@ import "react-datepicker/dist/react-datepicker.css";
 import "bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css";
 import "bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js";
 
+import "./assets/css/plugins/style.css";
+import "./assets/css/customizer.css";
+
 import Home from "./components/Home/Home";
 
 const App = () => {

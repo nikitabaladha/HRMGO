@@ -1,0 +1,55 @@
+/* Make navbar a vertical sidebar */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 250px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.navbar-toggler {
+  display: none;
+}
+
+.navbar-brand {
+  margin: 0;
+}
+
+.nav-item {
+  width: 100%;
+}
+
+/* Vertical nav items */
+.nav-link {
+  display: block;
+}
+
+/* Dropdown menu styles */
+.nav-item.dropdown > .dropdown-menu {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.nav-item.dropdown > .dropdown-menu.show {
+  display: block;
+  opacity: 1;
+}
+
+.dropdown-menu > li > .dropdown-submenu {
+  display: none;
+}
+
+.dropdown-menu > li > .dropdown-submenu.show {
+  display: block;
+}
+
+.dropdown-menu {
+  border: none;
+}
+
+.rotate-90 {
+  transform: rotate(90deg);
+}
