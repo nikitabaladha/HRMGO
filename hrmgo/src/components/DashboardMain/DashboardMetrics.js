@@ -1,5 +1,7 @@
 import React from "react";
 
+import DashboardMainHeader from "./DashboardMainHeader.js";
+
 import { TbUsers } from "react-icons/tb";
 import { LuWallet } from "react-icons/lu";
 import { LuTicket } from "react-icons/lu";
@@ -54,21 +56,10 @@ const DashboardMetrics = () => {
   return (
     <section className="dash-container">
       <div className="dash-content">
-        <div className="page-header">
-          <div className="page-block">
-            <div className="row align-items-center">
-              <div className="col-auto">
-                <div className="page-header-title">
-                  <h4 className="m-b-10">Dashboard</h4>
-                </div>
-                <ul className="breadcrumb"></ul>
-              </div>
-              <div className="col">
-                <div className="float-end"></div>
-              </div>
-            </div>
-          </div>
-        </div>
+        {/* imported dashboard main header */}
+        <DashboardMainHeader />
+
+        {/* dashboard metrics starts */}
         <div className="row">
           <div className="col-xxl-12">
             <div className="row">

@@ -1,11 +1,14 @@
 import React from "react";
 
+import { Link } from "react-router-dom";
+
 import { IoIosArrowDown } from "react-icons/io";
 import { FiUser } from "react-icons/fi";
 import { IoPower } from "react-icons/io5";
 import { FaRegCommentDots } from "react-icons/fa";
 import { TbMessage2 } from "react-icons/tb";
-import { LuGlobe } from "react-icons/lu";
+
+// import { LuGlobe } from "react-icons/lu";
 
 const Header = () => {
   const handleLogout = (event) => {
@@ -19,20 +22,20 @@ const Header = () => {
         <div className="me-auto dash-mob-drp">
           <ul className="list-unstyled">
             <li className="dash-h-item mob-hamburger">
-              <a href="#!" className="dash-head-link" id="mobile-collapse">
+              <Link to="#!" className="dash-head-link" id="mobile-collapse">
                 <div className="hamburger hamburger--arrowturn">
                   <div className="hamburger-box">
                     <div className="hamburger-inner"></div>
                   </div>
                 </div>
-              </a>
+              </Link>
             </li>
 
             <li className="dropdown dash-h-item drp-company">
-              <a
+              <Link
                 className="dash-head-link dropdown-toggle arrow-none me-0"
                 data-bs-toggle="dropdown"
-                href="#"
+                to="#"
                 role="button"
                 aria-haspopup="false"
                 aria-expanded="false"
@@ -49,25 +52,24 @@ const Header = () => {
                   Hi, Rajodiya Infotech!
                   <IoIosArrowDown className="drp-arrow nocolor hide-mob" />
                 </span>
-              </a>
+              </Link>
               <div className="dropdown-menu dash-h-dropdown">
-                <a
-                  href="https://demo.workdo.io/hrmgo/profile"
+                <Link
+                  to="https://demo.workdo.io/hrmgo/profile"
                   className="dropdown-item"
                 >
                   <FiUser />
                   <span>My Profile</span>
-                </a>
+                </Link>
 
-                <a
-                  href="https://demo.workdo.io/hrmgo/logout"
+                <Link
+                  to="https://demo.workdo.io/hrmgo/logout"
                   className="dropdown-item"
                   onClick={handleLogout}
                 >
-                  {/* <i className="ti ti-power"></i> */}
                   <IoPower />
                   <span>Logout</span>
-                </a>
+                </Link>
                 <form
                   id="logout-form"
                   action="https://demo.workdo.io/hrmgo/logout"
@@ -89,9 +91,9 @@ const Header = () => {
         <div className="ms-auto">
           <ul className="list-unstyled">
             <li className="dash-h-item">
-              <a
+              <Link
                 className="dash-head-link me-0"
-                href="https://demo.workdo.io/hrmgo/chats"
+                to="https://demo.workdo.io/hrmgo/chats"
               >
                 <i>
                   <FaRegCommentDots />
@@ -99,14 +101,14 @@ const Header = () => {
                 <span className="bg-danger dash-h-badge message-counter custom_messanger_counter">
                   0<span className="sr-only"></span>
                 </span>
-              </a>
+              </Link>
             </li>
 
             <li className="dropdown dash-h-item drp-notification">
-              <a
+              <Link
                 className="dash-head-link dropdown-toggle arrow-none me-0"
                 data-bs-toggle="dropdown"
-                href="#"
+                to="#"
                 role="button"
                 aria-haspopup="false"
                 aria-expanded="false"
@@ -117,34 +119,34 @@ const Header = () => {
                 <span className="bg-danger dash-h-badge message-counter custom_messanger_counter">
                   0<span className="sr-only"></span>
                 </span>
-              </a>
+              </Link>
               <div className="dropdown-menu dash-h-dropdown dropdown-menu-end">
                 <div className="noti-header">
                   <h5 className="m-0">Messages</h5>
-                  <a
-                    href="#"
+                  <Link
+                    to="#"
                     className="dash-head-link mark_all_as_read_message"
                   >
                     Clear All
-                  </a>
+                  </Link>
                 </div>
                 <div className="noti-body dropdown-list-message-msg">
                   <table className="count-listOfContacts"></table>
                 </div>
                 <div className="noti-footer">
                   <div className="d-grid">
-                    <a
-                      href="https://demo.workdo.io/hrmgo/chats"
+                    <Link
+                      to="https://demo.workdo.io/hrmgo/chats"
                       className="btn dash-head-link justify-content-center text-primary mx-0"
                     >
                       View all
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
             </li>
 
-            <li className="dropdown dash-h-item drp-language">
+            {/* <li className="dropdown dash-h-item drp-language">
               <a
                 className="dash-head-link dropdown-toggle arrow-none me-0"
                 data-bs-toggle="dropdown"
@@ -282,7 +284,7 @@ const Header = () => {
                   Manage Language
                 </a>
               </div>
-            </li>
+            </li> */}
           </ul>
         </div>
       </div>

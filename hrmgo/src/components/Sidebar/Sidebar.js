@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+
+import { Link } from "react-router-dom";
+
 import { IoIosArrowForward } from "react-icons/io";
 import { AiOutlineHome } from "react-icons/ai";
 import { TbUsers } from "react-icons/tb";
@@ -499,8 +502,8 @@ const Sidebar = () => {
       {subMenu.map((item) => (
         <li key={item.id} className="dash-item">
           {item.subMenu ? (
-            <a
-              href="#!"
+            <Link
+              to="#!"
               className="dash-link"
               onClick={() => toggleSubMenu(item.id)}
             >
@@ -519,11 +522,11 @@ const Sidebar = () => {
               >
                 <IoIosArrowForward />
               </span>
-            </a>
+            </Link>
           ) : (
-            <a href={item.link} className="dash-link">
+            <Link href={item.link} className="dash-link">
               {item.label}
-            </a>
+            </Link>
           )}
           {item.subMenu &&
             activeSubMenu === item.id &&
@@ -537,7 +540,7 @@ const Sidebar = () => {
     <nav className="dash-sidebar light-sidebar transprent-bg mob-sidebar-active">
       <div className="navbar-wrapper">
         <div className="m-header main-logo">
-          <a href="https://demo.workdo.io/hrmgo/dashboard" className="b-brand">
+          <Link to="https://demo.workdo.io/hrmgo/dashboard" className="b-brand">
             <img
               src="https://demo.workdo.io/hrmgo/storage/uploads/logo/logo-dark.png?1730091906"
               alt="HRMGo"
@@ -548,7 +551,7 @@ const Sidebar = () => {
               alt="HRMGo"
               className="logo logo-sm"
             />
-          </a>
+          </Link>
         </div>
 
         <div className="navbar-content" data-simplebar="init">
@@ -580,8 +583,8 @@ const Sidebar = () => {
                             activeMenu === menu.id ? "active" : ""
                           }`}
                         >
-                          <a
-                            href={menu.link}
+                          <Link
+                            to={menu.link}
                             className="dash-link"
                             onClick={() => toggleMenu(menu.id)}
                           >
@@ -603,7 +606,7 @@ const Sidebar = () => {
                                 <IoIosArrowForward />
                               </span>
                             )}
-                          </a>
+                          </Link>
                           {menu.subMenu &&
                             activeMenu === menu.id &&
                             renderSubMenu(menu.subMenu)}

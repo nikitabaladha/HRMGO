@@ -2,14 +2,14 @@ import React from "react";
 
 import Sidebar from "../Sidebar/Sidebar.js";
 import Header from "../Header/Header.js";
-import DashboardMetrics from "../DashboardMetrics/DashboardMetrics.js";
+import DashboardMain from "../DashboardMain/DashboardMain.js";
 
 const Home = () => {
   return (
     <>
       <Sidebar />
       <Header />
-      <DashboardMetrics />
+      <DashboardMain />
     </>
   );
 };
