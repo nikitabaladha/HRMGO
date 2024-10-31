@@ -27,6 +27,7 @@ import { GoBell } from "react-icons/go";
 import { FiTable } from "react-icons/fi";
 import { IoSettingsOutline } from "react-icons/io5";
 
+import { BsClockFill } from "react-icons/bs";
 const menuConfig = [
   // dashboard
   {
