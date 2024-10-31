@@ -1,6 +1,23 @@
 import React from "react";
 
 const Clock = () => {
+  // Data for each absent employee
+  const absentEmployees = [
+    { name: "Julie Lynn", status: "Absent" },
+    { name: "Lunea Todd", status: "Absent" },
+    { name: "Ida F. Mullen", status: "Absent" },
+    { name: "Teresa R McRae", status: "Absent" },
+    { name: "Joel O Dolan", status: "Absent" },
+    { name: "Jeremy Holmes", status: "Absent" },
+    { name: "Anjolie Mayer", status: "Absent" },
+    { name: "Nyssa Sloan", status: "Absent" },
+    { name: "Jillian Sykes", status: "Absent" },
+    { name: "Aida Bugg", status: "Absent" },
+    { name: "Mona Hendricks", status: "Absent" },
+    { name: "Kyle Willis", status: "Absent" },
+    { name: "Abra Stevens", status: "Absent" },
+  ];
+
   return (
     <>
       <div className="card">
@@ -17,90 +34,14 @@ const Clock = () => {
                 </tr>
               </thead>
               <tbody className="list">
-                <tr>
-                  <td>Julie Lynn</td>
-                  <td>
-                    <span className="absent-btn">Absent</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Lunea Todd</td>
-                  <td>
-                    <span className="absent-btn">Absent</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Ida F. Mullen</td>
-                  <td>
-                    <span className="absent-btn">Absent</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Teresa R McRae</td>
-                  <td>
-                    <span className="absent-btn">Absent</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Joel O Dolan</td>
-                  <td>
-                    <span className="absent-btn">Absent</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Ida F. Mullen</td>
-                  <td>
-                    <span className="absent-btn">Absent</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Jeremy Holmes</td>
-                  <td>
-                    <span className="absent-btn">Absent</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Anjolie Mayer</td>
-                  <td>
-                    <span className="absent-btn">Absent</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Nyssa Sloan</td>
-                  <td>
-                    <span className="absent-btn">Absent</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Jillian Sykes</td>
-                  <td>
-                    <span className="absent-btn">Absent</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Aida Bugg</td>
-                  <td>
-                    <span className="absent-btn">Absent</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Mona Hendricks</td>
-                  <td>
-                    <span className="absent-btn">Absent</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Kyle Willis</td>
-                  <td>
-                    <span className="absent-btn">Absent</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Abra Stevens</td>
-                  <td>
-                    <span className="absent-btn">Absent</span>
-                  </td>
-                </tr>
+                {absentEmployees.map((employee, index) => (
+                  <tr key={index}>
+                    <td>{employee.name}</td>
+                    <td>
+                      <span className="absent-btn">{employee.status}</span>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>

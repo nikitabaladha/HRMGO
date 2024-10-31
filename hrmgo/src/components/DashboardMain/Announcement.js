@@ -1,9 +1,42 @@
 import React from "react";
 
 const Announcement = () => {
+  // Data for each announcement
+  const announcements = [
+    {
+      title: "Magnam est ducimus",
+      startDate: "Sep 25, 2024",
+      endDate: "Sep 25, 2024",
+      description: "At est quasi saepe p",
+    },
+    {
+      title: "Magnam est ducimus",
+      startDate: "Nov 25, 2022",
+      endDate: "Nov 26, 2022",
+      description: "At est quasi saepe p",
+    },
+    {
+      title: "Project Meeting",
+      startDate: "Mar 10, 2023",
+      endDate: "Mar 26, 2023",
+      description: "Lorem Ipsum, Or Lipsum",
+    },
+    {
+      title: "Team Meeting",
+      startDate: "Dec 4, 2023",
+      endDate: "Dec 5, 2023",
+      description: "Lorem Ipsum, Or Lipsum",
+    },
+    {
+      title: "Event Related",
+      startDate: "Oct 4, 2023",
+      endDate: "Oct 5, 2023",
+      description: "Lorem Ipsum, Or Lipsum",
+    },
+  ];
+
   return (
     <>
-      {/* Announcement list start*/}
       <div className="col-xl-12 col-lg-12 col-md-12">
         <div className="card">
           <div className="card-header card-body table-border-style">
@@ -21,43 +54,20 @@ const Announcement = () => {
                   </tr>
                 </thead>
                 <tbody className="list">
-                  <tr>
-                    <td>Magnam est ducimus</td>
-                    <td>Sep 25, 2024</td>
-                    <td>Sep 25, 2024</td>
-                    <td>At est quasi saepe p</td>
-                  </tr>
-                  <tr>
-                    <td>Magnam est ducimus</td>
-                    <td>Nov 25, 2022</td>
-                    <td>Nov 26, 2022</td>
-                    <td>At est quasi saepe p</td>
-                  </tr>
-                  <tr>
-                    <td>Project Meeting</td>
-                    <td>Mar 10, 2023</td>
-                    <td>Mar 26, 2023</td>
-                    <td>Lorem Ipsum, Or Lipsum</td>
-                  </tr>
-                  <tr>
-                    <td>Team Meeting</td>
-                    <td>Dec 4, 2023</td>
-                    <td>Dec 5, 2023</td>
-                    <td>Lorem Ipsum, Or Lipsum</td>
-                  </tr>
-                  <tr>
-                    <td>Event Related</td>
-                    <td>Oct 4, 2023</td>
-                    <td>Oct 5, 2023</td>
-                    <td>Lorem Ipsum, Or Lipsum</td>
-                  </tr>
+                  {announcements.map((announcement, index) => (
+                    <tr key={index}>
+                      <td>{announcement.title}</td>
+                      <td>{announcement.startDate}</td>
+                      <td>{announcement.endDate}</td>
+                      <td>{announcement.description}</td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>
           </div>
         </div>
       </div>
-      {/* Announcement list end*/}
     </>
   );
 };

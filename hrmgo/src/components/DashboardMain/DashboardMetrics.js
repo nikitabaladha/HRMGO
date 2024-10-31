@@ -53,7 +53,6 @@ const DashboardMetrics = () => {
 
   return (
     <>
-      {/* dashboard metrics starts */}
       <div className="row">
         <div className="col-xxl-12">
           <div className="row">

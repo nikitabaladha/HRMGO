@@ -1,6 +1,14 @@
 import React from "react";
 
 const Meeting = () => {
+  // Data for each meeting
+  const meetings = [
+    { title: "New Technology", date: "Oct 2, 2023", time: "3:20 PM" },
+    { title: "Team Meeting", date: "Sep 6, 2022", time: "5:00 PM" },
+    { title: "Event Related", date: "Dec 11, 2023", time: "2:25 PM" },
+    { title: "Company Rules", date: "Nov 18, 2023", time: "4:30 PM" },
+  ];
+
   return (
     <>
       <div className="card">
@@ -18,26 +26,13 @@ const Meeting = () => {
                 </tr>
               </thead>
               <tbody className="list">
-                <tr>
-                  <td>New Technology</td>
-                  <td>Oct 2, 2023</td>
-                  <td>3:20 PM</td>
-                </tr>
-                <tr>
-                  <td>Team Meeting</td>
-                  <td>Sep 6, 2022</td>
-                  <td>5:00 PM</td>
-                </tr>
-                <tr>
-                  <td>Event Related</td>
-                  <td>Dec 11, 2023</td>
-                  <td>2:25 PM</td>
-                </tr>
-                <tr>
-                  <td>Company Rules</td>
-                  <td>Nov 18, 2023</td>
-                  <td>4:30 PM</td>
-                </tr>
+                {meetings.map((meeting, index) => (
+                  <tr key={index}>
+                    <td>{meeting.title}</td>
+                    <td>{meeting.date}</td>
+                    <td>{meeting.time}</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
