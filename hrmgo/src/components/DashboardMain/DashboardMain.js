@@ -3,6 +3,7 @@ import React from "react";
 import DashboardMainHeader from "./DashboardMainHeader.js";
 import DashboardMetrics from "./DashboardMetrics.js";
 import MeetingClockCalender from "./MeetingClockCalender/MeetingClockCalender.js";
+import Announcement from "./Announcement.js";
 
 const DashboardMain = () => {
   return (
@@ -12,6 +13,7 @@ const DashboardMain = () => {
           <DashboardMainHeader />
           <DashboardMetrics />
           <MeetingClockCalender />
+          <Announcement />
         </div>
       </section>
     </>
