@@ -8,7 +8,9 @@ import { IoPower } from "react-icons/io5";
 import { FaRegCommentDots } from "react-icons/fa";
 import { TbMessage2 } from "react-icons/tb";
 
-const Header = ({ toggleSidebar }) => {
+// import { LuGlobe } from "react-icons/lu";
+
+const Header = () => {
   const handleLogout = (event) => {
     event.preventDefault();
     document.getElementById("logout-form").submit();
@@ -20,12 +22,7 @@ const Header = ({ toggleSidebar }) => {
         <div className="me-auto dash-mob-drp">
           <ul className="list-unstyled">
             <li className="dash-h-item mob-hamburger">
-              <Link
-                to="#!"
-                className="dash-head-link"
-                id="mobile-collapse"
-                onClick={toggleSidebar}
-              >
+              <Link to="#!" className="dash-head-link" id="mobile-collapse">
                 <div className="hamburger hamburger--arrowturn">
                   <div className="hamburger-box">
                     <div className="hamburger-inner"></div>

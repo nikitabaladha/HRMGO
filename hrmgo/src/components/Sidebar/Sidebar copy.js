@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 
 import { Link } from "react-router-dom";
 
@@ -484,29 +484,9 @@ const menuConfig = [
   },
 ];
 
-const Sidebar = ({ sidebarVisible, toggleSidebar }) => {
+const Sidebar = () => {
   const [activeMenu, setActiveMenu] = useState(null);
   const [activeSubMenu, setActiveSubMenu] = useState(null);
-
-  const sidebarRef = useRef(null);
-
-  // Handle clicks outside of the sidebar
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
-        // Only close sidebar if it is currently visible
-        if (sidebarVisible) {
-          toggleSidebar();
-        }
-      }
-    };
-
-    // Add event listener for mouse clicks
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [sidebarVisible, toggleSidebar]);
 
   const toggleMenu = (menuId) => {
     setActiveMenu(activeMenu === menuId ? null : menuId);
@@ -557,12 +537,7 @@ const Sidebar = ({ sidebarVisible, toggleSidebar }) => {
   );
 
   return (
-    <nav
-      ref={sidebarRef} // Attach ref here
-      className={`dash-sidebar light-sidebar transprent-bg ${
-        sidebarVisible ? "mob-sidebar-active" : ""
-      }`}
-    >
+    <nav className="dash-sidebar light-sidebar transprent-bg mob-sidebar-active">
       <div className="navbar-wrapper">
         <div className="m-header main-logo">
           <Link to="https://demo.workdo.io/hrmgo/dashboard" className="b-brand">
