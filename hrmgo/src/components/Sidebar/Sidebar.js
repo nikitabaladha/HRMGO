@@ -493,11 +493,12 @@ const Sidebar = ({ sidebarVisible, toggleSidebar }) => {
   // Handle clicks outside of the sidebar
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
-        // Only close sidebar if it is currently visible
-        if (sidebarVisible) {
-          toggleSidebar();
-        }
+      if (
+        sidebarRef.current &&
+        !sidebarRef.current.contains(event.target) &&
+        sidebarVisible
+      ) {
+        toggleSidebar(); // Close the sidebar if clicking outside
       }
     };
 
@@ -557,121 +558,139 @@ const Sidebar = ({ sidebarVisible, toggleSidebar }) => {
   );
 
   return (
-    <nav
-      ref={sidebarRef} // Attach ref here
-      className={`dash-sidebar light-sidebar transprent-bg ${
-        sidebarVisible ? "mob-sidebar-active" : ""
-      }`}
-    >
-      <div className="navbar-wrapper">
-        <div className="m-header main-logo">
-          <Link to="https://demo.workdo.io/hrmgo/dashboard" className="b-brand">
-            <img
-              src="https://demo.workdo.io/hrmgo/storage/uploads/logo/logo-dark.png?1730091906"
-              alt="HRMGo"
-              className="logo logo-lg"
-            />
-            <img
-              src="https://demo.workdo.io/hrmgo/storage/uploads/logo/logo-dark.png"
-              alt="HRMGo"
-              className="logo logo-sm"
-            />
-          </Link>
-        </div>
+    <>
+      {" "}
+      <nav
+        ref={sidebarRef} // Attach ref here
+        className={`dash-sidebar light-sidebar transprent-bg ${
+          sidebarVisible ? "mob-sidebar-active" : ""
+        }`}
+      >
+        <div className="navbar-wrapper" style={{ display: "block" }}>
+          <div className="m-header main-logo">
+            <Link
+              to="https://demo.workdo.io/hrmgo/dashboard"
+              className="b-brand"
+            >
+              <img
+                src="https://demo.workdo.io/hrmgo/storage/uploads/logo/logo-dark.png?1730091906"
+                alt="HRMGo"
+                className="logo logo-lg"
+              />
+              <img
+                src="https://demo.workdo.io/hrmgo/storage/uploads/logo/logo-dark.png"
+                alt="HRMGo"
+                className="logo logo-sm"
+              />
+            </Link>
+          </div>
 
-        <div className="navbar-content" data-simplebar="init">
-          <div className="simplebar-wrapper" style={{ margin: "-10px 0px" }}>
-            <div className="simplebar-height-auto-observer-wrapper">
-              <div className="simplebar-height-auto-observer"></div>
-            </div>
-            <div className="simplebar-mask">
-              <div
-                className="simplebar-offset"
-                style={{ right: "0px", bottom: "0px" }}
-              >
+          <div
+            className="navbar-content active dash-trigger"
+            data-simplebar="init"
+          >
+            <div className="simplebar-wrapper" style={{ margin: "-10px 0px" }}>
+              <div className="simplebar-height-auto-observer-wrapper">
+                <div className="simplebar-height-auto-observer"></div>
+              </div>
+              <div className="simplebar-mask">
                 <div
-                  className="simplebar-content-wrapper"
-                  tabIndex="0"
-                  role="region"
-                  aria-label="scrollable content"
-                  style={{ height: "100%", overflow: "hidden scroll" }}
+                  className="simplebar-offset"
+                  style={{ right: "0px", bottom: "0px" }}
                 >
                   <div
-                    className="simplebar-content"
-                    style={{ padding: "10px 0px" }}
+                    className="simplebar-content-wrapper"
+                    tabIndex="0"
+                    role="region"
+                    aria-label="scrollable content"
+                    style={{ height: "100%", overflow: "hidden scroll" }}
                   >
-                    <ul className="dash-navbar">
-                      {menuConfig.map((menu) => (
-                        <li
-                          key={menu.id}
-                          className={`dash-item dash-hasmenu ${
-                            activeMenu === menu.id ? "active" : ""
-                          }`}
-                        >
-                          <Link
-                            to={menu.link}
-                            className="dash-link"
-                            onClick={() => toggleMenu(menu.id)}
+                    <div
+                      className="simplebar-content"
+                      style={{ padding: "10px 0px" }}
+                    >
+                      <ul className="dash-navbar">
+                        {menuConfig.map((menu) => (
+                          <li
+                            key={menu.id}
+                            className={`dash-item dash-hasmenu ${
+                              activeMenu === menu.id ? "active" : ""
+                            }`}
                           >
-                            <span className="dash-micon">{menu.iconClass}</span>
-                            <span className="dash-mtext">{menu.label}</span>
-                            {menu.subMenu && (
-                              <span
-                                className={`dash-arrow ${
-                                  activeMenu === menu.id ? "active" : ""
-                                }`}
-                                style={{
-                                  transform:
-                                    activeMenu === menu.id
-                                      ? "rotate(90deg)"
-                                      : "rotate(0deg)",
-                                  transition: "transform 0.3s ease",
-                                }}
-                              >
-                                <IoIosArrowForward />
+                            <Link
+                              to={menu.link}
+                              className="dash-link"
+                              onClick={() => toggleMenu(menu.id)}
+                            >
+                              <span className="dash-micon">
+                                {menu.iconClass}
                               </span>
-                            )}
-                          </Link>
-                          {menu.subMenu &&
-                            activeMenu === menu.id &&
-                            renderSubMenu(menu.subMenu)}
-                        </li>
-                      ))}
-                    </ul>
+                              <span className="dash-mtext">{menu.label}</span>
+                              {menu.subMenu && (
+                                <span
+                                  className={`dash-arrow ${
+                                    activeMenu === menu.id ? "active" : ""
+                                  }`}
+                                  style={{
+                                    transform:
+                                      activeMenu === menu.id
+                                        ? "rotate(90deg)"
+                                        : "rotate(0deg)",
+                                    transition: "transform 0.3s ease",
+                                  }}
+                                >
+                                  <IoIosArrowForward />
+                                </span>
+                              )}
+                            </Link>
+                            {menu.subMenu &&
+                              activeMenu === menu.id &&
+                              renderSubMenu(menu.subMenu)}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
                 </div>
               </div>
+              <div
+                className="simplebar-placeholder"
+                style={{ width: "auto", height: "1502px" }}
+              ></div>
             </div>
             <div
-              className="simplebar-placeholder"
-              style={{ width: "auto", height: "1502px" }}
-            ></div>
-          </div>
-          <div
-            className="simplebar-track simplebar-horizontal"
-            style={{ visibility: "hidden" }}
-          >
+              className="simplebar-track simplebar-horizontal"
+              style={{ visibility: "hidden" }}
+            >
+              <div
+                className="simplebar-scrollbar"
+                style={{ width: "0px", display: "none" }}
+              ></div>
+            </div>
             <div
-              className="simplebar-scrollbar"
-              style={{ width: "0px", display: "none" }}
-            ></div>
-          </div>
-          <div
-            className="simplebar-track simplebar-vertical"
-            style={{ visibility: "visible" }}
-          >
-            <div
-              className="simplebar-scrollbar"
-              style={{
-                height: "260px",
-                transform: "translate3d(0px, 0px, 0px)",
-                display: "block",
-              }}
-            ></div>
+              className="simplebar-track simplebar-vertical"
+              style={{ visibility: "visible" }}
+            >
+              <div
+                className="simplebar-scrollbar"
+                style={{
+                  height: "260px",
+                  transform: "translate3d(0px, 0px, 0px)",
+                  display: "block",
+                }}
+              ></div>
+            </div>
           </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+      {/* Overlay: Visible only when sidebarVisible is true */}
+      {sidebarVisible && (
+        <div
+          className="dash-menu-overlay"
+          onClick={toggleSidebar} // Close sidebar when overlay is clicked
+        ></div>
+      )}
+    </>
   );
 };
 
