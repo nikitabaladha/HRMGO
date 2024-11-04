@@ -55,7 +55,6 @@ const Calender = () => {
                   }}
                   events={events}
                   dateClick={handleDateClick}
-                  height="auto"
                   buttonText={{
                     today: "Today",
                     month: "Month",

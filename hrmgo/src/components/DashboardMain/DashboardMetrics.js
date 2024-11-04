@@ -1,5 +1,4 @@
 import React from "react";
-
 import { TbUsers } from "react-icons/tb";
 import { LuWallet } from "react-icons/lu";
 import { LuTicket } from "react-icons/lu";
@@ -22,7 +21,7 @@ const DashboardMetrics = () => {
       color: "info",
     },
     {
-      title: "Account Balance",
+      title: "Account Balance", // Specific card to display value as h6
       subtitle: "Total",
       icon: <LuWallet />,
       value: "₹2,045,619.00",
@@ -75,9 +74,16 @@ const DashboardMetrics = () => {
                         </div>
                       </div>
                       <div className="col-auto text-end">
-                        <h4 className={`m-0 text-${card.color}`}>
-                          {card.value}
-                        </h4>
+                        {/* Conditional rendering for value size */}
+                        {card.title === "Account Balance" ? (
+                          <h6 className={`m-0 text-${card.color}`}>
+                            {card.value}
+                          </h6>
+                        ) : (
+                          <h4 className={`m-0 text-${card.color}`}>
+                            {card.value}
+                          </h4>
+                        )}
                       </div>
                     </div>
                   </div>
