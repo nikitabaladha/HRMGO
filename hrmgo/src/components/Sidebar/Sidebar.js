@@ -2,6 +2,10 @@ import React, { useState, useEffect, useRef } from "react";
 
 import { Link } from "react-router-dom";
 
+import PerfectScrollbar from "react-perfect-scrollbar";
+
+import "react-perfect-scrollbar/dist/css/styles.css";
+
 import { IoIosArrowForward } from "react-icons/io";
 import { AiOutlineHome } from "react-icons/ai";
 import { TbUsers } from "react-icons/tb";
@@ -609,6 +613,7 @@ const Sidebar = ({ sidebarVisible, toggleSidebar }) => {
                       className="simplebar-content"
                       style={{ padding: "10px 0px" }}
                     >
+                      {" "}
                       <ul className="dash-navbar">
                         {menuConfig.map((menu) => (
                           <li
