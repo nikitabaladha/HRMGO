@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { MdKeyboardArrowDown } from "react-icons/md";
 
 import postAPI from "../../api/postAPI.js";
@@ -16,6 +16,8 @@ const Login = ({ onLogin }) => {
     password: "",
   });
   const [generalError, setGeneralError] = useState("");
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -50,6 +52,10 @@ const Login = ({ onLogin }) => {
           "An unexpected login error occurred. Please try again."
       );
     }
+  };
+
+  const handleSignupRedirect = () => {
+    navigate("/signup");
   };
 
   return (
@@ -290,6 +296,16 @@ const Login = ({ onLogin }) => {
                         type="submit"
                       >
                         Login
+                      </button>
+                    </div>
+                    <p className="mt-4">Don't have an account ?</p>
+                    <div className="d-grid">
+                      <button
+                        className="btn btn-info login-do-btn"
+                        type="submit"
+                        onClick={handleSignupRedirect}
+                      >
+                        Signup
                       </button>
                     </div>
                     <p className="my-4 text-center" />
