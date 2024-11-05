@@ -1,7 +1,6 @@
-// src/App.js
-
 import React, { useState, useEffect } from "react";
 import { BrowserRouter } from "react-router-dom";
+
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import "cookieconsent/build/cookieconsent.min.css";
@@ -34,7 +33,7 @@ const App = () => {
 
   return (
     <BrowserRouter>
-      <AppRoutes isAuthenticated={isAuthenticated} handleLogin={handleLogin} />{" "}
+      <AppRoutes isAuthenticated={isAuthenticated} handleLogin={handleLogin} />
     </BrowserRouter>
   );
 };
