@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { IoIosArrowDown } from "react-icons/io";
 import { FiUser } from "react-icons/fi";
@@ -9,9 +9,14 @@ import { FaRegCommentDots } from "react-icons/fa";
 import { TbMessage2 } from "react-icons/tb";
 
 const Header = ({ toggleSidebar }) => {
-  const handleLogout = (event) => {
-    event.preventDefault();
-    document.getElementById("logout-form").submit();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // Clear specific items from localStorage (e.g., tokens)
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("userDetails");
+
+    window.location.href = "/login";
   };
 
   return (
@@ -65,11 +70,7 @@ const Header = ({ toggleSidebar }) => {
                   <span>My Profile</span>
                 </Link>
 
-                <Link
-                  to="https://demo.workdo.io/hrmgo/logout"
-                  className="dropdown-item"
-                  onClick={handleLogout}
-                >
+                <Link className="dropdown-item" onClick={handleLogout}>
                   <IoPower />
                   <span>Logout</span>
                 </Link>

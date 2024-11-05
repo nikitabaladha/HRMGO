@@ -250,8 +250,8 @@ const Login = ({ onLogin }) => {
                 <div className="custom-login-form">
                   <form
                     onSubmit={handleSubmit}
-                    className="needs-validation"
-                    noValidate=""
+                    // class="needs-validation was-validated"
+                    // noValidate=""
                   >
                     <div className="form-group mb-3">
                       <label className="form-label">Email</label>
