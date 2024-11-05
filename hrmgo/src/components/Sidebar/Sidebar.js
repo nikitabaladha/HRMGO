@@ -614,46 +614,49 @@ const Sidebar = ({ sidebarVisible, toggleSidebar }) => {
                       style={{ padding: "10px 0px" }}
                     >
                       {" "}
-                      <ul className="dash-navbar">
-                        {menuConfig.map((menu) => (
-                          <li
-                            key={menu.id}
-                            className={`dash-item dash-hasmenu ${
-                              activeMenu === menu.id ? "active" : ""
-                            }`}
-                          >
-                            <Link
-                              to={menu.link}
-                              className="dash-link"
-                              onClick={() => toggleMenu(menu.id)}
+                      <PerfectScrollbar>
+                        {" "}
+                        <ul className="dash-navbar">
+                          {menuConfig.map((menu) => (
+                            <li
+                              key={menu.id}
+                              className={`dash-item dash-hasmenu ${
+                                activeMenu === menu.id ? "active" : ""
+                              }`}
                             >
-                              <span className="dash-micon">
-                                {menu.iconClass}
-                              </span>
-                              <span className="dash-mtext">{menu.label}</span>
-                              {menu.subMenu && (
-                                <span
-                                  className={`dash-arrow ${
-                                    activeMenu === menu.id ? "active" : ""
-                                  }`}
-                                  style={{
-                                    transform:
-                                      activeMenu === menu.id
-                                        ? "rotate(90deg)"
-                                        : "rotate(0deg)",
-                                    transition: "transform 0.3s ease",
-                                  }}
-                                >
-                                  <IoIosArrowForward />
+                              <Link
+                                to={menu.link}
+                                className="dash-link"
+                                onClick={() => toggleMenu(menu.id)}
+                              >
+                                <span className="dash-micon">
+                                  {menu.iconClass}
                                 </span>
-                              )}
-                            </Link>
-                            {menu.subMenu &&
-                              activeMenu === menu.id &&
-                              renderSubMenu(menu.subMenu)}
-                          </li>
-                        ))}
-                      </ul>
+                                <span className="dash-mtext">{menu.label}</span>
+                                {menu.subMenu && (
+                                  <span
+                                    className={`dash-arrow ${
+                                      activeMenu === menu.id ? "active" : ""
+                                    }`}
+                                    style={{
+                                      transform:
+                                        activeMenu === menu.id
+                                          ? "rotate(90deg)"
+                                          : "rotate(0deg)",
+                                      transition: "transform 0.3s ease",
+                                    }}
+                                  >
+                                    <IoIosArrowForward />
+                                  </span>
+                                )}
+                              </Link>
+                              {menu.subMenu &&
+                                activeMenu === menu.id &&
+                                renderSubMenu(menu.subMenu)}
+                            </li>
+                          ))}
+                        </ul>
+                      </PerfectScrollbar>
                     </div>
                   </div>
                 </div>
