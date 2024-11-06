@@ -32,17 +32,16 @@ import { FiTable } from "react-icons/fi";
 import { IoSettingsOutline } from "react-icons/io5";
 
 const menuConfig = [
-  // dashboard
   {
     id: "dashboard",
     label: "Dashboard",
     iconClass: <AiOutlineHome />,
-    link: "#!",
+    link: "/dashboard/overview",
     subMenu: [
       {
         id: "overview",
         label: "Overview",
-        link: "/dashboard",
+        link: "/dashboard/overview",
       },
       {
         id: "report",
@@ -51,32 +50,32 @@ const menuConfig = [
           {
             id: "incomeExpense",
             label: "Income Vs Expense",
-            link: "/report/income-expense",
+            link: "/dashboard/report/income-vs-expense",
           },
           {
             id: "monthlyAttendance",
             label: "Monthly Attendance",
-            link: "https://demo.workdo.io/hrmgo/report/monthly/attendance",
+            link: "/dashboard/report/monthly-attendance",
           },
           {
             id: "leave",
             label: "Leave",
-            link: "https://demo.workdo.io/hrmgo/report/leave",
+            link: "/dashboard/report/leave",
           },
           {
             id: "accountStatement",
             label: "Account Statement",
-            link: "https://demo.workdo.io/hrmgo/report/account-statement",
+            link: "/dashboard/report/account-statement",
           },
           {
             id: "payroll",
             label: "Payroll",
-            link: "https://demo.workdo.io/hrmgo/report/payroll",
+            link: "/dashboard/report/payroll",
           },
           {
             id: "timesheet",
             label: "Timesheet",
-            link: "https://demo.workdo.io/hrmgo/report/timesheet",
+            link: "/dashboard/report/time-sheet",
           },
         ],
       },
@@ -88,22 +87,22 @@ const menuConfig = [
     id: "staff",
     label: "Staff",
     iconClass: <TbUsers />,
-    link: "#!",
+    link: "",
     subMenu: [
       {
         id: "user",
         label: "User",
-        link: "https://demo.workdo.io/hrmgo/user",
+        link: "/dashboard/staff/user",
       },
       {
         id: "roles",
         label: "Role",
-        link: "https://demo.workdo.io/hrmgo/roles",
+        link: "/dashboard/staff/roles",
       },
       {
         id: "employeeProfile",
         label: "Employee Profile",
-        link: "https://demo.workdo.io/hrmgo/employee-profile",
+        link: "/dashboard/staff/employee-profile",
       },
     ],
   },
@@ -113,7 +112,7 @@ const menuConfig = [
     id: "employee",
     label: "Employee",
     iconClass: <LuUser />,
-    link: "https://demo.workdo.io/hrmgo/employee",
+    link: "/dashboard/employee",
   },
 
   // pay roll
@@ -121,17 +120,17 @@ const menuConfig = [
     id: "payroll",
     label: "Payroll",
     iconClass: <TbReceipt />,
-    link: "#!",
+    link: "",
     subMenu: [
       {
         id: "setSalary",
         label: "Set Salary",
-        link: "https://demo.workdo.io/hrmgo/setsalary",
+        link: "/dashboard/payroll/set-salary",
       },
       {
         id: "payslip",
         label: "Payslip",
-        link: "https://demo.workdo.io/hrmgo/payslip",
+        link: "/dashboard/payroll/payslip",
       },
     ],
   },
@@ -146,12 +145,12 @@ const menuConfig = [
       {
         id: "timeSheet",
         label: "Timesheet",
-        link: "https://demo.workdo.io/hrmgo/timesheet",
+        link: "/dashboard/time-sheet/time-sheet",
       },
       {
         id: "manageLeave",
         label: "Manage Leave",
-        link: "https://demo.workdo.io/hrmgo/manageleave",
+        link: "/dashboard/time-sheet/manage-leave",
       },
       {
         id: "attendance",
@@ -160,12 +159,12 @@ const menuConfig = [
           {
             id: "markedAttendance",
             label: "Marked Attendance",
-            link: "https://demo.workdo.io/hrmgo/attendanceemployee",
+            link: "/dashboard/attendance/marked-attendance",
           },
           {
             id: "bulkAttendance",
             label: "Bulk Attendance",
-            link: "https://demo.workdo.io/hrmgo/attendanceemployee/bulkattendance",
+            link: "/dashboard/attendance/bulk-attendance",
           },
         ],
       },
@@ -182,17 +181,17 @@ const menuConfig = [
       {
         id: "indicator",
         label: "Indicator",
-        link: "https://demo.workdo.io/hrmgo/indicator",
+        link: "/dashboard/performance/indicator",
       },
       {
         id: "appraisal",
         label: "Appraisal",
-        link: "https://demo.workdo.io/hrmgo/appraisal",
+        link: "/dashboard/performance/appraisal",
       },
       {
         id: "goalTracking",
         label: "Goal Tracking",
-        link: "https://demo.workdo.io/hrmgo/goaltracking",
+        link: "/dashboard/performance/goal-tracking",
       },
     ],
   },
@@ -207,38 +206,37 @@ const menuConfig = [
       {
         id: "accountList",
         label: "Account List",
-        link: "https://demo.workdo.io/hrmgo/accountlist",
+        link: "/dashboard/finance/account-list",
       },
       {
         id: "accountBalance",
         label: "Account Balance",
-        link: "https://demo.workdo.io/hrmgo/accountbalance",
+        link: "/dashboard/finance/account-balance",
       },
       {
         id: "payees",
         label: "Payees",
-        link: "https://demo.workdo.io/hrmgo/payees",
+        link: "/dashboard/finance/payees",
       },
       {
         id: "payers",
         label: "payers",
-        link: "https://demo.workdo.io/hrmgo/payer",
+        link: "/dashboard/finance/payer",
       },
       {
         id: "deposit",
         label: "Deposit",
-        link: "https://demo.workdo.io/hrmgo/deposit",
+        link: "/dashboard/finance/deposit",
       },
-
       {
         id: "expense",
         label: "Expense",
-        link: "https://demo.workdo.io/hrmgo/expense",
+        link: "/dashboard/finance/expense",
       },
       {
         id: "transferBalance",
         label: "Transfer Balance",
-        link: "https://demo.workdo.io/hrmgo/transferbalance",
+        link: "/dashboard/finance/transfer-balance",
       },
     ],
   },
@@ -253,12 +251,12 @@ const menuConfig = [
       {
         id: "trainingList",
         label: "Training List",
-        link: "https://demo.workdo.io/hrmgo/training",
+        link: "/dashboard/training/training-list",
       },
       {
         id: "trainer",
         label: "Trainer",
-        link: "https://demo.workdo.io/hrmgo/trainer",
+        link: "/dashboard/training/trainer",
       },
     ],
   },
@@ -273,53 +271,53 @@ const menuConfig = [
       {
         id: "award",
         label: "Award",
-        link: "https://demo.workdo.io/hrmgo/award",
+        link: "/dashboard/hr-admin-setup/award",
       },
       {
         id: "transfer",
         label: "Transfer",
-        link: "https://demo.workdo.io/hrmgo/transfer",
+        link: "/dashboard/hr-admin-setup/transfer",
       },
       {
         id: "resignation",
         label: "Resignation",
-        link: "https://demo.workdo.io/hrmgo/resignation",
+        link: "/dashboard/hr-admin-setup/resignation",
       },
       {
         id: "trip",
         label: "Trip",
-        link: "https://demo.workdo.io/hrmgo/travel",
+        link: "/dashboard/hr-admin-setup/trip",
       },
       {
         id: "promotion",
         label: "Promotion",
-        link: "https://demo.workdo.io/hrmgo/promotion",
+        link: "/dashboard/hr-admin-setup/promotion",
       },
 
       {
         id: "complaints",
         label: "Complaints",
-        link: "https://demo.workdo.io/hrmgo/complaint",
+        link: "/dashboard/hr-admin-setup/complaint",
       },
       {
         id: "warning",
         label: "Warning",
-        link: "https://demo.workdo.io/hrmgo/warning",
+        link: "/dashboard/hr-admin-setup/warning",
       },
       {
         id: "termination",
         label: "Termination",
-        link: "https://demo.workdo.io/hrmgo/termination",
+        link: "/dashboard/hr-admin-setup/termination",
       },
       {
         id: "announcement",
         label: "Announcement",
-        link: "https://demo.workdo.io/hrmgo/announcement",
+        link: "/dashboard/hr-admin-setup/announcement",
       },
       {
         id: "holidays",
         label: "Holidays",
-        link: "https://demo.workdo.io/hrmgo/warning",
+        link: "/dashboard/hr-admin-setup/holidays",
       },
     ],
   },
@@ -334,42 +332,42 @@ const menuConfig = [
       {
         id: "jobs",
         label: "Jobs",
-        link: "https://demo.workdo.io/hrmgo/job",
+        link: "/dashboard/recruitment/job",
       },
       {
         id: "jobCreate",
         label: "Job Create",
-        link: "https://demo.workdo.io/hrmgo/job/create",
+        link: "/dashboard/recruitment/job-create",
       },
       {
         id: "jobApplication",
         label: "Job Application",
-        link: "https://demo.workdo.io/hrmgo/job-application",
+        link: "/dashboard/recruitment/job-application",
       },
       {
         id: "jobCandidate",
         label: "Job Candidate",
-        link: "https://demo.workdo.io/hrmgo/candidates-job-applications",
+        link: "/dashboard/recruitment/job-candidate",
       },
       {
         id: "jobOnboarding",
         label: "Job On-Boarding",
-        link: "https://demo.workdo.io/hrmgo/job-onboard",
+        link: "/dashboard/recruitment/job-onboard",
       },
       {
         id: "customQuestion",
         label: "Custom Question",
-        link: "https://demo.workdo.io/hrmgo/custom-question",
+        link: "/dashboard/recruitment/custom-question",
       },
       {
         id: "interviewSchedule",
         label: "Interview Schedule",
-        link: "https://demo.workdo.io/hrmgo/interview-schedule",
+        link: "h/dashboard/recruitment/interview-schedule",
       },
       {
         id: "career",
         label: "Career",
-        link: "https://demo.workdo.io/hrmgo/career/1/en",
+        link: "/dashboard/recruitment/career",
         target: "_blank",
       },
     ],
@@ -380,7 +378,7 @@ const menuConfig = [
     id: "contract",
     label: "Contracts",
     iconClass: <TbDeviceFloppy />,
-    link: "https://demo.workdo.io/hrmgo/contract",
+    link: "/dashboard/contract",
   },
 
   // Ticket
@@ -388,7 +386,7 @@ const menuConfig = [
     id: "ticket",
     label: "Ticket",
     iconClass: <LuTicket />,
-    link: "https://demo.workdo.io/hrmgo/ticket",
+    link: "/dashboard/ticket",
   },
 
   // Event
@@ -396,7 +394,7 @@ const menuConfig = [
     id: "event",
     label: "Event",
     iconClass: <TbCalendarEvent />,
-    link: "https://demo.workdo.io/hrmgo/event",
+    link: "/dashboard/event",
   },
 
   // Meeting
@@ -404,7 +402,7 @@ const menuConfig = [
     id: "meeting",
     label: "Meeting",
     iconClass: <MdOutlineCalendarMonth />,
-    link: "https://demo.workdo.io/hrmgo/meeting",
+    link: "/dashboard/meeting",
   },
 
   // Zoom Meeting
@@ -412,7 +410,7 @@ const menuConfig = [
     id: "zoomMeeting",
     label: "Zoom Meeting",
     iconClass: <CiVideoOn />,
-    link: "https://demo.workdo.io/hrmgo/zoom-meeting",
+    link: "/dashboard/zoom-meeting",
   },
 
   // Assets
@@ -420,7 +418,7 @@ const menuConfig = [
     id: "assets",
     label: "Assets",
     iconClass: <TbMedicalCross />,
-    link: "https://demo.workdo.io/hrmgo/account-assets",
+    link: "/dashboard/assets",
   },
 
   // Document
@@ -428,7 +426,7 @@ const menuConfig = [
     id: "document",
     label: "Document",
     iconClass: <CiFileOn />,
-    link: "https://demo.workdo.io/hrmgo/document-upload",
+    link: "/dashboard/upload",
   },
 
   // Email Templates
@@ -436,7 +434,7 @@ const menuConfig = [
     id: "emailTemplates",
     label: "Email Templates",
     iconClass: <TbTemplate />,
-    link: "https://demo.workdo.io/hrmgo/email_template_lang/1/en",
+    link: "/dashboard/email-templates",
   },
 
   // Company Policy
@@ -444,7 +442,7 @@ const menuConfig = [
     id: "companyPolicy",
     label: "Company Policy",
     iconClass: <TbPray />,
-    link: "https://demo.workdo.io/hrmgo/company-policy",
+    link: "/dashboard/company-policy",
   },
 
   // Messenger
@@ -452,7 +450,7 @@ const menuConfig = [
     id: "messenger",
     label: "Messenger",
     iconClass: <LuMessagesSquare />,
-    link: "https://demo.workdo.io/hrmgo/chats",
+    link: "/dashboard/messenger",
   },
 
   // Notification Template
@@ -460,7 +458,7 @@ const menuConfig = [
     id: "notificationTemplate",
     label: "Notification Template",
     iconClass: <GoBell />,
-    link: "https://demo.workdo.io/hrmgo/notification-templates",
+    link: "/dashboard/notification-templates",
   },
 
   // HRM System Setup
@@ -468,7 +466,7 @@ const menuConfig = [
     id: "hrmSystemSetup",
     label: "HRM System Setup",
     iconClass: <FiTable />,
-    link: "https://demo.workdo.io/hrmgo/branch",
+    link: "/dashboard/hrm-system-branch",
   },
 
   // Landing Page
@@ -476,7 +474,7 @@ const menuConfig = [
     id: "landingPage",
     label: "Landing Page",
     iconClass: <TbLicense />,
-    link: "https://demo.workdo.io/hrmgo/landingpage",
+    link: "/dashboard/landing-page",
   },
 
   // System Setting
@@ -484,7 +482,7 @@ const menuConfig = [
     id: "systemSetting",
     label: "System Setting",
     iconClass: <IoSettingsOutline />,
-    link: "https://demo.workdo.io/hrmgo/settings",
+    link: "/dashboard/system-settings",
   },
 ];
 
@@ -522,15 +520,60 @@ const Sidebar = ({ sidebarVisible, toggleSidebar }) => {
     setActiveSubMenu(activeSubMenu === subMenuId ? null : subMenuId);
   };
 
+  // const renderSubMenu = (subMenu) => (
+  //   <ul className="dash-submenu">
+  //     {subMenu.map((item) => (
+  //       <li key={item.id} className="dash-item">
+  //         {item.subMenu ? (
+  //           <Link
+  //             to=""
+  //             className="dash-link"
+  //             onClick={() => toggleSubMenu(item.id)}
+  //           >
+  //             <span className="dash-mtext">{item.label}</span>
+  //             <span
+  //               className={`dash-arrow ${
+  //                 activeSubMenu === item.id ? "active" : ""
+  //               }`}
+  //               style={{
+  //                 transform:
+  //                   activeSubMenu === item.id
+  //                     ? "rotate(90deg)"
+  //                     : "rotate(0deg)",
+  //                 transition: "transform 0.3s ease",
+  //               }}
+  //             >
+  //               <IoIosArrowForward />
+  //             </span>
+  //           </Link>
+  //         ) : (
+  //           <Link to={item.link} className="dash-link">
+  //             {item.label}
+  //           </Link>
+  //         )}
+  //         {item.subMenu &&
+  //           activeSubMenu === item.id &&
+  //           renderSubMenu(item.subMenu)}
+  //       </li>
+  //     ))}
+  //   </ul>
+  // );
+
   const renderSubMenu = (subMenu) => (
     <ul className="dash-submenu">
       {subMenu.map((item) => (
         <li key={item.id} className="dash-item">
           {item.subMenu ? (
-            <Link
-              to="#!"
+            <div
               className="dash-link"
-              onClick={() => toggleSubMenu(item.id)}
+              onClick={() => toggleSubMenu(item.id)} // Toggle submenu
+              role="button"
+              tabIndex={0}
+              onKeyPress={(e) => {
+                if (e.key === "Enter") {
+                  toggleSubMenu(item.id);
+                }
+              }}
             >
               <span className="dash-mtext">{item.label}</span>
               <span
@@ -547,9 +590,9 @@ const Sidebar = ({ sidebarVisible, toggleSidebar }) => {
               >
                 <IoIosArrowForward />
               </span>
-            </Link>
+            </div>
           ) : (
-            <Link href={item.link} className="dash-link">
+            <Link to={item.link} className="dash-link">
               {item.label}
             </Link>
           )}
@@ -560,7 +603,6 @@ const Sidebar = ({ sidebarVisible, toggleSidebar }) => {
       ))}
     </ul>
   );
-
   return (
     <>
       {" "}

@@ -20401,15 +20401,15 @@ body:not(.minimenu)
 
 .dash-container {
   position: relative;
-  top: 30px;
-  margin-left: 120px;
+  top: 70px;
+  margin-left: 255px;
   min-height: calc(100vh - 70px);
 }
 
 .dash-container .dash-content {
-  padding-left: 25px;
-  padding-right: 15px;
-  padding-top: 20px;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-top: 30px;
 }
 
 .dash-container .page-header + .row {

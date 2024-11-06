@@ -1,3 +1,5 @@
+// components/DashboardMain/Overview/Overview.js
+
 import React from "react";
 
 import DashboardMainHeader from "./DashboardMainHeader.js";
@@ -8,14 +10,10 @@ import Announcement from "./Announcement.js";
 const OverView = () => {
   return (
     <>
-      <section className="dash-container">
-        <div className="dash-content">
-          <DashboardMainHeader />
-          <DashboardMetrics />
-          <MeetingAttendanceCalender />
-          <Announcement />
-        </div>
-      </section>
+      <DashboardMainHeader />
+      <DashboardMetrics />
+      <MeetingAttendanceCalender />
+      <Announcement />
     </>
   );
 };
