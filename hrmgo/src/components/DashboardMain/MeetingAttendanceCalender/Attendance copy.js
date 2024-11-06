@@ -1,30 +1,22 @@
-import React, { useEffect, useState } from "react";
-import getAPI from "../../../api/getAPI.js";
+import React from "react";
 
 const Attendance = () => {
-  const [absentEmployees, setAbsentEmployees] = useState([]);
-
-  useEffect(() => {
-    const fetchAttendance = async () => {
-      try {
-        const response = await getAPI(`/attendance-get-all`, {}, true);
-        if (
-          !response.hasError &&
-          response.data &&
-          Array.isArray(response.data.data)
-        ) {
-          setAbsentEmployees(response.data.data);
-          console.log("Attendance fetched successfully", response.data.data);
-        } else {
-          console.error("Invalid response format or error in response");
-        }
-      } catch (err) {
-        console.error("Error fetching attendance:", err);
-      }
-    };
-
-    fetchAttendance();
-  }, []);
+  // Data for each absent employee
+  const absentEmployees = [
+    { name: "Julie Lynn", status: "Absent" },
+    { name: "Lunea Todd", status: "Absent" },
+    { name: "Ida F. Mullen", status: "Absent" },
+    { name: "Teresa R McRae", status: "Absent" },
+    { name: "Joel O Dolan", status: "Absent" },
+    { name: "Jeremy Holmes", status: "Absent" },
+    { name: "Anjolie Mayer", status: "Absent" },
+    { name: "Nyssa Sloan", status: "Absent" },
+    { name: "Jillian Sykes", status: "Absent" },
+    { name: "Aida Bugg", status: "Absent" },
+    { name: "Mona Hendricks", status: "Absent" },
+    { name: "Kyle Willis", status: "Absent" },
+    { name: "Abra Stevens", status: "Absent" },
+  ];
 
   return (
     <>
