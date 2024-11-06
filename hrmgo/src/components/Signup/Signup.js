@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 
 import postAPI from "../../api/postAPI.js";
 
@@ -41,8 +42,11 @@ const Signup = () => {
       const response = await postAPI("/signup", formData, false);
 
       if (!response.hasError) {
-        handleLoginRedirect();
-        console.log("Signup successful");
+        toast.success("Signup successful!");
+
+        setTimeout(() => {
+          handleLoginRedirect();
+        }, 2000);
 
         setFormData({
           firstName: "",
@@ -64,6 +68,7 @@ const Signup = () => {
 
   return (
     <div className="custom-login">
+      <ToastContainer />
       <div className="login-bg-img">
         <img src={background1} className="login-bg-1" alt="Background 1" />
         <img src={background2} className="login-bg-2" alt="Background 2" />

@@ -16,6 +16,8 @@ import "./assets/css/plugins/style.css";
 import "./assets/css/plugins/main.css";
 import "./css/custom.css";
 
+import "react-toastify/dist/ReactToastify.css";
+
 import AppRoutes from "./routes";
 
 const App = () => {

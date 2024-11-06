@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 
 import postAPI from "../../api/postAPI.js";
 
@@ -40,7 +41,11 @@ const Login = ({ onLogin }) => {
           "userDetails",
           JSON.stringify(response.data.userDetails)
         );
-        onLogin();
+        toast.success("Login successful!");
+
+        setTimeout(() => {
+          onLogin();
+        }, 2000);
       } else {
         setGeneralError(response.data.message);
       }
@@ -58,6 +63,7 @@ const Login = ({ onLogin }) => {
 
   return (
     <div className="custom-login">
+      <ToastContainer />
       <div className="login-bg-img">
         <img src={background1} className="login-bg-1" alt="Background 1" />
         <img src={background2} className="login-bg-2" alt="Background 2" />
