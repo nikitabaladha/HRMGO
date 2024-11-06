@@ -1,12 +1,10 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { MdKeyboardArrowDown } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 import postAPI from "../../api/postAPI.js";
 
 import "./custom-login.css";
 
-import logo from "../../uploads/logo/logo-dark-cbaaeb18eba8e.png";
 import background1 from "../../uploads/svg/login-1.svg";
 import background2 from "../../uploads/svg/login-2.svg";
 
@@ -72,182 +70,6 @@ const Signup = () => {
       </div>
       <div className="bg-login bg-primary"></div>
       <div className="custom-login-inner">
-        <header className="dash-header">
-          <nav className="navbar navbar-expand-md default">
-            <div className="container">
-              <div className="navbar-brand">
-                <Link to="#">
-                  <img src={logo} alt="HRMGo" loading="lazy" className="logo" />
-                </Link>
-              </div>
-              <button
-                className="navbar-toggler"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarlogin"
-              >
-                <span className="navbar-toggler-icon" />
-              </button>
-              <div className="collapse navbar-collapse" id="navbarlogin">
-                <ul className="navbar-nav align-items-center ms-auto mb-2 mb-lg-0">
-                  <li className="nav-item">
-                    <Link
-                      className="nav-link"
-                      to="https://demo.workdo.io/hrmgo/pages/about_us"
-                    >
-                      About Us
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link
-                      className="nav-link"
-                      to="https://demo.workdo.io/hrmgo/pages/terms_and_conditions"
-                    >
-                      Terms and Conditions
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link
-                      className="nav-link"
-                      to="https://demo.workdo.io/hrmgo/pages/privacy_policy"
-                    >
-                      Privacy Policy
-                    </Link>
-                  </li>
-                  <div className="lang-dropdown-only-desk">
-                    <li className="dropdown dash-h-item drp-language">
-                      <Link
-                        className="dash-head-link dropdown-toggle btn"
-                        to="#"
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false"
-                      >
-                        <span className="drp-text">
-                          English
-                          <MdKeyboardArrowDown className="dropdown-icon" />
-                        </span>
-                      </Link>
-                      <div className="dropdown-menu dash-h-dropdown dropdown-menu-end">
-                        <Link
-                          to="https://demo.workdo.io/hrmgo/login/ar"
-                          tabIndex={0}
-                          className="dropdown-item "
-                        >
-                          <span>Arabic</span>
-                        </Link>
-                        <Link
-                          to="https://demo.workdo.io/hrmgo/login/zh"
-                          tabIndex={0}
-                          className="dropdown-item "
-                        >
-                          <span>Chinese</span>
-                        </Link>
-                        <Link
-                          href="https://demo.workdo.io/hrmgo/login/da"
-                          tabIndex={0}
-                          className="dropdown-item "
-                        >
-                          <span>Danish</span>
-                        </Link>
-                        <Link
-                          href="https://demo.workdo.io/hrmgo/login/de"
-                          tabIndex={0}
-                          className="dropdown-item "
-                        >
-                          <span>German</span>
-                        </Link>
-                        <Link
-                          to="https://demo.workdo.io/hrmgo/login/en"
-                          tabIndex={0}
-                          className="dropdown-item active"
-                        >
-                          <span>English</span>
-                        </Link>
-                        <Link
-                          to="https://demo.workdo.io/hrmgo/login/es"
-                          tabIndex={0}
-                          className="dropdown-item "
-                        >
-                          <span>Spanish</span>
-                        </Link>
-                        <Link
-                          to="https://demo.workdo.io/hrmgo/login/fr"
-                          tabIndex={0}
-                          className="dropdown-item "
-                        >
-                          <span>French</span>
-                        </Link>
-                        <Link
-                          to="https://demo.workdo.io/hrmgo/login/he"
-                          tabIndex={0}
-                          className="dropdown-item "
-                        >
-                          <span>Hebrew</span>
-                        </Link>
-                        <Link
-                          to="https://demo.workdo.io/hrmgo/login/it"
-                          tabIndex={0}
-                          className="dropdown-item "
-                        >
-                          <span>Italian</span>
-                        </Link>
-                        <Link
-                          to="https://demo.workdo.io/hrmgo/login/ja"
-                          tabIndex={0}
-                          className="dropdown-item "
-                        >
-                          <span>Japanese</span>
-                        </Link>
-                        <Link
-                          to="https://demo.workdo.io/hrmgo/login/nl"
-                          tabIndex={0}
-                          className="dropdown-item "
-                        >
-                          <span>Dutch</span>
-                        </Link>
-                        <Link
-                          to="https://demo.workdo.io/hrmgo/login/pl"
-                          tabIndex={0}
-                          className="dropdown-item "
-                        >
-                          <span>Polish</span>
-                        </Link>
-                        <Link
-                          to="https://demo.workdo.io/hrmgo/login/pt"
-                          tabIndex={0}
-                          className="dropdown-item "
-                        >
-                          <span>Portuguese</span>
-                        </Link>
-                        <Link
-                          to="https://demo.workdo.io/hrmgo/login/ru"
-                          tabIndex={0}
-                          className="dropdown-item "
-                        >
-                          <span>Russian</span>
-                        </Link>
-                        <Link
-                          to="https://demo.workdo.io/hrmgo/login/tr"
-                          tabIndex={0}
-                          className="dropdown-item "
-                        >
-                          <span>Turkish</span>
-                        </Link>
-                        <Link
-                          href="https://demo.workdo.io/hrmgo/login/pt-br"
-                          tabIndex={0}
-                          className="dropdown-item "
-                        >
-                          <span>Portuguese(Brazil)</span>
-                        </Link>
-                      </div>
-                    </li>
-                  </div>
-                </ul>
-              </div>
-            </div>
-          </nav>
-        </header>
         <main className="custom-wrapper">
           <div className="custom-row">
             <div className="card">
@@ -332,7 +154,7 @@ const Signup = () => {
                       </button>
                     </div>
 
-                    <p className="mt-4">Already have an account ?</p>
+                    <p className="mt-4 text-info">Already have an account ?</p>
                     <div className="d-grid">
                       <button
                         className="btn btn-info login-do-btn"
@@ -348,17 +170,6 @@ const Signup = () => {
             </div>
           </div>
         </main>
-        <footer>
-          <div className="auth-footer">
-            <div className="container">
-              <div className="row">
-                <div className="col-12">
-                  <span>© 2024 HRMGo</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </footer>
       </div>
     </div>
   );
