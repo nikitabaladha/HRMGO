@@ -1,39 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import getAPI from "../../api/getAPI.js";
 
 const Announcement = () => {
-  // Data for each announcement
-  const announcements = [
-    {
-      title: "Magnam est ducimus",
-      startDate: "Sep 25, 2024",
-      endDate: "Sep 25, 2024",
-      description: "At est quasi saepe p",
-    },
-    {
-      title: "Magnam est ducimus",
-      startDate: "Nov 25, 2022",
-      endDate: "Nov 26, 2022",
-      description: "At est quasi saepe p",
-    },
-    {
-      title: "Project Meeting",
-      startDate: "Mar 10, 2023",
-      endDate: "Mar 26, 2023",
-      description: "Lorem Ipsum, Or Lipsum",
-    },
-    {
-      title: "Team Meeting",
-      startDate: "Dec 4, 2023",
-      endDate: "Dec 5, 2023",
-      description: "Lorem Ipsum, Or Lipsum",
-    },
-    {
-      title: "Event Related",
-      startDate: "Oct 4, 2023",
-      endDate: "Oct 5, 2023",
-      description: "Lorem Ipsum, Or Lipsum",
-    },
-  ];
+  const [announcements, setAnnouncements] = useState([]);
+
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    const month = date.toLocaleString("default", { month: "short" });
+    const day = date.getDate();
+    const year = date.getFullYear();
+    return `${month} ${day}, ${year}`;
+  }
+
+  useEffect(() => {
+    const fetchAnnouncement = async () => {
+      try {
+        const response = await getAPI(`/announcement-get-all`, {}, true);
+        if (
+          !response.hasError &&
+          response.data &&
+          Array.isArray(response.data.data)
+        ) {
+          setAnnouncements(response.data.data);
+          console.log("Announcements fetched successfully", response.data.data);
+        } else {
+          console.error("Invalid response format or error in response");
+        }
+      } catch (err) {
+        console.error("Error fetching Announcements:", err);
+      }
+    };
+
+    fetchAnnouncement();
+  }, []);
 
   return (
     <>
@@ -57,8 +56,11 @@ const Announcement = () => {
                   {announcements.map((announcement, index) => (
                     <tr key={index}>
                       <td>{announcement.title}</td>
-                      <td>{announcement.startDate}</td>
-                      <td>{announcement.endDate}</td>
+
+                      <td>{formatDate(announcement.startDate)}</td>
+
+                      <td>{formatDate(announcement.endDate)}</td>
+
                       <td>{announcement.description}</td>
                     </tr>
                   ))}
