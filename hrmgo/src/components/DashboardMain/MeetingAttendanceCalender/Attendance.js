@@ -1,6 +1,6 @@
 import React from "react";
 
-const Clock = () => {
+const Attendance = () => {
   // Data for each absent employee
   const absentEmployees = [
     { name: "Julie Lynn", status: "Absent" },
@@ -51,4 +51,4 @@ const Clock = () => {
   );
 };
 
-export default Clock;
+export default Attendance;

@@ -1,7 +1,7 @@
 import React from "react";
 
 import Meeting from "./Meeting";
-import Clock from "./Clock";
+import Attendance from "./Attendance";
 import Calender from "./Calender";
 
 const MeetingClockCalender = () => {
@@ -14,7 +14,7 @@ const MeetingClockCalender = () => {
             <Meeting />
 
             {/* Today Not Clock In */}
-            <Clock />
+            <Attendance />
           </div>
 
           {/* Calender */}
