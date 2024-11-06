@@ -42,7 +42,7 @@ const menuConfig = [
       {
         id: "overview",
         label: "Overview",
-        link: "https://demo.workdo.io/hrmgo/dashboard",
+        link: "/dashboard",
       },
       {
         id: "report",
@@ -51,7 +51,7 @@ const menuConfig = [
           {
             id: "incomeExpense",
             label: "Income Vs Expense",
-            link: "https://demo.workdo.io/hrmgo/report/income-expense",
+            link: "/report/income-expense",
           },
           {
             id: "monthlyAttendance",

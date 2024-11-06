@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import getAPI from "../../api/getAPI.js";
+import getAPI from "../../../api/getAPI.js";
 import { TbUsers } from "react-icons/tb";
 import { LuWallet } from "react-icons/lu";
 import { LuTicket } from "react-icons/lu";
