@@ -8,11 +8,10 @@ import { IoPower } from "react-icons/io5";
 import { FaRegCommentDots } from "react-icons/fa";
 import { TbMessage2 } from "react-icons/tb";
 
-const Header = ({ toggleSidebar }) => {
+const Header = ({ toggleSidebar, fullName }) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    // Clear specific items from localStorage (e.g., tokens)
     localStorage.removeItem("accessToken");
     localStorage.removeItem("userDetails");
 
@@ -57,7 +56,7 @@ const Header = ({ toggleSidebar }) => {
                   />
                 </span>
                 <span className="hide-mob ms-2">
-                  Hi, Rajodiya Infotech!
+                  Hi, {fullName}
                   <IoIosArrowDown className="drp-arrow nocolor hide-mob" />
                 </span>
               </Link>
@@ -149,146 +148,6 @@ const Header = ({ toggleSidebar }) => {
                 </div>
               </div>
             </li>
-
-            {/* <li className="dropdown dash-h-item drp-language">
-              <a
-                className="dash-head-link dropdown-toggle arrow-none me-0"
-                data-bs-toggle="dropdown"
-                href="#"
-                role="button"
-                aria-haspopup="false"
-                aria-expanded="false"
-                id="dropdownLanguage"
-              >
-                <i className="ti ti-world nocolor"></i>
-                <i>
-                  <LuGlobe className="nocolor" />
-                </i>
-                <span className="drp-text hide-mob">English</span>
-                <i className="ti ti-chevron-down drp-arrow nocolor"></i>
-              </a>
-              <div
-                className="dropdown-menu dash-h-dropdown dropdown-menu-end"
-                aria-labelledby="dropdownLanguage"
-              >
-                <a
-                  href="https://demo.workdo.io/hrmgo/change-language/ar"
-                  className="dropdown-item "
-                >
-                  <span>Arabic</span>
-                </a>
-                <a
-                  href="https://demo.workdo.io/hrmgo/change-language/zh"
-                  className="dropdown-item "
-                >
-                  <span>Chinese</span>
-                </a>
-                <a
-                  href="https://demo.workdo.io/hrmgo/change-language/da"
-                  className="dropdown-item "
-                >
-                  <span>Danish</span>
-                </a>
-                <a
-                  href="https://demo.workdo.io/hrmgo/change-language/de"
-                  className="dropdown-item "
-                >
-                  <span>German</span>
-                </a>
-                <a
-                  href="https://demo.workdo.io/hrmgo/change-language/en"
-                  className="dropdown-item text-primary"
-                >
-                  <span>English</span>
-                </a>
-                <a
-                  href="https://demo.workdo.io/hrmgo/change-language/es"
-                  className="dropdown-item "
-                >
-                  <span>Spanish</span>
-                </a>
-                <a
-                  href="https://demo.workdo.io/hrmgo/change-language/fr"
-                  className="dropdown-item "
-                >
-                  <span>French</span>
-                </a>
-                <a
-                  href="https://demo.workdo.io/hrmgo/change-language/he"
-                  className="dropdown-item "
-                >
-                  <span>Hebrew</span>
-                </a>
-                <a
-                  href="https://demo.workdo.io/hrmgo/change-language/it"
-                  className="dropdown-item "
-                >
-                  <span>Italian</span>
-                </a>
-                <a
-                  href="https://demo.workdo.io/hrmgo/change-language/ja"
-                  className="dropdown-item "
-                >
-                  <span>Japanese</span>
-                </a>
-                <a
-                  href="https://demo.workdo.io/hrmgo/change-language/nl"
-                  className="dropdown-item "
-                >
-                  <span>Dutch</span>
-                </a>
-                <a
-                  href="https://demo.workdo.io/hrmgo/change-language/pl"
-                  className="dropdown-item "
-                >
-                  <span>Polish</span>
-                </a>
-                <a
-                  href="https://demo.workdo.io/hrmgo/change-language/pt"
-                  className="dropdown-item "
-                >
-                  <span>Portuguese</span>
-                </a>
-                <a
-                  href="https://demo.workdo.io/hrmgo/change-language/ru"
-                  className="dropdown-item "
-                >
-                  <span>Russian</span>
-                </a>
-                <a
-                  href="https://demo.workdo.io/hrmgo/change-language/tr"
-                  className="dropdown-item "
-                >
-                  <span>Turkish</span>
-                </a>
-                <a
-                  href="https://demo.workdo.io/hrmgo/change-language/pt-br"
-                  className="dropdown-item "
-                >
-                  <span>Portuguese(Brazil)</span>
-                </a>
-
-                <div className="dropdown-divider m-0"></div>
-                <a
-                  href="#"
-                  className="dropdown-item text-primary"
-                  data-size="md"
-                  data-url="https://demo.workdo.io/hrmgo/create-language"
-                  data-ajax-popup="true"
-                  data-title="Create New Language"
-                  data-bs-toggle="tooltip"
-                >
-                  Create Language
-                </a>
-                <div className="dropdown-divider m-0"></div>
-                <a
-                  href="https://demo.workdo.io/hrmgo/manage-language/en"
-                  className="dropdown-item text-primary"
-                >
-                  Manage Language
-                </a>
-              </div>
-            </li> */}
           </ul>
         </div>
       </div>

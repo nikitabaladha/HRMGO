@@ -8,6 +8,7 @@ import Footer from "../Footer/Footer.js";
 
 const Home = () => {
   const [sidebarVisible, setSidebarVisible] = useState(false);
+  const [fullName, setFullName] = useState("");
 
   const toggleSidebar = () => {
     setSidebarVisible(!sidebarVisible);
@@ -16,8 +17,9 @@ const Home = () => {
   useEffect(() => {
     const userDetails = JSON.parse(localStorage.getItem("userDetails"));
     if (userDetails) {
-      const fullName = `${userDetails.firstName} ${userDetails.lastName}`;
-      toast.success(`Welcome, ${fullName}`);
+      const userFullName = `${userDetails.firstName} ${userDetails.lastName}`;
+      setFullName(userFullName);
+      toast.success(`Welcome, ${userFullName}`);
     }
   }, []);
 
@@ -25,7 +27,7 @@ const Home = () => {
     <>
       <ToastContainer />
       <Sidebar sidebarVisible={sidebarVisible} toggleSidebar={toggleSidebar} />
-      <Header toggleSidebar={toggleSidebar} />
+      <Header toggleSidebar={toggleSidebar} fullName={fullName} />
       <DashboardMain />
       <Footer />
     </>
