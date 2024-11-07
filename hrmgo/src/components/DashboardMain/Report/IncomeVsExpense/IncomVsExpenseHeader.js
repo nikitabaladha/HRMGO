@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Link } from "react-router-dom";
+import { MdOutlineFileDownload } from "react-icons/md";
 
 const IncomeVsExpenseHeader = () => {
   return (
@@ -33,7 +34,7 @@ const IncomeVsExpenseHeader = () => {
                   data-bs-original-title="Download"
                 >
                   <span className="btn-inner--icon">
-                    <i className="ti ti-download " />
+                    <MdOutlineFileDownload />
                   </span>
                 </Link>
               </div>
