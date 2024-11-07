@@ -14,10 +14,11 @@ const UserChart = () => {
       bar: {
         horizontal: false,
         endingShape: "rounded",
+        columnWidth: "30%",
       },
     },
     dataLabels: {
-      enabled: true,
+      enabled: false,
     },
     xaxis: {
       categories: [
@@ -33,15 +34,40 @@ const UserChart = () => {
       position: "top",
       horizontalAlign: "right",
       floating: true,
-      offsetY: -20,
+      offsetY: -10,
       offsetX: -5,
+      markers: {
+        width: 12,
+        height: 12,
+        radius: 2,
+        offsetX: -2,
+      },
+      itemMargin: {
+        horizontal: 5,
+        vertical: 10,
+      },
     },
     tooltip: {
       shared: true,
       intersect: false,
     },
     fill: {
-      opacity: 0.85,
+      opacity: 1,
+    },
+    colors: ["#3EC9D6", "#FF3A6E"],
+    grid: {
+      borderColor: "#e0e0e0", // Color of the grid lines
+      strokeDashArray: 4, // Makes the lines dashed
+    },
+    yaxis: {
+      min: 0,
+      max: 120,
+      tickAmount: 4, // Ensures intervals of 30
+      labels: {
+        formatter: function (val) {
+          return val.toFixed(0); // Display without decimal points
+        },
+      },
     },
   };
 
@@ -63,13 +89,6 @@ const UserChart = () => {
           <div id="user-chart" style={{ minHeight: "265px" }}>
             <Chart options={options} series={series} type="bar" height={250} />
           </div>
-          <style
-            type="text/css"
-            dangerouslySetInnerHTML={{
-              __html:
-                "\t\n    \t\n      .apexcharts-legend {\t\n        display: flex;\t\n        overflow: auto;\t\n        padding: 0 10px;\t\n      }\t\n      .apexcharts-legend.apx-legend-position-bottom, .apexcharts-legend.apx-legend-position-top {\t\n        flex-wrap: wrap\t\n      }\t\n      .apexcharts-legend.apx-legend-position-right, .apexcharts-legend.apx-legend-position-left {\t\n        flex-direction: column;\t\n        bottom: 0;\t\n      }\t\n      .apexcharts-legend.apx-legend-position-bottom.apexcharts-align-left, .apexcharts-legend.apx-legend-position-top.apexcharts-align-left, .apexcharts-legend.apx-legend-position-right, .apexcharts-legend.apx-legend-position-left {\t\n        justify-content: flex-start;\t\n      }\t\n      .apexcharts-legend.apx-legend-position-bottom.apexcharts-align-center, .apexcharts-legend.apx-legend-position-top.apexcharts-align-center {\t\n        justify-content: center;  \t\n      }\t\n      .apexcharts-legend.apx-legend-position-bottom.apexcharts-align-right, .apexcharts-legend.apx-legend-position-top.apexcharts-align-right {\t\n        justify-content: flex-end;\t\n      }\t\n      .apexcharts-legend-series {\t\n        cursor: pointer;\t\n        line-height: normal;\t\n      }\t\n      .apexcharts-legend.apx-legend-position-bottom .apexcharts-legend-series, .apexcharts-legend.apx-legend-position-top .apexcharts-legend-series{\t\n        display: flex;\t\n        align-items: center;\t\n      }\t\n      .apexcharts-legend-text {\t\n        position: relative;\t\n        font-size: 14px;\t\n      }\t\n      .apexcharts-legend-text *, .apexcharts-legend-marker * {\t\n        pointer-events: none;\t\n      }\t\n      .apexcharts-legend-marker {\t\n        position: relative;\t\n        display: inline-block;\t\n        cursor: pointer;\t\n        margin-right: 3px;\t\n        border-style: solid;\n      }\t\n      \t\n      .apexcharts-legend.apexcharts-align-right .apexcharts-legend-series, .apexcharts-legend.apexcharts-align-left .apexcharts-legend-series{\t\n        display: inline-block;\t\n      }\t\n      .apexcharts-legend-series.apexcharts-no-click {\t\n        cursor: auto;\t\n      }\t\n      .apexcharts-legend .apexcharts-hidden-zero-series, .apexcharts-legend .apexcharts-hidden-null-series {\t\n        display: none !important;\t\n      }\t\n      .apexcharts-inactive-legend {\t\n        opacity: 0.45;\t\n      }",
-            }}
-          />
         </div>
       </div>
     </div>
