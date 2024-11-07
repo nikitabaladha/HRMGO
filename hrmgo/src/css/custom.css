@@ -820,3 +820,9 @@ a > i.ti-plus {
   background-color: #59ae36 !important;
   color: white !important;
 }
+
+.fc-event {
+  background-color: transparent !important;
+  border-color: transparent !important; /* Optional: Remove border */
+  color: inherit !important; /* Optional: Inherit text color */
+}

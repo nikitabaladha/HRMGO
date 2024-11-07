@@ -7,6 +7,8 @@ import interactionPlugin from "@fullcalendar/interaction";
 
 const Calendar = () => {
   const [calendars, setCalendars] = useState([]);
+  const [showPopup, setShowPopup] = useState(false);
+  const [popupData, setPopupData] = useState(null);
 
   function formatDate(dateString) {
     const date = new Date(dateString);
@@ -45,6 +47,26 @@ const Calendar = () => {
     fetchCalendar();
   }, []);
 
+  const handleMoreClick = (event) => {
+    setShowPopup(true);
+    setPopupData({
+      date: event.dateStr,
+      events: event.event ? [event.event.title] : [],
+    });
+  };
+
+  const handleClosePopup = () => {
+    setShowPopup(false);
+  };
+
+  const handleEventClick = (eventInfo) => {
+    setShowPopup(true);
+    setPopupData({
+      date: eventInfo.event.start.toISOString().split("T")[0],
+      events: [eventInfo.event.title], // Display the event titles here
+    });
+  };
+
   return (
     <>
       <div className="col-xl-7">
@@ -67,28 +89,103 @@ const Calendar = () => {
                   </option>
                 </select>
               </div>
-              <div className="card-body">
-                <FullCalendar
-                  plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-                  initialView="dayGridMonth"
-                  headerToolbar={{
-                    left: "prev,next today",
-                    center: "title",
-                    right: "dayGridMonth,timeGridWeek,timeGridDay",
-                  }}
-                  events={calendars}
-                  buttonText={{
-                    today: "Today",
-                    month: "Month",
-                    week: "Week",
-                    day: "Day",
-                  }}
-                />
-              </div>
+            </div>
+            <div className="card-body">
+              <FullCalendar
+                plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+                initialView="dayGridMonth"
+                headerToolbar={{
+                  left: "prev,next today",
+                  center: "title",
+                  right: "dayGridMonth,timeGridWeek,timeGridDay",
+                }}
+                events={calendars}
+                eventContent={(eventInfo) => {
+                  return (
+                    <>
+                      <div
+                        style={{
+                          color: "black",
+                        }}
+                      >
+                        1+ more
+                      </div>
+                    </>
+                  );
+                }}
+                buttonText={{
+                  today: "Today",
+                  month: "Month",
+                  week: "Week",
+                  day: "Day",
+                }}
+                eventClick={handleEventClick}
+              />
             </div>
           </div>
         </div>
       </div>
+
+      {showPopup && (
+        <div
+          className="popup-overlay"
+          id="fc-dom-121"
+          onClick={handleClosePopup}
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: "rgba(0,0,0,0.5)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            zIndex: 9999,
+          }}
+        >
+          <div
+            className="popup-content"
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              background: "#fff",
+              padding: "20px",
+              borderRadius: "8px",
+              maxWidth: "500px",
+              width: "100%",
+            }}
+          >
+            <div
+              className="popup-header"
+              style={{ display: "flex", justifyContent: "space-between" }}
+            >
+              <h4>{popupData.date}</h4>
+              <button
+                onClick={handleClosePopup}
+                style={{
+                  background: "transparent",
+                  border: "none",
+                  fontSize: "18px",
+                  cursor: "pointer",
+                }}
+              >
+                &times;
+              </button>
+            </div>
+            <div className="popup-body">
+              {popupData.events.length > 0 ? (
+                <ul>
+                  {popupData.events.map((event, index) => (
+                    <li key={index}>{event}</li>
+                  ))}
+                </ul>
+              ) : (
+                <p>No events for this day.</p>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };
