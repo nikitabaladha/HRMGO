@@ -1,11 +1,20 @@
 //components/DashboardMain/Report/IncomeVsExpense/IncomeVsExpense.js
 
 import React from "react";
+import MonthlyAttendanceHeader from "./MonthlyAttendanceHeader";
+import MonthlyAttendanceSearchForm from "./MonthlyAttendanceSearchForm";
+import AttendanceReport from "./AttendanceReport";
+import AttendanceTable from "./AttendanceTable";
 
 const MonthlyAttendance = () => {
   return (
     <>
-      <h1>Hi, I am MonthlyAttendance</h1>
+      <MonthlyAttendanceHeader />
+      <div class="row">
+        <MonthlyAttendanceSearchForm />
+        <AttendanceReport />
+        <AttendanceTable />
+      </div>
     </>
   );
 };
