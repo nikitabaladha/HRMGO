@@ -4,10 +4,12 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
+import CalenderModal from "./CalenderModal.js";
 
 const Calendar = () => {
   const [calendars, setCalendars] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
+  const [showCalendarModal, setShowCalenderModal] = useState(false);
   const [popupData, setPopupData] = useState(null);
 
   function formatDate(dateString) {
@@ -47,24 +49,23 @@ const Calendar = () => {
     fetchCalendar();
   }, []);
 
-  const handleMoreClick = (event) => {
-    setShowPopup(true);
-    setPopupData({
-      date: event.dateStr,
-      events: event.event ? [event.event.title] : [],
-    });
-  };
-
   const handleClosePopup = () => {
     setShowPopup(false);
   };
 
   const handleEventClick = (eventInfo) => {
-    setShowPopup(true);
     setPopupData({
       date: eventInfo.event.start.toISOString().split("T")[0],
-      events: [eventInfo.event.title], // Display the event titles here
+      events: [eventInfo.event.title],
     });
+    setShowPopup(true);
+  };
+
+  const handlePopupClick = () => {
+    if (popupData) {
+      console.log("Popup clicked");
+      setShowCalenderModal(true);
+    }
   };
 
   return (
@@ -130,7 +131,7 @@ const Calendar = () => {
         <div
           className="popup-overlay"
           id="fc-dom-121"
-          onClick={handleClosePopup}
+          onClick={handlePopupClick} // This will trigger the modal to open
           style={{
             position: "fixed",
             top: 0,
@@ -185,6 +186,14 @@ const Calendar = () => {
             </div>
           </div>
         </div>
+      )}
+
+      {/* Calendar Modal */}
+      {showCalendarModal && popupData && (
+        <CalenderModal
+          onClose={() => setShowCalenderModal(false)}
+          popupData={popupData}
+        />
       )}
     </>
   );
