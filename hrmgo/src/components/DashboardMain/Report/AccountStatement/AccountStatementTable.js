@@ -1,55 +1,12 @@
 import React from "react";
 
-// Sample data structure for employees and their AccountStatement
-const employees = [
-  {
-    name: "Julie Lynn",
-    AccountStatement: Array(30).fill(""), // 30 days of empty AccountStatement
-  },
-  {
-    name: "Lunea Todd",
-    AccountStatement: Array(30).fill(""), // 30 days of empty AccountStatement
-  },
-  {
-    name: "Ida F. Mullen",
-    AccountStatement: Array(30).fill(""), // 30 days of empty AccountStatement
-  },
-  {
-    name: "Abra Stevens",
-    AccountStatement: Array(30).fill(""), // 30 days of empty AccountStatement
-  },
-  {
-    name: "Julie Lynn",
-    AccountStatement: Array(30).fill(""), // 30 days of empty AccountStatement
-  },
-  {
-    name: "Lunea Todd",
-    AccountStatement: Array(30).fill(""), // 30 days of empty AccountStatement
-  },
-  {
-    name: "Ida F. Mullen",
-    AccountStatement: Array(30).fill(""), // 30 days of empty AccountStatement
-  },
-  {
-    name: "Abra Stevens",
-    AccountStatement: Array(30).fill(""), // 30 days of empty AccountStatement
-  },
-  {
-    name: "Julie Lynn",
-    AccountStatement: Array(30).fill(""), // 30 days of empty AccountStatement
-  },
-  {
-    name: "Lunea Todd",
-    AccountStatement: Array(30).fill(""), // 30 days of empty AccountStatement
-  },
-  {
-    name: "Ida F. Mullen",
-    AccountStatement: Array(30).fill(""), // 30 days of empty AccountStatement
-  },
-  {
-    name: "Abra Stevens",
-    AccountStatement: Array(30).fill(""), // 30 days of empty AccountStatement
-  },
+// Sample dynamic data structure for employees and their AccountStatement
+const data = [
+  { account: "Benjamin Adams", date: "Oct 28, 2023", amount: "$1,000.00" },
+  { account: "Benjamin Adams", date: "Sep 26, 2023", amount: "$500.00" },
+  { account: "Chisom Latifat", date: "Dec 12, 2023", amount: "$12,000.00" },
+  { account: "Earl Hane MD", date: "Nov 10, 2022", amount: "$500.00" },
+  { account: "Benjamin Adams", date: "Sep 25, 2024", amount: "$100.00" },
 ];
 
 const AccountStatementTable = () => {
@@ -68,31 +25,13 @@ const AccountStatementTable = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>Benjamin Adams</td>
-                    <td>Oct 28, 2023</td>
-                    <td>$1,000.00</td>
-                  </tr>
-                  <tr>
-                    <td>Benjamin Adams</td>
-                    <td>Sep 26, 2023</td>
-                    <td>$500.00</td>
-                  </tr>
-                  <tr>
-                    <td>Chisom Latifat</td>
-                    <td>Dec 12, 2023</td>
-                    <td>$12,000.00</td>
-                  </tr>
-                  <tr>
-                    <td>Earl Hane MD</td>
-                    <td>Nov 10, 2022</td>
-                    <td>$500.00</td>
-                  </tr>
-                  <tr>
-                    <td>Benjamin Adams</td>
-                    <td>Sep 25, 2024</td>
-                    <td>$100.00</td>
-                  </tr>
+                  {data.map((item, index) => (
+                    <tr key={index}>
+                      <td>{item.account}</td>
+                      <td>{item.date}</td>
+                      <td>{item.amount}</td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>
