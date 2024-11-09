@@ -4,7 +4,7 @@ import React from "react";
 
 import IncomeVsExpenseHeader from "./IncomVsExpenseHeader";
 import IncomeVsExpenseMonthHeader from "./IncomeVsExpenseMonthHeader";
-import IncomeVsExpenseOverview from "./IncomeVsExpenseOverview";
+import IncomeVsExpenseReport from "./IncomeVsExpenseReport";
 import UserChart from "./UserChart";
 
 const IncomeVsExpense = () => {
@@ -19,7 +19,7 @@ const IncomeVsExpense = () => {
         <IncomeVsExpenseMonthHeader />
         {/* Third row  */}
         <div id="printableArea">
-          <IncomeVsExpenseOverview />
+          <IncomeVsExpenseReport />
 
           {/* Fourth row */}
           <UserChart />

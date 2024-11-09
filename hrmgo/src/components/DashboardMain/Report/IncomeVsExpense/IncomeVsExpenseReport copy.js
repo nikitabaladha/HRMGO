@@ -39,7 +39,7 @@ const cardData = [
   },
 ];
 
-const IncomeVsExpenseOverview = () => {
+const IncomeVsExpenseReport = () => {
   return (
     <>
       <div className="row">
@@ -74,4 +74,4 @@ const IncomeVsExpenseOverview = () => {
   );
 };
 
-export default IncomeVsExpenseOverview;
+export default IncomeVsExpenseReport;
