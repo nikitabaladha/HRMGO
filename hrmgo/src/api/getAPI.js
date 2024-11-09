@@ -1,17 +1,29 @@
 import axiosInstance from "./axiosConfig";
 
-async function getAPI(url, headers = {}, isPrivate = true) {
+async function getAPI(
+  url,
+  config = {},
+  isPrivate = true,
+  includeParams = false
+) {
   try {
     let accessToken;
     if (isPrivate) {
       accessToken = JSON.parse(localStorage.getItem("accessToken"));
     }
 
-    const response = await axiosInstance.get(url, {
+    const requestConfig = {
       headers: {
         access_token: accessToken,
       },
-    });
+    };
+
+    // Conditionally include query parameters
+    if (includeParams && config.params) {
+      requestConfig.params = config.params; // Only add params if includeParams is true and params are provided
+    }
+
+    const response = await axiosInstance.get(url, requestConfig);
 
     if (response.status === 200) {
       return {

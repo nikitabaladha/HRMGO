@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { IoIosSearch } from "react-icons/io";
 import { MdOutlineDeleteForever } from "react-icons/md";
 
-const IncomeVsExpenseMonthHeader = () => {
+const IncomeVsExpenseSearchForm = () => {
   return (
     <>
       <div className="col-sm-12">
@@ -68,7 +68,8 @@ const IncomeVsExpenseMonthHeader = () => {
                         <Link
                           to="/"
                           className="btn btn-sm btn-primary"
-                          onclick="document.getElementById('report_income_expense').submit(); return false;"
+                          // onClick it call the backend get api for router.get(/income-expense-chart-get-all ) method and which ever the month i select it show here in the chart page
+
                           data-bs-toggle="tooltip"
                           title=""
                           data-bs-original-title="apply"
@@ -101,4 +102,4 @@ const IncomeVsExpenseMonthHeader = () => {
   );
 };
 
-export default IncomeVsExpenseMonthHeader;
+export default IncomeVsExpenseSearchForm;

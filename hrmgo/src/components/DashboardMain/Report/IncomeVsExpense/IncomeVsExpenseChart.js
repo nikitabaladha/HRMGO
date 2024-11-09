@@ -1,10 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import Chart from "react-apexcharts";
-import getAPI from "../../../../api/getAPI.js";
 
-const IncomeVsExpenseChart = () => {
-  const [categories, setCategories] = useState([]);
-  const [series, setSeries] = useState([]);
+const IncomeVsExpenseChart = ({ data }) => {
+  const [chartData, setChartData] = useState({
+    categories: [],
+    incomeData: [],
+    expenseData: [],
+  });
+
+  // Update chart data whenever 'data' changes
+  useEffect(() => {
+    if (data && data.length) {
+      const categories = data.map((item) => {
+        const date = new Date(item.categories);
+        return date.toLocaleString("default", {
+          month: "short",
+          year: "numeric",
+        });
+      });
+
+      const incomeData = data.map((item) => item.incomeData);
+      const expenseData = data.map((item) => item.expenseData);
+
+      setChartData({ categories, incomeData, expenseData });
+    }
+  }, [data]);
 
   const options = {
     chart: {
@@ -25,7 +45,7 @@ const IncomeVsExpenseChart = () => {
       enabled: false,
     },
     xaxis: {
-      categories: categories || [],
+      categories: chartData.categories,
     },
     legend: {
       position: "top",
@@ -58,68 +78,27 @@ const IncomeVsExpenseChart = () => {
     },
     yaxis: {
       min: 0,
-      max: 120,
-      tickAmount: 4,
-      labels: {
-        formatter: function (val) {
-          return val.toFixed(0);
-        },
-      },
+      max: Math.max(...chartData.incomeData, ...chartData.expenseData) + 20,
+      // tickAmount: 4,
+      // labels: {
+      //   formatter: function (val) {
+      //     return val.toFixed(0);
+      //   },
+      // },
     },
   };
 
-  useEffect(() => {
-    const fetchIncomeVsExpenseChart = async () => {
-      try {
-        const response = await getAPI(
-          `/income-expense-chart-get-all`,
-          {},
-          true
-        );
-
-        if (!response.hasError && response.data) {
-          const fetchedCategories = response.data.data.categories || []; // Access categories directly
-          const incomeData = response.data.data.incomeData || []; // Access incomeData directly
-          const expenseData = response.data.data.expenseData || []; // Access expenseData directly
-
-          setCategories(fetchedCategories);
-          console.log("Categories:", response.data.data.categories);
-          console.log("Expenses:", expenseData);
-          console.log("Income:", incomeData);
-          setSeries([
-            { name: "Income", data: incomeData },
-            { name: "Expense", data: expenseData },
-          ]);
-          console.log(
-            "IncomeVsExpenseChart fetched successfully",
-            response.data
-          );
-        } else {
-          console.error("Invalid response format or error in response");
-        }
-      } catch (err) {
-        console.error("Error fetching IncomeVsExpenseChart:", err);
-      }
-    };
-
-    fetchIncomeVsExpenseChart();
-  }, []);
+  const series = [
+    { name: "Income", data: chartData.incomeData },
+    { name: "Expense", data: chartData.expenseData },
+  ];
 
   return (
     <div className="col-md-12">
       <div className="card">
         <div className="rounded p-3">
-          <div id="user-chart" style={{ minHeight: "265px" }}>
-            {categories.length > 0 && series.length > 0 ? (
-              <Chart
-                options={options}
-                series={series}
-                type="bar"
-                height={250}
-              />
-            ) : (
-              <p>Loading data...</p>
-            )}
+          <div id="user-chart" style={{ minHeight: "300px" }}>
+            <Chart options={options} series={series} type="bar" height={300} />
           </div>
         </div>
       </div>
