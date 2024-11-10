@@ -4,21 +4,25 @@ import { TbCalendarClock } from "react-icons/tb";
 import { LuWallet } from "react-icons/lu";
 import { TbReportMoney } from "react-icons/tb";
 
-const formatMonthYear = (monthYear) => {
-  const [year, month] = monthYear.split("-");
-  const date = new Date(year, month - 1);
-  const options = { year: "numeric", month: "long" };
-  return date.toLocaleDateString("en-US", options);
-};
-
 const IncomeVsExpenseReport = ({ data, startMonth, endMonth }) => {
-  // Card data configuration
+  // Format the month and year if monthYear is provided
+  const formatMonthYear = (monthYear) => {
+    if (!monthYear) return ""; // Return empty string if no monthYear is provided
+    const [year, month] = monthYear.split("-");
+    const date = new Date(year, month - 1);
+    const options = { year: "numeric", month: "long" };
+    return date.toLocaleDateString("en-US", options);
+  };
 
-  const totalIncome = data.reduce((sum, item) => sum + item.incomeData, 0);
-  const totalExpense = data.reduce((sum, item) => sum + item.expenseData, 0);
+  const totalIncome = data
+    ? data.reduce((sum, item) => sum + item.incomeData, 0)
+    : 0;
+  const totalExpense = data
+    ? data.reduce((sum, item) => sum + item.expenseData, 0)
+    : 0;
 
-  const formattedStartMonth = formatMonthYear(startMonth);
-  const formattedEndMonth = formatMonthYear(endMonth);
+  const formattedStartMonth = startMonth ? formatMonthYear(startMonth) : "N/A";
+  const formattedEndMonth = endMonth ? formatMonthYear(endMonth) : "N/A";
 
   const cardData = [
     {
@@ -46,6 +50,7 @@ const IncomeVsExpenseReport = ({ data, startMonth, endMonth }) => {
       bgClass: "bg-secondary",
     },
   ];
+
   return (
     <>
       <div className="row">
@@ -58,7 +63,6 @@ const IncomeVsExpenseReport = ({ data, startMonth, endMonth }) => {
                     <div className={`theme-avtar ${card.bgClass}`}>
                       {card.icon}
                     </div>
-
                     <div className="ms-3">
                       <h5 className="mb-0">{card.title}</h5>
                       <p className="text-muted text-sm mb-0">{card.subtitle}</p>
