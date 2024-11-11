@@ -8,6 +8,7 @@ import IncomeVsExpense from "./components/DashboardMain/Report/IncomeVsExpense/I
 import MonthlyAttendance from "./components/DashboardMain/Report/MonthlyAttendance/MonthlyAttendance.js";
 import Leave from "./components/DashboardMain/Report/Leave/Leave";
 import AccountStatement from "./components/DashboardMain/Report/AccountStatement/AccountStatement.js";
+import Employee from "./components/DashboardMain/Employee/Employee.js";
 
 const AppRoutes = ({ isAuthenticated, handleLogin }) => {
   return (
@@ -37,7 +38,9 @@ const AppRoutes = ({ isAuthenticated, handleLogin }) => {
               path="report/account-statement"
               element={<AccountStatement />}
             />
+            <Route path="employee" element={<Employee />} />
           </Route>
+
           <Route path="*" element={<Navigate to="/dashboard" replace />} />
         </>
       )}

@@ -79,12 +79,12 @@ const IncomeVsExpenseChart = ({ data }) => {
     yaxis: {
       min: 0,
       max: Math.max(...chartData.incomeData, ...chartData.expenseData) + 20,
-      // tickAmount: 4,
-      // labels: {
-      //   formatter: function (val) {
-      //     return val.toFixed(0);
-      //   },
-      // },
+      tickAmount: 4,
+      labels: {
+        formatter: function (val) {
+          return val.toFixed(0);
+        },
+      },
     },
   };
 

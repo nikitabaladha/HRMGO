@@ -1,7 +1,8 @@
 //components/DashboardMain/Report/IncomeVsExpense/IncomeVsExpenseHeader.js
 
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import { IoIosSearch } from "react-icons/io";
 import { MdOutlineDeleteForever } from "react-icons/md";
@@ -13,24 +14,22 @@ const IncomeVsExpenseSearchForm = ({ onSearch }) => {
   // Handle form submission and call the onSearch function passed from the parent
   const handleSearch = () => {
     if (!startMonth || !endMonth) {
-      alert("Please select both start and end months.");
+      toast.error("Please select both start and end months.");
       return;
     }
 
-    console.log("Start Month:", startMonth); // Log to verify the value
-    console.log("End Month:", endMonth); // Log to verify the value
-
-    onSearch(startMonth, endMonth); // Trigger parent function with selected months
+    onSearch(startMonth, endMonth);
   };
   return (
     <>
+      <ToastContainer position="top-center" autoClose={3000} />
       <div className="col-sm-12">
         <div className="mt-2" id="multiCollapseExample1">
           <div className="card">
             <div className="card-body">
               <form
                 method="GET"
-                action="https://demo.workdo.io/hrmgo/report/income-expense"
+                action="/report/income-expense"
                 acceptCharset="UTF-8"
                 id="report_income_expense"
               >
@@ -85,7 +84,6 @@ const IncomeVsExpenseSearchForm = ({ onSearch }) => {
                         <button
                           type="button"
                           className="btn btn-sm btn-primary"
-                          // onClick it call the backend get api for router.get(/income-expense-chart-get-all ) method and which ever the month i select it show here in the chart page
                           onClick={handleSearch}
                           data-bs-toggle="tooltip"
                           title=""
@@ -95,7 +93,7 @@ const IncomeVsExpenseSearchForm = ({ onSearch }) => {
                             <IoIosSearch />
                           </span>
                         </button>
-                        <Link
+                        <button
                           to="/report/income-expense"
                           className="btn btn-sm btn-danger"
                           data-bs-toggle="tooltip"
@@ -105,7 +103,7 @@ const IncomeVsExpenseSearchForm = ({ onSearch }) => {
                           <span className="btn-inner--icon">
                             <MdOutlineDeleteForever />
                           </span>
-                        </Link>
+                        </button>
                       </div>
                     </div>
                   </div>
