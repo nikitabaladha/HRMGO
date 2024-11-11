@@ -1,41 +1,42 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import getAPI from "../../../api/getAPI.js";
 import { Link } from "react-router-dom";
 import { TbPencil } from "react-icons/tb";
 import { FaRegTrashAlt } from "react-icons/fa";
 
-// Sample dynamic data structure for employees
-const employeeData = [
-  {
-    id: "EMP0000001",
-    name: "Julie Lynn",
-    email: "IsidroTJohnson@armyspy.com",
-    branch: "China",
-    department: "Industrials",
-    designation: "Manager",
-    joiningDate: "Mar 4, 2020",
-  },
-  {
-    id: "EMP0000002",
-    name: "Lunea Todd",
-    email: "protiong@teleworm.us",
-    branch: "China",
-    department: "Health care",
-    designation: "CEO",
-    joiningDate: "Mar 4, 2020",
-  },
-  {
-    id: "EMP0000003",
-    name: "Ida F. Mullen",
-    email: "Idafmullen@armyspy.com",
-    branch: "India",
-    department: "Telecommunications",
-    designation: "Telecom Specialist",
-    joiningDate: "Mar 4, 2020",
-  },
-  // Add more employees here as needed
-];
-
 const EmployeeTable = () => {
+  const [employeeData, setEmployeeData] = useState([]);
+
+  useEffect(() => {
+    const fetchEmployeeData = async () => {
+      try {
+        const response = await getAPI(`/employee-get-all`, {}, true);
+        if (
+          !response.hasError &&
+          response.data &&
+          Array.isArray(response.data.data)
+        ) {
+          setEmployeeData(response.data.data);
+          console.log("Employee Data fetched successfully", response.data.data);
+        } else {
+          console.error("Invalid response format or error in response");
+        }
+      } catch (err) {
+        console.error("Error fetching Employee Data:", err);
+      }
+    };
+
+    fetchEmployeeData();
+  }, []);
+
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    const month = date.toLocaleString("default", { month: "short" });
+    const day = date.getDate();
+    const year = date.getFullYear();
+    return `${month} ${day}, ${year}`;
+  }
+
   return (
     <>
       <div className="row">
@@ -66,10 +67,10 @@ const EmployeeTable = () => {
                         </td>
                         <td>{employee.name}</td>
                         <td>{employee.email}</td>
-                        <td>{employee.branch}</td>
-                        <td>{employee.department}</td>
+                        <td>{employee.branchName}</td>
+                        <td>{employee.departmentName}</td>
                         <td>{employee.designation}</td>
-                        <td>{employee.joiningDate}</td>
+                        <td>{formatDate(employee.joiningDate)}</td>
                         <td className="Action">
                           <span>
                             <div className="action-btn bg-info ms-2">
