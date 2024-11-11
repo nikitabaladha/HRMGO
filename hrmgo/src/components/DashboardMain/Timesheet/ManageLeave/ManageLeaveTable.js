@@ -1,48 +1,61 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import getAPI from "../../../../api/getAPI.js";
 import { Link } from "react-router-dom";
 import { HiOutlineTrash } from "react-icons/hi2";
 import { TbPencil, TbCaretRight } from "react-icons/tb";
 
-const leaveData = [
-  {
-    id: 1,
-    employeeName: "Julie Lynn",
-    leaveType: "Casual Leave",
-    appliedOn: "Mar 4, 2023",
-    startDate: "Mar 3, 2023",
-    endDate: "Mar 5, 2023",
-    totalDays: 3,
-    reason: "Lorem Ipsum, Or Lipsum",
-    status: "Reject",
-    statusColor: "danger",
-  },
-  {
-    id: 2,
-    employeeName: "Lunea Todd",
-    leaveType: "Medical Leave",
-    appliedOn: "Mar 4, 2023",
-    startDate: "Mar 3, 2023",
-    endDate: "Mar 7, 2023",
-    totalDays: 5,
-    reason: "Lorem Ipsum, Or Lipsum",
-    status: "Approved",
-    statusColor: "success",
-  },
-  {
-    id: 3,
-    employeeName: "Julie Lynn",
-    leaveType: "Casual Leave",
-    appliedOn: "Mar 4, 2023",
-    startDate: "Mar 17, 2023",
-    endDate: "Mar 19, 2023",
-    totalDays: 3,
-    reason: "Lorem Ipsum, Or Lipsum",
-    status: "Pending",
-    statusColor: "warning",
-  },
-];
-
 const ManageLeaveTable = () => {
+  const [leaveData, setLeaveData] = useState([]);
+
+  const statusColor = [
+    {
+      status: "Reject",
+      statusColor: "danger", // Red for Reject
+    },
+    {
+      status: "Approved",
+      statusColor: "success", // Green for Approved
+    },
+    {
+      status: "Pending",
+      statusColor: "warning", // Yellow for Pending
+    },
+  ];
+
+  useEffect(() => {
+    const fetchMangeLeaveData = async () => {
+      try {
+        const response = await getAPI(`/manage-leave-get-all`, {}, true);
+        if (
+          !response.hasError &&
+          response.data &&
+          Array.isArray(response.data.data)
+        ) {
+          setLeaveData(response.data.data);
+          console.log("Leave Data fetched successfully", response.data.data);
+        } else {
+          console.error("Invalid response format or error in response");
+        }
+      } catch (err) {
+        console.error("Error fetching leave Data:", err);
+      }
+    };
+
+    fetchMangeLeaveData();
+  }, []);
+
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    const options = { year: "numeric", month: "short", day: "numeric" };
+    console.log(date.toLocaleDateString("en-US", options));
+    return date.toLocaleDateString("en-US", options);
+  }
+
+  function getStatusColor(status) {
+    const statusObj = statusColor.find((item) => item.status === status);
+    return statusObj ? statusObj.statusColor : "secondary";
+  }
+
   return (
     <div className="row">
       <div className="col-xl-12">
@@ -68,14 +81,16 @@ const ManageLeaveTable = () => {
                     <tr key={leave.id}>
                       <td>{leave.employeeName}</td>
                       <td>{leave.leaveType}</td>
-                      <td>{leave.appliedOn}</td>
-                      <td>{leave.startDate}</td>
-                      <td>{leave.endDate}</td>
+                      <td>{formatDate(leave.appliedOn)}</td>
+                      <td>{formatDate(leave.startDate)}</td>
+                      <td>{formatDate(leave.endDate)}</td>
                       <td>{leave.totalDays}</td>
                       <td>{leave.reason}</td>
                       <td>
                         <div
-                          className={`badge bg-${leave.statusColor} p-2 px-3 rounded status-badge5`}
+                          className={`badge bg-${getStatusColor(
+                            leave.status
+                          )} p-2 px-3 rounded status-badge5`}
                         >
                           {leave.status}
                         </div>
