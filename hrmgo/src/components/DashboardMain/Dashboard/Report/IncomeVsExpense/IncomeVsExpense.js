@@ -1,7 +1,7 @@
 //components/DashboardMain/Report/IncomeVsExpense/IncomeVsExpense.js
 
 import React, { useState } from "react";
-import getAPI from "../../../../api/getAPI.js";
+import getAPI from "../../../../../api/getAPI.js";
 
 import IncomeVsExpenseHeader from "./IncomVsExpenseHeader";
 import IncomeVsExpenseSearchForm from "./IncomeVsExpenseSearchForm";

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import getAPI from "../../../../api/getAPI.js";
+import getAPI from "../../../../../api/getAPI.js";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";

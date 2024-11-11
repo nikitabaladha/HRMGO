@@ -3,12 +3,13 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Login from "./components/Login/Login";
 import Signup from "./components/Signup/Signup";
 import DashboardMain from "./components/DashboardMain/DashboardMain";
-import Overview from "./components/DashboardMain/Overview/Overview";
-import IncomeVsExpense from "./components/DashboardMain/Report/IncomeVsExpense/IncomeVsExpense.js";
-import MonthlyAttendance from "./components/DashboardMain/Report/MonthlyAttendance/MonthlyAttendance.js";
-import Leave from "./components/DashboardMain/Report/Leave/Leave";
-import AccountStatement from "./components/DashboardMain/Report/AccountStatement/AccountStatement.js";
+import Overview from "./components/DashboardMain/Dashboard/Overview/Overview";
+import IncomeVsExpense from "./components/DashboardMain/Dashboard/Report/IncomeVsExpense/IncomeVsExpense.js";
+import MonthlyAttendance from "./components/DashboardMain/Dashboard/Report/MonthlyAttendance/MonthlyAttendance.js";
+import Leave from "./components/DashboardMain/Dashboard/Report/Leave/Leave";
+import AccountStatement from "./components/DashboardMain/Dashboard/Report/AccountStatement/AccountStatement.js";
 import Employee from "./components/DashboardMain/Employee/Employee.js";
+import ManageLeave from "./components/DashboardMain/Timesheet/ManageLeave/ManageLeave.js";
 
 const AppRoutes = ({ isAuthenticated, handleLogin }) => {
   return (
@@ -39,6 +40,8 @@ const AppRoutes = ({ isAuthenticated, handleLogin }) => {
               element={<AccountStatement />}
             />
             <Route path="employee" element={<Employee />} />
+
+            <Route path="time-sheet/manage-leave" element={<ManageLeave />} />
           </Route>
 
           <Route path="*" element={<Navigate to="/dashboard" replace />} />

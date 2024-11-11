@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import getAPI from "../../../../api/getAPI.js";
+import getAPI from "../../../../../api/getAPI.js";
 
 const Attendance = () => {
   const [absentEmployees, setAbsentEmployees] = useState([]);
