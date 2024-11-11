@@ -10,6 +10,7 @@ import Leave from "./components/DashboardMain/Dashboard/Report/Leave/Leave";
 import AccountStatement from "./components/DashboardMain/Dashboard/Report/AccountStatement/AccountStatement.js";
 import Employee from "./components/DashboardMain/Employee/Employee.js";
 import ManageLeave from "./components/DashboardMain/Timesheet/ManageLeave/ManageLeave.js";
+import TimeSheet from "./components/DashboardMain/Timesheet/TimeSheet/TimeSheet.js";
 
 const AppRoutes = ({ isAuthenticated, handleLogin }) => {
   return (
@@ -42,6 +43,7 @@ const AppRoutes = ({ isAuthenticated, handleLogin }) => {
             <Route path="employee" element={<Employee />} />
 
             <Route path="time-sheet/manage-leave" element={<ManageLeave />} />
+            <Route path="time-sheet/time-sheet" element={<TimeSheet />} />
           </Route>
 
           <Route path="*" element={<Navigate to="/dashboard" replace />} />
