@@ -1,134 +1,3 @@
-// // HRMGO\hrmgo\src\components\DashboardMain\Timesheet\TimeSheet\TimeSheetTable.js
-// import React, { useEffect, useState } from "react";
-// import getAPI from "../../../../api/getAPI.js";
-
-// import { Link } from "react-router-dom";
-// import { HiOutlineTrash } from "react-icons/hi2";
-// import { TbPencil } from "react-icons/tb";
-
-// const TimeSheetTable = () => {
-//   const [timeSheetData, setTimeSheetData] = useState([]);
-
-//   useEffect(() => {
-//     const fetchTimeSheetData = async () => {
-//       try {
-//         const response = await getAPI(`/timesheet-get-all`, {}, true);
-//         if (
-//           !response.hasError &&
-//           response.data &&
-//           Array.isArray(response.data.data)
-//         ) {
-//           setTimeSheetData(response.data.data);
-//           console.log(
-//             "TimeSheetData Data fetched successfully",
-//             response.data.data
-//           );
-//         } else {
-//           console.error("Invalid response format or error in response");
-//         }
-//       } catch (err) {
-//         console.error("Error fetching TimeSheetData:", err);
-//       }
-//     };
-
-//     fetchTimeSheetData();
-//   }, []);
-
-//   function formatDate(dateString) {
-//     const date = new Date(dateString);
-//     const month = date.toLocaleString("default", { month: "short" });
-//     const day = date.getDate();
-//     const year = date.getFullYear();
-//     return `${month} ${day}, ${year}`;
-//   }
-
-//   return (
-//     <>
-//       <div className="col-xl-12">
-//         <div className="card">
-//           <div className="card-header card-body table-border-style">
-//             <div className="card-body py-0">
-//               <div className="table-responsive">
-//                 <table className="table" id="pc-dt-simple">
-//                   <thead>
-//                     <tr>
-//                       <th>Employee</th>
-//                       <th>Date</th>
-//                       <th>Hours</th>
-//                       <th>Remark</th>
-//                       <th width="200px">Action</th>
-//                     </tr>
-//                   </thead>
-//                   <tbody>
-//                     {timeSheetData.map((entry) => (
-//                       <tr key={entry.id}>
-//                         <td>{entry.employeeName}</td>
-//                         <td>{formatDate(entry.date)}</td>
-//                         <td>{entry.hours}</td>
-//                         <td>{entry.remark}</td>
-//                         <td className="Action">
-//                           <span>
-//                             <div className="action-btn bg-info ms-2">
-//                               <Link
-//                                 to="/"
-//                                 className="mx-3 btn btn-sm align-items-center"
-//                                 data-url={`/timesheet/${entry.id}/edit`}
-//                                 data-ajax-popup="true"
-//                                 data-size="md"
-//                                 data-bs-toggle="tooltip"
-//                                 title=""
-//                                 data-title="Edit Timesheet"
-//                                 data-bs-original-title="Edit"
-//                               >
-//                                 <TbPencil className="text-white" />
-//                               </Link>
-//                             </div>
-//                             <div className="action-btn bg-danger ms-2">
-//                               <form
-//                                 method="POST"
-//                                 action={`/timesheet/${entry.id}`}
-//                                 acceptCharset="UTF-8"
-//                                 id={`delete-form-${entry.id}`}
-//                               >
-//                                 <input
-//                                   name="_method"
-//                                   type="hidden"
-//                                   defaultValue="DELETE"
-//                                 />
-//                                 <input
-//                                   name="_token"
-//                                   type="hidden"
-//                                   defaultValue={entry.token}
-//                                 />
-//                                 <Link
-//                                   to="/"
-//                                   className="mx-3 btn btn-sm align-items-center bs-pass-para"
-//                                   data-bs-toggle="tooltip"
-//                                   title=""
-//                                   data-bs-original-title="Delete"
-//                                   aria-label="Delete"
-//                                 >
-//                                   <HiOutlineTrash className="text-white" />
-//                                 </Link>
-//                               </form>
-//                             </div>
-//                           </span>
-//                         </td>
-//                       </tr>
-//                     ))}
-//                   </tbody>
-//                 </table>
-//               </div>
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-//     </>
-//   );
-// };
-
-// export default TimeSheetTable;
-
 import React, { useEffect, useState } from "react";
 import getAPI from "../../../../api/getAPI.js";
 import { Link } from "react-router-dom";
@@ -142,8 +11,11 @@ const TimeSheetTable = ({ filters }) => {
     const fetchTimeSheetData = async () => {
       try {
         const response = await getAPI("/timesheet-get-all", {}, true);
+
         if (!response.hasError && Array.isArray(response.data.data)) {
           const data = response.data.data;
+
+          console.log("Api called");
 
           // Filter data based on the filters state
           const filteredData = data.filter((entry) => {
@@ -169,7 +41,7 @@ const TimeSheetTable = ({ filters }) => {
     };
 
     fetchTimeSheetData();
-  }, [filters]); // Trigger this effect when filters change
+  }, [filters]);
 
   function formatDate(dateString) {
     const date = new Date(dateString);
