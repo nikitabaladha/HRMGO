@@ -1,116 +1,242 @@
-//components/DashboardMain/Report/IncomeVsExpense/IncomeVsExpenseHeader.js
+// // HRMGO\hrmgo\src\components\DashboardMain\Timesheet\TimeSheet\TimeSheetSearchForm.js
+// import React, { useEffect, useState } from "react";
+// import getAPI from "../../../../api/getAPI.js";
 
-import React from "react";
+// import { Link } from "react-router-dom";
+
+// import { TbTrashOff } from "react-icons/tb";
+// import { IoMdSearch } from "react-icons/io";
+
+// const TimeSheetSearchForm = () => {
+//   const [employeeName, setEmployeeName] = useState([]);
+
+//   useEffect(() => {
+//     const fetchEmployeeName = async () => {
+//       try {
+//         const response = await getAPI(`/employee-get-all-name`, {}, true);
+//         if (
+//           !response.hasError &&
+//           response.data &&
+//           Array.isArray(response.data.data)
+//         ) {
+//           setEmployeeName(response.data.data);
+//           console.log("Employee Name fetched successfully", response.data.data);
+//         } else {
+//           console.error("Invalid response format or error in response");
+//         }
+//       } catch (err) {
+//         console.error("Error fetching Employee Name:", err);
+//       }
+//     };
+
+//     fetchEmployeeName();
+//   }, []);
+
+//   return (
+//     <>
+//       <div className="col-sm-12 col-lg-12 col-xl-12 col-md-12">
+//         <div className=" mt-2 " id="multiCollapseExample1" style={{}}>
+//           <div className="card">
+//             <div className="card-body">
+//               <form
+//                 method="GET"
+//                 action="/timesheet"
+//                 acceptCharset="UTF-8"
+//                 id="timesheet_filter"
+//               >
+//                 <div className="d-flex align-items-center justify-content-end">
+//                   <div className="col-xl-2 col-lg-3 col-md-6 col-sm-12 col-12 mx-2">
+//                     <div className="btn-box">
+//                       <label htmlFor="start_date" className="form-label">
+//                         Start Date
+//                       </label>
+//                       <input
+//                         className="month-btn form-control current_date"
+//                         autoComplete="off"
+//                         name="start_date"
+//                         type="date"
+//                         defaultValue=""
+//                         id="start_date"
+//                       />
+//                     </div>
+//                   </div>
+//                   <div className="col-xl-2 col-lg-3 col-md-6 col-sm-12 col-12 mx-2">
+//                     <div className="btn-box">
+//                       <label htmlFor="end_date" className="form-label">
+//                         End Date
+//                       </label>
+//                       <input
+//                         className="month-btn form-control current_date"
+//                         autoComplete="off"
+//                         name="end_date"
+//                         type="date"
+//                         defaultValue=""
+//                         id="end_date"
+//                       />
+//                     </div>
+//                   </div>
+//                   <div className="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12 mx-2">
+//                     <div className="btn-box">
+//                       <label htmlFor="employee" className="form-label">
+//                         Employee
+//                       </label>
+//                       <select
+//                         className="form-control select "
+//                         id="employee_id"
+//                         name="employee"
+//                       >
+//                         <option value="" selected="selected">
+//                           All
+//                         </option>
+//                         {employeeName.map((employee) => (
+//                           <option key={employee._id} value={employee._id}>
+//                             {employee.name}
+//                           </option>
+//                         ))}
+//                       </select>
+//                     </div>
+//                   </div>
+//                   <div className="col-auto float-end ms-2 mt-4">
+//                     <Link
+//                       to="/"
+//                       className="btn btn-sm btn-primary"
+//                       onclick="document.getElementById('timesheet_filter').submit(); return false;"
+//                       data-bs-toggle="tooltip"
+//                       title=""
+//                       data-bs-original-title="apply"
+//                     >
+//                       <span className="btn-inner--icon">
+//                         <IoMdSearch />
+//                       </span>
+//                     </Link>
+//                     <Link
+//                       to="/timesheet"
+//                       className="btn btn-sm btn-danger"
+//                       data-bs-toggle="tooltip"
+//                       title=""
+//                       data-bs-original-title="Reset"
+//                     >
+//                       <span className="btn-inner--icon">
+//                         <TbTrashOff className="text-white-off " />
+//                       </span>
+//                     </Link>
+//                   </div>
+//                 </div>
+//               </form>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//     </>
+//   );
+// };
+
+// export default TimeSheetSearchForm;
+
+import React, { useEffect, useState } from "react";
+import getAPI from "../../../../api/getAPI.js";
 import { Link } from "react-router-dom";
-
 import { TbTrashOff } from "react-icons/tb";
 import { IoMdSearch } from "react-icons/io";
 
-const TimeSheetSearchForm = () => {
+const TimeSheetSearchForm = ({ setFilters }) => {
+  const [employeeName, setEmployeeName] = useState([]);
+  const [formData, setFormData] = useState({
+    startDate: "",
+    endDate: "",
+    employeeId: "",
+  });
+
+  useEffect(() => {
+    const fetchEmployeeName = async () => {
+      try {
+        const response = await getAPI(`/employee-get-all-name`, {}, true);
+        if (!response.hasError && Array.isArray(response.data.data)) {
+          setEmployeeName(response.data.data);
+        } else {
+          console.error("Invalid response format or error in response");
+        }
+      } catch (err) {
+        console.error("Error fetching Employee Name:", err);
+      }
+    };
+    fetchEmployeeName();
+  }, []);
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    setFilters(formData);
+    console.log("Search filters applied:", formData);
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
   return (
-    <>
-      <div className="col-sm-12 col-lg-12 col-xl-12 col-md-12">
-        <div className=" mt-2 " id="multiCollapseExample1" style={{}}>
-          <div className="card">
-            <div className="card-body">
-              <form
-                method="GET"
-                action="/timesheet"
-                acceptCharset="UTF-8"
-                id="timesheet_filter"
-              >
-                <div className="d-flex align-items-center justify-content-end">
-                  <div className="col-xl-2 col-lg-3 col-md-6 col-sm-12 col-12 mx-2">
-                    <div className="btn-box">
-                      <label htmlFor="start_date" className="form-label">
-                        Start Date
-                      </label>
-                      <input
-                        className="month-btn form-control current_date"
-                        autoComplete="off"
-                        name="start_date"
-                        type="date"
-                        defaultValue=""
-                        id="start_date"
-                      />
-                    </div>
-                  </div>
-                  <div className="col-xl-2 col-lg-3 col-md-6 col-sm-12 col-12 mx-2">
-                    <div className="btn-box">
-                      <label htmlFor="end_date" className="form-label">
-                        End Date
-                      </label>
-                      <input
-                        className="month-btn form-control current_date"
-                        autoComplete="off"
-                        name="end_date"
-                        type="date"
-                        defaultValue=""
-                        id="end_date"
-                      />
-                    </div>
-                  </div>
-                  <div className="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12 mx-2">
-                    <div className="btn-box">
-                      <label htmlFor="employee" className="form-label">
-                        Employee
-                      </label>
-                      <select
-                        className="form-control select "
-                        id="employee_id"
-                        name="employee"
-                      >
-                        <option value="" selected="selected">
-                          All
-                        </option>
-                        <option value={4}>Julie Lynn</option>
-                        <option value={5}>Lunea Todd</option>
-                        <option value={6}>Ida F. Mullen</option>
-                        <option value={7}>Teresa R McRae</option>
-                        <option value={8}>Joel O Dolan</option>
-                        <option value={15}>Jeremy Holmes</option>
-                        <option value={16}>Anjolie Mayer</option>
-                        <option value={17}>Nyssa Sloan</option>
-                        <option value={19}>Jillian Sykes</option>
-                        <option value={20}>Aida Bugg</option>
-                        <option value={21}>Mona Hendricks</option>
-                        <option value={22}>Kyle Willis</option>
-                        <option value={29}>Abra Stevens</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div className="col-auto float-end ms-2 mt-4">
-                    <Link
-                      to="/"
-                      className="btn btn-sm btn-primary"
-                      onclick="document.getElementById('timesheet_filter').submit(); return false;"
-                      data-bs-toggle="tooltip"
-                      title=""
-                      data-bs-original-title="apply"
-                    >
-                      <span className="btn-inner--icon">
-                        <IoMdSearch />
-                      </span>
-                    </Link>
-                    <Link
-                      to="/timesheet"
-                      className="btn btn-sm btn-danger"
-                      data-bs-toggle="tooltip"
-                      title=""
-                      data-bs-original-title="Reset"
-                    >
-                      <span className="btn-inner--icon">
-                        <TbTrashOff className="text-white-off " />
-                      </span>
-                    </Link>
-                  </div>
+    <div className="col-sm-12 col-lg-12 col-xl-12 col-md-12">
+      <div className="mt-2" id="multiCollapseExample1">
+        <div className="card">
+          <div className="card-body">
+            <form onSubmit={handleSearch}>
+              <div className="d-flex align-items-center justify-content-end">
+                <div className="col-xl-2 col-lg-3 col-md-6 col-sm-12 col-12 mx-2">
+                  <label htmlFor="start_date" className="form-label">
+                    Start Date
+                  </label>
+                  <input
+                    type="date"
+                    name="startDate"
+                    value={formData.startDate}
+                    onChange={handleInputChange}
+                    className="form-control"
+                  />
                 </div>
-              </form>
-            </div>
+                <div className="col-xl-2 col-lg-3 col-md-6 col-sm-12 col-12 mx-2">
+                  <label htmlFor="end_date" className="form-label">
+                    End Date
+                  </label>
+                  <input
+                    type="date"
+                    name="endDate"
+                    value={formData.endDate}
+                    onChange={handleInputChange}
+                    className="form-control"
+                  />
+                </div>
+                <div className="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12 mx-2">
+                  <label htmlFor="employee" className="form-label">
+                    Employee
+                  </label>
+                  <select
+                    name="employeeId"
+                    value={formData.employeeId}
+                    onChange={handleInputChange}
+                    className="form-control"
+                  >
+                    <option value="">All</option>
+                    {employeeName.map((employee) => (
+                      <option key={employee._id} value={employee._id}>
+                        {employee.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="col-auto float-end ms-2 mt-4">
+                  <button type="submit" className="btn btn-sm btn-primary">
+                    <IoMdSearch />
+                  </button>
+                  <Link to="/timesheet" className="btn btn-sm btn-danger ms-2">
+                    <TbTrashOff />
+                  </Link>
+                </div>
+              </div>
+            </form>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
