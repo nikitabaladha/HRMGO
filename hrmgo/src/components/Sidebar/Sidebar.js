@@ -159,7 +159,8 @@ const menuConfig = [
           {
             id: "markedAttendance",
             label: "Marked Attendance",
-            link: "/dashboard/attendance/marked-attendance",
+
+            link: "/dashboard/time-sheet/attendance/marked-attendance",
           },
           {
             id: "bulkAttendance",
