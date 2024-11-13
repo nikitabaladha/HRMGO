@@ -165,7 +165,7 @@ const menuConfig = [
           {
             id: "bulkAttendance",
             label: "Bulk Attendance",
-            link: "/dashboard/attendance/bulk-attendance",
+            link: "/dashboard/time-sheet/attendance/bulk-attendance",
           },
         ],
       },

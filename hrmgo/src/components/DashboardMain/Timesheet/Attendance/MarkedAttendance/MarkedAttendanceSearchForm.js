@@ -13,7 +13,7 @@ const MarkedAttendanceSearchForm = () => {
           <div className="card-body">
             <form
               method="GET"
-              action="https://demo.workdo.io/hrmgo/attendanceemployee"
+              action="/attendanceemployee"
               acceptCharset="UTF-8"
               id="attendanceemployee_filter"
             >

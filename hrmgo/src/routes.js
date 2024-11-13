@@ -12,6 +12,7 @@ import Employee from "./components/DashboardMain/Employee/Employee.js";
 import ManageLeave from "./components/DashboardMain/Timesheet/ManageLeave/ManageLeave.js";
 import TimeSheet from "./components/DashboardMain/Timesheet/TimeSheet/TimeSheet.js";
 import MarkedAttendance from "./components/DashboardMain/Timesheet/Attendance/MarkedAttendance/MarkedAttendance.js";
+import BulkAttendance from "./components/DashboardMain/Timesheet/Attendance/BulkAttendance/BulkAttendance.js";
 
 const AppRoutes = ({ isAuthenticated, handleLogin }) => {
   return (
@@ -48,6 +49,10 @@ const AppRoutes = ({ isAuthenticated, handleLogin }) => {
             <Route
               path="time-sheet/attendance/marked-attendance"
               element={<MarkedAttendance />}
+            />
+            <Route
+              path="time-sheet/attendance/bulk-attendance"
+              element={<BulkAttendance />}
             />
           </Route>
 
