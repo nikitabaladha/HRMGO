@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import getAPI from "../../../../../api/getAPI.js";
 
 import { Link } from "react-router-dom";
 import { TbTrashOff } from "react-icons/tb";
@@ -6,6 +7,60 @@ import { IoMdSearch } from "react-icons/io";
 import { FaRegFile } from "react-icons/fa";
 
 const MarkedAttendanceSearchForm = () => {
+  const [branches, setBranches] = useState([]);
+  const [selectedBranch, setSelectedBranch] = useState("");
+  const [departments, setDepartments] = useState([]);
+
+  const handleBranchChange = (e) => {
+    const branchId = e.target.value;
+    setSelectedBranch(branchId);
+
+    if (branchId) {
+      const fetchDepartmentByBranchId = async () => {
+        try {
+          const response = await getAPI(
+            `/department-get-all-by-branch-id?branchId=${branchId}`,
+            {},
+            true,
+            true
+          );
+
+          // Check if the response is valid
+          if (!response.hasError && Array.isArray(response.data.data)) {
+            setDepartments(response.data.data);
+          } else {
+            console.error("Invalid response format or error in response");
+          }
+        } catch (err) {
+          console.error("Error fetching department data:", err); // Error handling
+        }
+      };
+      fetchDepartmentByBranchId();
+    } else {
+      setDepartments([]);
+    }
+  };
+
+  useEffect(() => {
+    // Fetch branch data on component mount
+    const fetchBranchData = async () => {
+      try {
+        const response = await getAPI(`/branch-get-all`, {}, true);
+
+        // Check if the response is valid
+        if (!response.hasError && Array.isArray(response.data.data)) {
+          setBranches(response.data.data); // Set the branches data
+          console.log("Branch data:", response.data.data); // Optional: For debugging
+        } else {
+          console.error("Invalid response format or error in response");
+        }
+      } catch (err) {
+        console.error("Error fetching branch data:", err); // Error handling
+      }
+    };
+    fetchBranchData();
+  }, []);
+
   return (
     <div className="col-sm-12">
       <div className=" mt-2 " id="multiCollapseExample1">
@@ -71,18 +126,17 @@ const MarkedAttendanceSearchForm = () => {
                           className="form-control select"
                           id="branch_id"
                           name="branch"
+                          value={selectedBranch}
+                          onChange={handleBranchChange}
                         >
                           <option value="" selected="selected">
                             All
                           </option>
-                          <option value={1}>China</option>
-                          <option value={2}>India</option>
-                          <option value={3}>Canada</option>
-                          <option value={4}>Greece</option>
-                          <option value={5}>Italy</option>
-                          <option value={6}>Japan</option>
-                          <option value={7}>Malaysia</option>
-                          <option value={8}>France</option>
+                          {branches.map((branch) => (
+                            <option key={branch._id} value={branch._id}>
+                              {branch.branchName}
+                            </option>
+                          ))}
                         </select>
                       </div>
                     </div>
@@ -91,12 +145,25 @@ const MarkedAttendanceSearchForm = () => {
                         <label htmlFor="department" className="form-label">
                           Department
                         </label>
-                        <select
-                          className="form-control select department_id"
-                          name="department_id"
-                          id="department_id"
-                          placeholder="Select Department"
-                        ></select>
+                        <div className="btn-box">
+                          <select
+                            className="form-control select department_id"
+                            id="department_id"
+                            name="department"
+                          >
+                            <option value="" selected="selected">
+                              Select Department
+                            </option>
+                            {departments.map((department) => (
+                              <option
+                                key={department._id}
+                                value={department._id}
+                              >
+                                {department.departmentName}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
                       </div>
                     </div>
                   </div>
