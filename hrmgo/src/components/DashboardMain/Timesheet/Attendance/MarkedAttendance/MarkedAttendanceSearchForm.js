@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from "react";
 import getAPI from "../../../../../api/getAPI.js";
-
 import { Link } from "react-router-dom";
 import { TbTrashOff } from "react-icons/tb";
 import { IoMdSearch } from "react-icons/io";
 import { FaRegFile } from "react-icons/fa";
 
-const MarkedAttendanceSearchForm = () => {
+const MarkedAttendanceSearchForm = ({ onDataFetched }) => {
   const [branches, setBranches] = useState([]);
   const [selectedBranch, setSelectedBranch] = useState("");
   const [departments, setDepartments] = useState([]);
+  const [selectedDepartment, setSelectedDepartment] = useState("");
+  const [searchType, setSearchType] = useState("monthly");
+  const [selectedMonth, setSelectedMonth] = useState("2024-11");
+  const [selectedDate, setSelectedDate] = useState("");
 
   const handleBranchChange = (e) => {
     const branchId = e.target.value;
@@ -25,14 +28,13 @@ const MarkedAttendanceSearchForm = () => {
             true
           );
 
-          // Check if the response is valid
           if (!response.hasError && Array.isArray(response.data.data)) {
             setDepartments(response.data.data);
           } else {
             console.error("Invalid response format or error in response");
           }
         } catch (err) {
-          console.error("Error fetching department data:", err); // Error handling
+          console.error("Error fetching department data:", err);
         }
       };
       fetchDepartmentByBranchId();
@@ -41,21 +43,41 @@ const MarkedAttendanceSearchForm = () => {
     }
   };
 
+  const handleSearch = async (e) => {
+    e.preventDefault();
+    try {
+      // Determine the date based on searchType
+      const date = searchType === "daily" ? selectedDate : selectedMonth;
+
+      // API call with branch, department, date, and searchType as query parameters
+      const response = await getAPI(
+        `/marked-attendance-get-all?branch=${selectedBranch}&department=${selectedDepartment}&date=${date}&type=${searchType}`,
+        {},
+        true,
+        true
+      );
+
+      if (!response.hasError && Array.isArray(response.data.data)) {
+        onDataFetched(response.data.data); // Pass fetched data to the parent component
+      } else {
+        console.error("Invalid response format or error in response");
+      }
+    } catch (err) {
+      console.error("Error fetching attendance data:", err);
+    }
+  };
+
   useEffect(() => {
-    // Fetch branch data on component mount
     const fetchBranchData = async () => {
       try {
         const response = await getAPI(`/branch-get-all`, {}, true);
-
-        // Check if the response is valid
         if (!response.hasError && Array.isArray(response.data.data)) {
-          setBranches(response.data.data); // Set the branches data
-          console.log("Branch data:", response.data.data); // Optional: For debugging
+          setBranches(response.data.data);
         } else {
           console.error("Invalid response format or error in response");
         }
       } catch (err) {
-        console.error("Error fetching branch data:", err); // Error handling
+        console.error("Error fetching branch data:", err);
       }
     };
     fetchBranchData();
@@ -63,15 +85,10 @@ const MarkedAttendanceSearchForm = () => {
 
   return (
     <div className="col-sm-12">
-      <div className=" mt-2 " id="multiCollapseExample1">
+      <div className="mt-2" id="multiCollapseExample1">
         <div className="card">
           <div className="card-body">
-            <form
-              method="GET"
-              action="/attendanceemployee"
-              acceptCharset="UTF-8"
-              id="attendanceemployee_filter"
-            >
+            <form method="GET" onSubmit={handleSearch} acceptCharset="UTF-8">
               <div className="row align-items-center justify-content-end">
                 <div className="col-xl-10">
                   <div className="row">
@@ -81,10 +98,11 @@ const MarkedAttendanceSearchForm = () => {
                         <input
                           type="radio"
                           id="monthly"
-                          defaultValue="monthly"
+                          value="monthly"
                           name="type"
                           className="form-check-input"
-                          defaultChecked=""
+                          checked={searchType === "monthly"}
+                          onChange={() => setSearchType("monthly")}
                         />
                         <label className="form-check-label" htmlFor="monthly">
                           Monthly
@@ -94,26 +112,36 @@ const MarkedAttendanceSearchForm = () => {
                         <input
                           type="radio"
                           id="daily"
-                          defaultValue="daily"
+                          value="daily"
                           name="type"
                           className="form-check-input"
+                          checked={searchType === "daily"}
+                          onChange={() => setSearchType("daily")}
                         />
                         <label className="form-check-label" htmlFor="daily">
                           Daily
                         </label>
                       </div>
                     </div>
-                    <div className="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12 month">
+                    <div className="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
                       <div className="btn-box">
                         <label htmlFor="month" className="form-label">
-                          Month
+                          {searchType === "monthly" ? "Month" : "Date"}
                         </label>
                         <input
-                          className="month-btn form-control month-btn"
+                          className="month-btn form-control"
                           name="month"
-                          type="month"
-                          defaultValue="2024-11"
-                          id="month"
+                          type={searchType === "monthly" ? "month" : "date"}
+                          value={
+                            searchType === "monthly"
+                              ? selectedMonth
+                              : selectedDate
+                          }
+                          onChange={(e) =>
+                            searchType === "monthly"
+                              ? setSelectedMonth(e.target.value)
+                              : setSelectedDate(e.target.value)
+                          }
                         />
                       </div>
                     </div>
@@ -129,9 +157,7 @@ const MarkedAttendanceSearchForm = () => {
                           value={selectedBranch}
                           onChange={handleBranchChange}
                         >
-                          <option value="" selected="selected">
-                            All
-                          </option>
+                          <option value="">All</option>
                           {branches.map((branch) => (
                             <option key={branch._id} value={branch._id}>
                               {branch.branchName}
@@ -147,13 +173,15 @@ const MarkedAttendanceSearchForm = () => {
                         </label>
                         <div className="btn-box">
                           <select
-                            className="form-control select department_id"
+                            className="form-control select"
                             id="department_id"
                             name="department"
+                            value={selectedDepartment}
+                            onChange={(e) =>
+                              setSelectedDepartment(e.target.value)
+                            }
                           >
-                            <option value="" selected="selected">
-                              Select Department
-                            </option>
+                            <option value="">Select Department</option>
                             {departments.map((department) => (
                               <option
                                 key={department._id}
@@ -171,38 +199,34 @@ const MarkedAttendanceSearchForm = () => {
                 <div className="col-auto mt-4">
                   <div className="row">
                     <div className="col-auto">
-                      <Link
-                        to="/"
+                      <button
+                        type="submit"
                         className="btn btn-sm btn-primary"
-                        onclick="document.getElementById('attendanceemployee_filter').submit(); return false;"
                         data-bs-toggle="tooltip"
                         title="Apply"
-                        data-original-title="apply"
                       >
                         <span className="btn-inner--icon">
                           <IoMdSearch />
                         </span>
-                      </Link>
+                      </button>
                       <Link
                         to="/attendanceemployee"
-                        className="btn btn-sm btn-danger "
+                        className="btn btn-sm btn-danger"
                         data-bs-toggle="tooltip"
                         title="Reset"
-                        data-original-title="Reset"
                       >
                         <span className="btn-inner--icon">
-                          <TbTrashOff className="text-white-off " />
+                          <TbTrashOff className="text-white-off" />
                         </span>
                       </Link>
                       <Link
                         to="/"
                         data-url="/import/attendance/file"
                         data-ajax-popup="true"
-                        data-title="Import  Attendance CSV File"
+                        data-title="Import Attendance CSV File"
                         data-bs-toggle="tooltip"
                         title=""
                         className="btn btn-sm btn-primary"
-                        data-bs-original-title="Import"
                       >
                         <FaRegFile />
                       </Link>

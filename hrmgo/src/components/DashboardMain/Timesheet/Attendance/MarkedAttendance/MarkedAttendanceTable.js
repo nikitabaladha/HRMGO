@@ -4,34 +4,7 @@ import { Link } from "react-router-dom";
 import { HiOutlineTrash } from "react-icons/hi2";
 import { TbPencil } from "react-icons/tb";
 
-const MarkedAttendanceTable = () => {
-  const [attendanceData, setAttendanceData] = useState([]);
-
-  useEffect(() => {
-    const fetchAttendanceData = async () => {
-      try {
-        const response = await getAPI(`/marked-attendance-get-all`, {}, true);
-        if (
-          !response.hasError &&
-          response.data &&
-          Array.isArray(response.data.data)
-        ) {
-          setAttendanceData(response.data.data);
-          console.log(
-            "AttendanceData fetched successfully",
-            response.data.data
-          );
-        } else {
-          console.error("Invalid response format or error in response");
-        }
-      } catch (err) {
-        console.error("Error fetching AttendanceData:", err);
-      }
-    };
-
-    fetchAttendanceData();
-  }, []);
-
+const MarkedAttendanceTable = ({ attendanceData }) => {
   return (
     <div className="col-xl-12">
       <div className="card">
