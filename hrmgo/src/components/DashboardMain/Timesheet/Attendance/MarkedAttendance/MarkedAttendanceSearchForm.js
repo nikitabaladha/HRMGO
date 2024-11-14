@@ -43,6 +43,22 @@ const MarkedAttendanceSearchForm = ({ onDataFetched }) => {
     }
   };
 
+  useEffect(() => {
+    const fetchBranchData = async () => {
+      try {
+        const response = await getAPI(`/branch-get-all`, {}, true);
+        if (!response.hasError && Array.isArray(response.data.data)) {
+          setBranches(response.data.data);
+        } else {
+          console.error("Invalid response format or error in response");
+        }
+      } catch (err) {
+        console.error("Error fetching branch data:", err);
+      }
+    };
+    fetchBranchData();
+  }, []);
+
   const handleSearch = async (e) => {
     e.preventDefault();
     try {
@@ -66,22 +82,6 @@ const MarkedAttendanceSearchForm = ({ onDataFetched }) => {
       console.error("Error fetching attendance data:", err);
     }
   };
-
-  useEffect(() => {
-    const fetchBranchData = async () => {
-      try {
-        const response = await getAPI(`/branch-get-all`, {}, true);
-        if (!response.hasError && Array.isArray(response.data.data)) {
-          setBranches(response.data.data);
-        } else {
-          console.error("Invalid response format or error in response");
-        }
-      } catch (err) {
-        console.error("Error fetching branch data:", err);
-      }
-    };
-    fetchBranchData();
-  }, []);
 
   return (
     <div className="col-sm-12">

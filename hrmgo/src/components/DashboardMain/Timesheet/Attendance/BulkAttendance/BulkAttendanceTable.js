@@ -1,46 +1,13 @@
-import React, { useEffect, useState } from "react";
-import getAPI from "../../../../../api/getAPI.js";
+import React from "react";
+
 import { Link } from "react-router-dom";
 
-const employees = [
-  {
-    id: 1,
-    employeeId: "#EMP0000001",
-    name: "Julie Lynn",
-    branch: "China",
-    department: "Industrials",
-    defaultIn: "09:00",
-    defaultOut: "18:00",
-  },
-  {
-    id: 7,
-    employeeId: "#EMP0000006",
-    name: "Jeremy Holmes",
-    branch: "China",
-    department: "Industrials",
-    defaultIn: "09:00",
-    defaultOut: "18:00",
-  },
-  {
-    id: 12,
-    employeeId: "#EMP0000011",
-    name: "Mona Hendricks",
-    branch: "China",
-    department: "Industrials",
-    defaultIn: "09:00",
-    defaultOut: "18:00",
-  },
-];
-const BulkAttendanceTable = () => {
+const BulkAttendanceTable = ({ filteredEmployees }) => {
   return (
     <div className="col-xl-12">
       <div className="card">
         <div className="card-header card-body table-border-style">
-          <form
-            method="POST"
-            action="/attendanceemployee/bulkattendance"
-            acceptCharset="UTF-8"
-          >
+          <form method="POST" acceptCharset="UTF-8">
             <input
               name="_token"
               type="hidden"
@@ -75,7 +42,7 @@ const BulkAttendanceTable = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {employees.map((employee) => (
+                  {filteredEmployees.map((employee) => (
                     <tr key={employee.id}>
                       <td className="Id">
                         <input
@@ -84,12 +51,12 @@ const BulkAttendanceTable = () => {
                           name="employee_id[]"
                         />
                         <Link to="" className="btn btn-outline-primary">
-                          {employee.employeeId}
+                          {employee.id}
                         </Link>
                       </td>
                       <td>{employee.name}</td>
-                      <td>{employee.branch}</td>
-                      <td>{employee.department}</td>
+                      <td>{employee.branchName}</td>
+                      <td>{employee.departmentName}</td>
                       <td>
                         <div className="row">
                           <div className="col-md-1">

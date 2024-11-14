@@ -5,10 +5,11 @@ import { Link } from "react-router-dom";
 import { TbTrashOff } from "react-icons/tb";
 import { IoMdSearch } from "react-icons/io";
 
-const BulkAttendanceSearchForm = () => {
+const BulkAttendanceSearchForm = ({ onDataFetched }) => {
   const [branches, setBranches] = useState([]);
   const [selectedBranch, setSelectedBranch] = useState("");
   const [departments, setDepartments] = useState([]);
+  const [selectedDepartment, setSelectedDepartment] = useState("");
 
   const handleBranchChange = (e) => {
     const branchId = e.target.value;
@@ -24,14 +25,14 @@ const BulkAttendanceSearchForm = () => {
             true
           );
 
-          // Check if the response is valid
           if (!response.hasError && Array.isArray(response.data.data)) {
             setDepartments(response.data.data);
+            console.log("Departments fetched :", response.data.data);
           } else {
             console.error("Invalid response format or error in response");
           }
         } catch (err) {
-          console.error("Error fetching department data:", err); // Error handling
+          console.error("Error fetching department data:", err);
         }
       };
       fetchDepartmentByBranchId();
@@ -41,24 +42,46 @@ const BulkAttendanceSearchForm = () => {
   };
 
   useEffect(() => {
-    // Fetch branch data on component mount
     const fetchBranchData = async () => {
       try {
         const response = await getAPI(`/branch-get-all`, {}, true);
-
-        // Check if the response is valid
         if (!response.hasError && Array.isArray(response.data.data)) {
-          setBranches(response.data.data); // Set the branches data
-          console.log("Branch data:", response.data.data); // Optional: For debugging
+          setBranches(response.data.data);
+          console.log("Branches fetched :", response.data.data);
         } else {
           console.error("Invalid response format or error in response");
         }
       } catch (err) {
-        console.error("Error fetching branch data:", err); // Error handling
+        console.error("Error fetching branch data:", err);
       }
     };
     fetchBranchData();
   }, []);
+
+  const handleSearch = async (e) => {
+    e.preventDefault();
+
+    // Log both selected branch and department before the API call
+    console.log("Selected Branch ID:", selectedBranch);
+    console.log("Selected Department ID:", selectedDepartment);
+
+    try {
+      const response = await getAPI(
+        `/employee-get-filter?branchId=673343c5400c5058306d7e62&departmentId=6733463a3a0c40c0cea3bf4a`,
+        {},
+        true,
+        true
+      );
+      if (!response.hasError && Array.isArray(response.data.data)) {
+        onDataFetched(response.data.data);
+        console.log("Filtered employees:", response.data.data);
+      } else {
+        console.error("Invalid response format or error in response");
+      }
+    } catch (error) {
+      console.error("Error fetching filtered employees:", error);
+    }
+  };
 
   return (
     <>
@@ -67,8 +90,8 @@ const BulkAttendanceSearchForm = () => {
           <div className="card">
             <div className="card-body">
               <form
+                onSubmit={handleSearch}
                 method="GET"
-                action="/attendanceemployee/bulkattendance"
                 acceptCharset="UTF-8"
                 id="bulkattendance_filter"
               >
@@ -120,10 +143,10 @@ const BulkAttendanceSearchForm = () => {
                         className="form-control select department_id"
                         id="department_id"
                         name="department"
+                        value={selectedDepartment}
+                        onChange={(e) => setSelectedDepartment(e.target.value)}
                       >
-                        <option value="" selected="selected">
-                          Select Department
-                        </option>
+                        <option value="">Select Department</option>
                         {departments.map((department) => (
                           <option key={department._id} value={department._id}>
                             {department.departmentName}
@@ -133,10 +156,8 @@ const BulkAttendanceSearchForm = () => {
                     </div>
                   </div>
                   <div className="col-auto float-end ms-2 mt-4">
-                    <Link
-                      to="/"
+                    <button
                       className="btn btn-sm btn-primary"
-                      onclick="document.getElementById('bulkattendance_filter').submit(); return false;"
                       data-bs-toggle="tooltip"
                       title=""
                       data-bs-original-title="apply"
@@ -144,7 +165,7 @@ const BulkAttendanceSearchForm = () => {
                       <span className="btn-inner--icon">
                         <IoMdSearch />
                       </span>
-                    </Link>
+                    </button>
                     <Link
                       to="/attendanceemployee/bulkattendance"
                       className="btn btn-sm btn-danger"
