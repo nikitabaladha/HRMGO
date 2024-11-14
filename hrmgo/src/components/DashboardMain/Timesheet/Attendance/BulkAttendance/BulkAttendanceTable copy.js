@@ -1,15 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
+
 import { Link } from "react-router-dom";
 
 const BulkAttendanceTable = ({ filteredEmployees }) => {
-  // State to manage the checkbox
-  const [isChecked, setIsChecked] = useState(false);
-
-  // Toggle function for the "present_all" checkbox
-  const handleToggleAllAttendance = (event) => {
-    setIsChecked(event.target.checked);
-  };
-
   return (
     <div className="col-xl-12">
       <div className="card">
@@ -36,14 +29,13 @@ const BulkAttendanceTable = ({ filteredEmployees }) => {
                             type="checkbox"
                             name="present_all"
                             id="present_all"
-                            checked={isChecked}
-                            onChange={handleToggleAllAttendance}
                           />
                           <label
                             className="custom-control-label"
                             htmlFor="present_all"
                           >
                             Attendance
+                            {/* If above list of employee is displayed then If i click on this check box then display "in" and "out" clock for all the listed employee */}
                           </label>
                         </div>
                       </div>
@@ -76,7 +68,6 @@ const BulkAttendanceTable = ({ filteredEmployees }) => {
                                   type="checkbox"
                                   name={`present-${employee.id}`}
                                   id={`present${employee.id}`}
-                                  checked={isChecked}
                                 />
                                 <label
                                   className="custom-control-label"
@@ -86,11 +77,8 @@ const BulkAttendanceTable = ({ filteredEmployees }) => {
                             </div>
                           </div>
 
-                          <div
-                            className={`col-md-8 present_check_in ${
-                              isChecked ? "" : "d-none"
-                            }`}
-                          >
+                          {/* If above list of employee is displayed then if i click on checkbox to mark it tick then show me this "in" and "out" clock  for all the employee*/}
+                          <div className="col-md-8 present_check_in d-none">
                             <div className="row">
                               <label className="col-md-2 control-label">
                                 In
@@ -100,8 +88,7 @@ const BulkAttendanceTable = ({ filteredEmployees }) => {
                                   type="time"
                                   className="form-control timepicker"
                                   name={`in-${employee.id}`}
-                                  // defaultValue={employee.defaultIn}
-                                  defaultValue="09:00"
+                                  defaultValue={employee.defaultIn}
                                 />
                               </div>
                               <label
@@ -110,14 +97,12 @@ const BulkAttendanceTable = ({ filteredEmployees }) => {
                               >
                                 Out
                               </label>
-
                               <div className="col-md-4">
                                 <input
                                   type="time"
                                   className="form-control timepicker"
                                   name={`out-${employee.id}`}
-                                  // defaultValue={employee.defaultOut}
-                                  defaultValue="18:00"
+                                  defaultValue={employee.defaultOut}
                                 />
                               </div>
                             </div>
