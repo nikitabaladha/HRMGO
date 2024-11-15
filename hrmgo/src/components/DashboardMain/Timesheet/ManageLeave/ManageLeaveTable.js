@@ -3,9 +3,11 @@ import getAPI from "../../../../api/getAPI.js";
 import { Link } from "react-router-dom";
 import { HiOutlineTrash } from "react-icons/hi2";
 import { TbPencil, TbCaretRight } from "react-icons/tb";
+import StatusModal from "./StatusModal";
 
 const ManageLeaveTable = () => {
   const [leaveData, setLeaveData] = useState([]);
+  const [selectedLeave, setSelectedLeave] = useState(null); // To store selected leave data
 
   const statusColor = [
     {
@@ -44,10 +46,17 @@ const ManageLeaveTable = () => {
     fetchMangeLeaveData();
   }, []);
 
+  const handleStatusUpdate = (leaveId, newStatus) => {
+    setLeaveData((prevData) =>
+      prevData.map((leave) =>
+        leave.leaveId === leaveId ? { ...leave, status: newStatus } : leave
+      )
+    );
+  };
+
   function formatDate(dateString) {
     const date = new Date(dateString);
     const options = { year: "numeric", month: "short", day: "numeric" };
-    console.log(date.toLocaleDateString("en-US", options));
     return date.toLocaleDateString("en-US", options);
   }
 
@@ -78,7 +87,7 @@ const ManageLeaveTable = () => {
                 </thead>
                 <tbody>
                   {leaveData.map((leave) => (
-                    <tr key={leave.id}>
+                    <tr key={leave.leaveId}>
                       <td>{leave.employeeName}</td>
                       <td>{leave.leaveType}</td>
                       <td>{formatDate(leave.appliedOn)}</td>
@@ -95,16 +104,13 @@ const ManageLeaveTable = () => {
                           {leave.status}
                         </div>
                       </td>
+
                       <td className="Action">
                         <span>
                           <div className="action-btn bg-success ms-2">
                             <Link
-                              to="/"
+                              onClick={() => setSelectedLeave(leave)}
                               className="mx-3 btn btn-sm align-items-center"
-                              data-size="lg"
-                              data-url={`/leave/${leave.id}`}
-                              data-ajax-popup="true"
-                              data-bs-toggle="tooltip"
                               title="Manage Leave"
                             >
                               <TbCaretRight className="text-white" />
@@ -112,7 +118,6 @@ const ManageLeaveTable = () => {
                           </div>
                           <div className="action-btn bg-info ms-2">
                             <Link
-                              to="/"
                               className="mx-3 btn btn-sm align-items-center"
                               data-size="lg"
                               data-url={`/leave/${leave.id}`}
@@ -141,7 +146,6 @@ const ManageLeaveTable = () => {
                                 value={leave.token}
                               />
                               <Link
-                                to="/"
                                 className="mx-3 btn btn-sm align-items-center bs-pass-para"
                                 data-bs-toggle="tooltip"
                                 title="Delete"
@@ -161,6 +165,20 @@ const ManageLeaveTable = () => {
           </div>
         </div>
       </div>
+
+      {/* Render StatusModal if leave is selected */}
+      {selectedLeave && (
+        <StatusModal
+          leave={{
+            ...selectedLeave,
+            appliedOn: formatDate(selectedLeave.appliedOn),
+            startDate: formatDate(selectedLeave.startDate),
+            endDate: formatDate(selectedLeave.endDate),
+          }}
+          onClose={() => setSelectedLeave(null)}
+          onStatusUpdate={handleStatusUpdate}
+        />
+      )}
     </div>
   );
 };

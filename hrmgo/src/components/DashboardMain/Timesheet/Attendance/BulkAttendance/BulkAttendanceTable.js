@@ -184,7 +184,7 @@ const BulkAttendanceTable = ({ filteredEmployees, date }) => {
                                           })
                                         : "09:00" // Default to 09:00 if no clockIn data is present
                                     }
-                                    readOnly
+                                    // readOnly
                                   />
                                 </div>
                                 <label
@@ -214,7 +214,7 @@ const BulkAttendanceTable = ({ filteredEmployees, date }) => {
                                           })
                                         : "18:00" // Default to 18:00 if no clockOut data is present
                                     }
-                                    readOnly
+                                    // readOnly
                                   />
                                 </div>
                               </div>
@@ -262,8 +262,8 @@ const BulkAttendanceTable = ({ filteredEmployees, date }) => {
               </table>
             </div>
             <div className="attendance-btn float-end pt-4">
-              <button type="submit" className="btn btn-sm btn-success">
-                Save Attendance
+              <button className="btn btn-primary" type="submit">
+                Update
               </button>
             </div>
           </form>
