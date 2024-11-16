@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { IoIosArrowDown } from "react-icons/io";
 import { FiUser } from "react-icons/fi";
@@ -9,8 +9,6 @@ import { FaRegCommentDots } from "react-icons/fa";
 import { TbMessage2 } from "react-icons/tb";
 
 const Header = ({ toggleSidebar, fullName }) => {
-  const navigate = useNavigate();
-
   const handleLogout = () => {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("userDetails");

@@ -4,10 +4,13 @@ import { Link } from "react-router-dom";
 import { HiOutlineTrash } from "react-icons/hi2";
 import { TbPencil, TbCaretRight } from "react-icons/tb";
 import StatusModal from "./StatusModal";
+import ConfirmationDialog from "./ConfirmationDialog";
 
 const ManageLeaveTable = () => {
   const [leaveData, setLeaveData] = useState([]);
-  const [selectedLeave, setSelectedLeave] = useState(null); // To store selected leave data
+  const [selectedLeave, setSelectedLeave] = useState(null);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [leaveId, setLeaveId] = useState(null);
 
   const statusColor = [
     {
@@ -64,6 +67,24 @@ const ManageLeaveTable = () => {
     const statusObj = statusColor.find((item) => item.status === status);
     return statusObj ? statusObj.statusColor : "secondary";
   }
+
+  // Handle delete confirmation
+  const handleDeleteConfirmation = ({ leaveId }) => {
+    setLeaveId(leaveId); // Set the leaveId to delete
+    setIsDeleteDialogOpen(true); // Open the dialog
+  };
+
+  const handleLeaveDeleted = (deletedLeaveId) => {
+    setLeaveData((prevData) =>
+      prevData.filter((leave) => leave.leaveId !== deletedLeaveId)
+    );
+    setIsDeleteDialogOpen(false); // Close the dialog
+  };
+
+  // Handle cancellation
+  const handleCancelDelete = () => {
+    setIsDeleteDialogOpen(false); // Close the dialog without deleting
+  };
 
   return (
     <div className="row">
@@ -140,12 +161,13 @@ const ManageLeaveTable = () => {
                                 type="hidden"
                                 value="DELETE"
                               />
-                              <input
-                                name="_token"
-                                type="hidden"
-                                value={leave.token}
-                              />
+                              <input name="_token" type="hidden" />
                               <Link
+                                onClick={() =>
+                                  handleDeleteConfirmation({
+                                    leaveId: leave.leaveId,
+                                  })
+                                }
                                 className="mx-3 btn btn-sm align-items-center bs-pass-para"
                                 data-bs-toggle="tooltip"
                                 title="Delete"
@@ -177,6 +199,15 @@ const ManageLeaveTable = () => {
           }}
           onClose={() => setSelectedLeave(null)}
           onStatusUpdate={handleStatusUpdate}
+        />
+      )}
+
+      {/* Confirmation Dialog */}
+      {isDeleteDialogOpen && (
+        <ConfirmationDialog
+          onCancel={handleCancelDelete}
+          leaveId={leaveId}
+          onLeaveDeleted={handleLeaveDeleted}
         />
       )}
     </div>
