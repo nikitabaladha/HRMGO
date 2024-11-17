@@ -5,26 +5,21 @@ import { HiOutlineTrash } from "react-icons/hi2";
 import { TbPencil, TbCaretRight } from "react-icons/tb";
 import StatusModal from "./StatusModal";
 import ConfirmationDialog from "./ConfirmationDialog";
+import UpdateModal from "./UpdateModal.js";
 
 const ManageLeaveTable = () => {
   const [leaveData, setLeaveData] = useState([]);
   const [selectedLeave, setSelectedLeave] = useState(null);
-  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [leaveId, setLeaveId] = useState(null);
 
+  const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+
   const statusColor = [
-    {
-      status: "Reject",
-      statusColor: "danger", // Red for Reject
-    },
-    {
-      status: "Approved",
-      statusColor: "success", // Green for Approved
-    },
-    {
-      status: "Pending",
-      statusColor: "warning", // Yellow for Pending
-    },
+    { status: "Reject", statusColor: "danger" },
+    { status: "Approved", statusColor: "success" },
+    { status: "Pending", statusColor: "warning" },
   ];
 
   useEffect(() => {
@@ -71,7 +66,16 @@ const ManageLeaveTable = () => {
   // Handle delete confirmation
   const handleDeleteConfirmation = ({ leaveId }) => {
     setLeaveId(leaveId); // Set the leaveId to delete
-    setIsDeleteDialogOpen(true); // Open the dialog
+    setIsDeleteDialogOpen(true); // Open the delete dialog
+    setIsStatusModalOpen(false); // Close StatusModal if it's open
+    setIsUpdateModalOpen(false); // Close UpdateModal if it's open
+  };
+
+  const handleUpdateConfirmation = (leave) => {
+    setSelectedLeave(leave);
+    setIsUpdateModalOpen(true); // Open the update modal
+    setIsStatusModalOpen(false); // Close StatusModal if it's open
+    setIsDeleteDialogOpen(false); // Close DeleteDialog if it's open
   };
 
   const handleLeaveDeleted = (deletedLeaveId) => {
@@ -81,9 +85,22 @@ const ManageLeaveTable = () => {
     setIsDeleteDialogOpen(false); // Close the dialog
   };
 
-  // Handle cancellation
+  // Handle cancellation of delete
   const handleCancelDelete = () => {
     setIsDeleteDialogOpen(false); // Close the dialog without deleting
+  };
+
+  const handleUpdateSuccess = (updatedLeave) => {
+    setLeaveData((prevData) =>
+      prevData.map((leave) =>
+        leave.leaveId === updatedLeave.leaveId
+          ? { ...leave, ...updatedLeave }
+          : leave
+      )
+    );
+
+    console.log("Updated Leave Data:", leaveData);
+    setIsUpdateModalOpen(false);
   };
 
   return (
@@ -130,7 +147,12 @@ const ManageLeaveTable = () => {
                         <span>
                           <div className="action-btn bg-success ms-2">
                             <Link
-                              onClick={() => setSelectedLeave(leave)}
+                              onClick={() => {
+                                setSelectedLeave(leave);
+                                setIsStatusModalOpen(true); // Open StatusModal
+                                setIsUpdateModalOpen(false); // Close UpdateModal
+                                setIsDeleteDialogOpen(false); // Close DeleteDialog
+                              }}
                               className="mx-3 btn btn-sm align-items-center"
                               title="Manage Leave"
                             >
@@ -141,10 +163,10 @@ const ManageLeaveTable = () => {
                             <Link
                               className="mx-3 btn btn-sm align-items-center"
                               data-size="lg"
-                              data-url={`/leave/${leave.id}`}
                               data-ajax-popup="true"
                               data-bs-toggle="tooltip"
                               title="Edit Leave"
+                              onClick={() => handleUpdateConfirmation(leave)}
                             >
                               <TbPencil className="text-white" />
                             </Link>
@@ -189,7 +211,7 @@ const ManageLeaveTable = () => {
       </div>
 
       {/* Render StatusModal if leave is selected */}
-      {selectedLeave && (
+      {isStatusModalOpen && selectedLeave && (
         <StatusModal
           leave={{
             ...selectedLeave,
@@ -197,7 +219,7 @@ const ManageLeaveTable = () => {
             startDate: formatDate(selectedLeave.startDate),
             endDate: formatDate(selectedLeave.endDate),
           }}
-          onClose={() => setSelectedLeave(null)}
+          onClose={() => setIsStatusModalOpen(false)}
           onStatusUpdate={handleStatusUpdate}
         />
       )}
@@ -208,6 +230,15 @@ const ManageLeaveTable = () => {
           onCancel={handleCancelDelete}
           leaveId={leaveId}
           onLeaveDeleted={handleLeaveDeleted}
+        />
+      )}
+
+      {/* Update Modal */}
+      {isUpdateModalOpen && selectedLeave && (
+        <UpdateModal
+          leave={selectedLeave}
+          onClose={() => setIsUpdateModalOpen(false)}
+          onUpdateSuccess={handleUpdateSuccess}
         />
       )}
     </div>

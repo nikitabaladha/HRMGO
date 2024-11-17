@@ -24,6 +24,7 @@
     "bootstrap-switch-button": "^1.1.0",
     "choices.js": "^11.0.2",
     "cookieconsent": "^3.1.1",
+    "date-fns": "^4.1.0",
     "dotenv": "^16.4.5",
     "feather-icons": "^4.29.2",
     "hrmgo": "file:",
