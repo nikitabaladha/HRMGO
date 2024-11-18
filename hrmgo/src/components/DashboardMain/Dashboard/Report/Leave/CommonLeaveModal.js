@@ -1,21 +1,19 @@
 import React from "react";
 
-const ApprovedLeaveModal = ({ employee, onClose }) => {
-  console.log("Employee Data", employee);
-  //    {
-  //     "employeeId": "EMP0000001",
-  //     "employeeName": "Ketan Gadhiya",
-  //     "branchName": "Canada",
-  //     "departmentName": "Financial",
-  //     "startDate": "Sep 25, 2024",
-  //     "endDate": "Sep 26, 2024",
-  //     "totalDays": 2,
-  //     "leaveType": "Medical Leave",
-  //     "reason": "Fever.",
-  //     "status": "Approved"
-  // }
-  console.log("Approved Leave Details:", employee.approvedLeaveDetails); //undefined;
-  const approvedLeaveDetails = employee?.approvedLeaveDetails || [];
+const CommonLeaveModal = ({ employee, onClose }) => {
+  const { leaves, leaveStatus } = employee;
+
+  // Filter leaves based on the selected status
+  const filteredLeaves = leaves?.filter(
+    (leave) => leave.status === leaveStatus
+  );
+
+  const leaveTitle =
+    leaveStatus === "Approved"
+      ? "Approved Leave Detail"
+      : leaveStatus === "Reject"
+      ? "Rejected Leave Detail"
+      : "Pending Leave Detail";
 
   return (
     <>
@@ -32,7 +30,7 @@ const ApprovedLeaveModal = ({ employee, onClose }) => {
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id="exampleModalLabel">
-                Approved Leave Detail
+                {leaveTitle}
               </h5>
               <button
                 type="button"
@@ -47,20 +45,24 @@ const ApprovedLeaveModal = ({ employee, onClose }) => {
                   <div className="col text-center">
                     <div className="card p-4 mb-4">
                       <h5 className="report-text gray-text mb-0">
-                        Casual Leave :
+                        Casual Leave:
                       </h5>
                       <h5 className="report-text mb-0">
-                        {employee.casualLeave || 0}
+                        {filteredLeaves.filter(
+                          (leave) => leave.leaveType === "Casual Leave"
+                        ).length || 0}
                       </h5>
                     </div>
                   </div>
                   <div className="col text-center">
                     <div className="card p-4 mb-4">
                       <h5 className="report-text gray-text mb-0">
-                        Medical Leave :
+                        Medical Leave:
                       </h5>
                       <h5 className="report-text mb-0">
-                        {employee.medicalLeave || 0}
+                        {filteredLeaves.filter(
+                          (leave) => leave.leaveType === "Medical Leave"
+                        ).length || 0}
                       </h5>
                     </div>
                   </div>
@@ -77,14 +79,16 @@ const ApprovedLeaveModal = ({ employee, onClose }) => {
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td>{employee?.leaveType}</td>
-                          <td>
-                            {employee?.startDate} to {employee?.endDate}
-                          </td>
-                          <td>{employee?.totalDays}</td>
-                          <td>{employee?.reason}</td>
-                        </tr>
+                        {filteredLeaves.map((leave, index) => (
+                          <tr key={index}>
+                            <td>{leave.leaveType}</td>
+                            <td>
+                              {leave.startDate} to {leave.endDate}
+                            </td>
+                            <td>{leave.totalDays}</td>
+                            <td>{leave.reason}</td>
+                          </tr>
+                        ))}
                       </tbody>
                     </table>
                   </div>
@@ -98,4 +102,4 @@ const ApprovedLeaveModal = ({ employee, onClose }) => {
   );
 };
 
-export default ApprovedLeaveModal;
+export default CommonLeaveModal;

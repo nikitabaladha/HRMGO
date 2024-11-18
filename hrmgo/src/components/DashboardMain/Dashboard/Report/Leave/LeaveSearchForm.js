@@ -3,7 +3,6 @@ import getAPI from "../../../../../api/getAPI.js";
 import { Link } from "react-router-dom";
 import { TbTrashOff } from "react-icons/tb";
 import { IoMdSearch } from "react-icons/io";
-import { FaRegFile } from "react-icons/fa";
 
 const LeaveSearchForm = ({ onDataFetched }) => {
   const [branches, setBranches] = useState([]);
@@ -81,6 +80,7 @@ const LeaveSearchForm = ({ onDataFetched }) => {
       );
 
       if (!response.hasError && Array.isArray(response.data.data)) {
+        console.log("Fetched leave Data", response);
         onDataFetched(response.data.data);
         console.log("Fetched leave Data", response.data.data);
       } else {
@@ -226,17 +226,6 @@ const LeaveSearchForm = ({ onDataFetched }) => {
                         <span className="btn-inner--icon">
                           <TbTrashOff className="text-white-off" />
                         </span>
-                      </Link>
-                      <Link
-                        to="/"
-                        data-url="/import/attendance/file"
-                        data-ajax-popup="true"
-                        data-title="Import Attendance CSV File"
-                        data-bs-toggle="tooltip"
-                        title=""
-                        className="btn btn-sm btn-primary"
-                      >
-                        <FaRegFile />
                       </Link>
                     </div>
                   </div>
