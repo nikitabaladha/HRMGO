@@ -1,4 +1,5 @@
 import React from "react";
+import { useEffect } from "react";
 import putAPI from "../../../../api/putAPI.js";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -32,6 +33,23 @@ const StatusModal = ({ leave, onClose, onStatusUpdate }) => {
     }
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      const modalContent = document.querySelector(".modal-content");
+
+      // Check if the click was outside the modal content
+      if (modalContent && !modalContent.contains(event.target)) {
+        onClose();
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [onClose]);
+
   return (
     <>
       <div
@@ -41,7 +59,7 @@ const StatusModal = ({ leave, onClose, onStatusUpdate }) => {
         role="dialog"
         aria-labelledby="exampleModalLabel"
         aria-modal="true"
-        style={{ display: "block" }}
+        style={{ display: "block", backgroundColor: "rgba(0, 0, 0, 0.5)" }}
       >
         <div className="modal-dialog modal-lg" role="document">
           <div className="modal-content">

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import putAPI from "../../../../api/putAPI.js";
 import { toast } from "react-toastify";
@@ -53,6 +52,23 @@ const UpdateModal = ({ leave, onClose, onUpdateSuccess }) => {
     }
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      const modalContent = document.querySelector(".modal-content");
+
+      // Check if the click was outside the modal content
+      if (modalContent && !modalContent.contains(event.target)) {
+        onClose();
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [onClose]);
+
   return (
     <div
       className="modal fade show"
@@ -61,7 +77,11 @@ const UpdateModal = ({ leave, onClose, onUpdateSuccess }) => {
       role="dialog"
       aria-labelledby="exampleModalLabel"
       aria-modal="true"
-      style={{ display: "block", paddingLeft: 0 }}
+      style={{
+        display: "block",
+        paddingLeft: 0,
+        backgroundColor: "rgba(0, 0, 0, 0.5)",
+      }}
     >
       <div className="modal-dialog modal-lg" role="document">
         <div className="modal-content">
@@ -86,22 +106,7 @@ const UpdateModal = ({ leave, onClose, onUpdateSuccess }) => {
               onSubmit={handleUpdate}
             >
               <input name="_method" type="hidden" defaultValue="PUT" />
-              <input name="_token" type="hidden" />
               <div className="modal-body">
-                <div className="card-footer text-end">
-                  <Link
-                    className="btn btn-sm btn-primary"
-                    data-size="medium"
-                    data-ajax-popup-over="true"
-                    data-bs-toggle="tooltip"
-                    data-bs-placement="top"
-                    title="Generate"
-                    data-title="Generate Content With AI"
-                  >
-                    <i className="fas fa-robot" /> Generate With AI
-                  </Link>
-                </div>
-
                 <div className="row">
                   <div className="col-md-12">
                     <div className="form-group">
