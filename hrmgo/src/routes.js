@@ -13,6 +13,7 @@ import ManageLeave from "./components/DashboardMain/Timesheet/ManageLeave/Manage
 import TimeSheet from "./components/DashboardMain/Timesheet/TimeSheet/TimeSheet.js";
 import MarkedAttendance from "./components/DashboardMain/Timesheet/Attendance/MarkedAttendance/MarkedAttendance.js";
 import BulkAttendance from "./components/DashboardMain/Timesheet/Attendance/BulkAttendance/BulkAttendance.js";
+import SetSalary from "./components/DashboardMain/Payroll/SetSalary/SetSalary.js";
 
 const AppRoutes = ({ isAuthenticated, handleLogin }) => {
   return (
@@ -54,6 +55,7 @@ const AppRoutes = ({ isAuthenticated, handleLogin }) => {
               path="time-sheet/attendance/bulk-attendance"
               element={<BulkAttendance />}
             />
+            <Route path="payroll/set-salary" element={<SetSalary />} />
           </Route>
 
           <Route path="*" element={<Navigate to="/dashboard" replace />} />

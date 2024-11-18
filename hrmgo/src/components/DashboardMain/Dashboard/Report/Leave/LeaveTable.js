@@ -1,73 +1,126 @@
-import React from "react";
+// import React from "react";
+// import { Link } from "react-router-dom";
+// import { useState } from "react";
+// import ApprovedLeaveModal from "./ApprovedLeaveModal";
+
+// const LeaveTable = ({ leaveData }) => {
+//   console.log("leavedata", leaveData);
+//   const [isApprovedLeaveModalOpen, setIsApprovedLeaveModalOpen] =
+//     useState(false);
+
+//   const handleOpenApprovedLeaveModal = () => {
+//     setIsApprovedLeaveModalOpen(true); // Open the delete dialog
+//   };
+
+//   return (
+//     <>
+//       <div>leaveData</div>
+//       <div className="col-xl-12">
+//         <div className="card">
+//           <div className="card-header card-body table-border-style">
+//             <div className="table-responsive">
+//               <table className="table" id="pc-dt-simple">
+//                 <thead>
+//                   <tr>
+//                     <th>Employee ID</th>
+//                     <th>Employee</th>
+//                     <th>Approved Leaves</th>
+//                     <th>Rejected Leaves</th>
+//                     <th>Pending Leaves</th>
+//                   </tr>
+//                 </thead>
+//                 <tbody>
+//                   {leaveData.map((employee, index) => (
+//                     <tr key={index}>
+//                       <td>
+//                         <Link to="" className="btn btn-outline-primary">
+//                           {employee.employeeId}
+//                         </Link>
+//                       </td>
+//                       <td>{employee.employeeName}</td>
+//                       <td>
+//                         <div className="btn btn-sm btn-info rounded">
+//                           {employee.approvedLeaves}
+//                           <Link
+//                             className="text-white"
+//                             data-ajax-popup="true"
+//                             data-size="lg"
+//                             data-title="Approved Leave Detail"
+//                             data-bs-toggle="tooltip"
+//                             title="View"
+//                             onClick={() => {
+//                               setIsApprovedLeaveModalOpen(true);
+//                             }}
+//                           >
+//                             View
+//                           </Link>
+//                         </div>
+//                       </td>
+//                       <td>
+//                         <div className="btn btn-sm btn-danger rounded">
+//                           {employee.rejectedLeaves}
+//                           <Link
+//                             className="text-white"
+//                             data-size="lg"
+//                             data-ajax-popup="true"
+//                             data-title="Rejected Leave Detail"
+//                             data-bs-toggle="tooltip"
+//                             title="View"
+//                           >
+//                             View
+//                           </Link>
+//                         </div>
+//                       </td>
+//                       <td>
+//                         <div className="m-view-btn btn btn-sm btn-warning rounded">
+//                           {employee.pendingLeaves}
+//                           <Link
+//                             className="text-white"
+//                             data-size="lg"
+//                             data-ajax-popup="true"
+//                             data-title="Pending Leave Detail"
+//                             data-bs-toggle="tooltip"
+//                             title="View"
+//                           >
+//                             View
+//                           </Link>
+//                         </div>
+//                       </td>
+//                     </tr>
+//                   ))}
+//                 </tbody>
+//               </table>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+
+//       {/* Update Modal */}
+//       {isApprovedLeaveModalOpen && (
+//         <ApprovedLeaveModal
+//           onClose={() => setIsApprovedLeaveModalOpen(false)}
+//         />
+//       )}
+//     </>
+//   );
+// };
+
+// export default LeaveTable;
+
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import ApprovedLeaveModal from "./ApprovedLeaveModal";
 
-const employees = [
-  {
-    id: "#EMP0000001",
-    name: "Julie Lynn",
-    approvedLeaves: 1,
-    rejectedLeaves: 1,
-    pendingLeaves: 2,
-  },
-  {
-    id: "#EMP0000002",
-    name: "Lunea Todd",
-    approvedLeaves: 1,
-    rejectedLeaves: 0,
-    pendingLeaves: 1,
-  },
-  {
-    id: "#EMP0000003",
-    name: "Ida F. Mullen",
-    approvedLeaves: 0,
-    rejectedLeaves: 1,
-    pendingLeaves: 0,
-  },
-  {
-    id: "#EMP0000001",
-    name: "Julie Lynn",
-    approvedLeaves: 1,
-    rejectedLeaves: 1,
-    pendingLeaves: 2,
-  },
-  {
-    id: "#EMP0000002",
-    name: "Lunea Todd",
-    approvedLeaves: 1,
-    rejectedLeaves: 0,
-    pendingLeaves: 1,
-  },
-  {
-    id: "#EMP0000003",
-    name: "Ida F. Mullen",
-    approvedLeaves: 0,
-    rejectedLeaves: 1,
-    pendingLeaves: 0,
-  },
-  {
-    id: "#EMP0000001",
-    name: "Julie Lynn",
-    approvedLeaves: 1,
-    rejectedLeaves: 1,
-    pendingLeaves: 2,
-  },
-  {
-    id: "#EMP0000002",
-    name: "Lunea Todd",
-    approvedLeaves: 1,
-    rejectedLeaves: 0,
-    pendingLeaves: 1,
-  },
-  {
-    id: "#EMP0000003",
-    name: "Ida F. Mullen",
-    approvedLeaves: 0,
-    rejectedLeaves: 1,
-    pendingLeaves: 0,
-  },
-];
+const LeaveTable = ({ leaveData }) => {
+  const [isApprovedLeaveModalOpen, setIsApprovedLeaveModalOpen] =
+    useState(false);
+  const [selectedEmployee, setSelectedEmployee] = useState(null);
 
-const LeaveTable = () => {
+  const handleOpenApprovedLeaveModal = (employee) => {
+    setSelectedEmployee(employee); // Set selected employee data
+    setIsApprovedLeaveModalOpen(true); // Open the modal
+  };
+
   return (
     <>
       <div className="col-xl-12">
@@ -85,28 +138,22 @@ const LeaveTable = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {employees.map((employee, index) => (
+                  {leaveData.map((employee, index) => (
                     <tr key={index}>
                       <td>
-                        <Link to="" className="btn btn-outline-primary">
-                          {employee.id}
+                        <Link to="#" className="btn btn-outline-primary">
+                          {employee.employeeId}
                         </Link>
                       </td>
-                      <td>{employee.name}</td>
+                      <td>{employee.employeeName}</td>
                       <td>
                         <div className="btn btn-sm btn-info rounded">
                           {employee.approvedLeaves}
                           <Link
-                            to="#"
                             className="text-white"
-                            data-url={`https://demo.workdo.io/hrmgo/employee/${
-                              index + 1
-                            }/leave/Approved/no/2024-11/2024`}
-                            data-ajax-popup="true"
-                            data-size="lg"
-                            data-title="Approved Leave Detail"
-                            data-bs-toggle="tooltip"
-                            title="View"
+                            onClick={() =>
+                              handleOpenApprovedLeaveModal(employee)
+                            } // Pass employee to the modal
                           >
                             View
                           </Link>
@@ -115,39 +162,13 @@ const LeaveTable = () => {
                       <td>
                         <div className="btn btn-sm btn-danger rounded">
                           {employee.rejectedLeaves}
-                          <Link
-                            to="#"
-                            className="text-white"
-                            data-url={`https://demo.workdo.io/hrmgo/employee/${
-                              index + 1
-                            }/leave/Reject/no/2024-11/2024`}
-                            data-size="lg"
-                            data-ajax-popup="true"
-                            data-title="Rejected Leave Detail"
-                            data-bs-toggle="tooltip"
-                            title="View"
-                          >
-                            View
-                          </Link>
+                          <Link className="text-white">View</Link>
                         </div>
                       </td>
                       <td>
                         <div className="m-view-btn btn btn-sm btn-warning rounded">
                           {employee.pendingLeaves}
-                          <Link
-                            to="#"
-                            className="text-white"
-                            data-url={`https://demo.workdo.io/hrmgo/employee/${
-                              index + 1
-                            }/leave/Pending/no/2024-11/2024`}
-                            data-size="lg"
-                            data-ajax-popup="true"
-                            data-title="Pending Leave Detail"
-                            data-bs-toggle="tooltip"
-                            title="View"
-                          >
-                            View
-                          </Link>
+                          <Link className="text-white">View</Link>
                         </div>
                       </td>
                     </tr>
@@ -158,6 +179,14 @@ const LeaveTable = () => {
           </div>
         </div>
       </div>
+
+      {/* Update Modal */}
+      {isApprovedLeaveModalOpen && selectedEmployee && (
+        <ApprovedLeaveModal
+          employee={selectedEmployee} // Pass selected employee data as prop
+          onClose={() => setIsApprovedLeaveModalOpen(false)} // Close modal
+        />
+      )}
     </>
   );
 };
