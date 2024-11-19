@@ -1,7 +1,7 @@
 import React from "react";
 
 const AttendanceTable = ({ attendanceData }) => {
-  const totalDaysInMonth = 30; // Adjust this value for months with fewer days
+  const totalDaysInMonth = 31; // Adjust this value for months with fewer days
 
   // Ensure attendanceData is an array
   const employees = Array.isArray(attendanceData)

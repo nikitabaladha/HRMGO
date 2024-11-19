@@ -26,48 +26,12 @@ const BulkAttendanceTable = ({ filteredEmployees, date }) => {
         ? new Date(`${date}T${clockOut}:00Z`)
         : new Date(`${date}T18:00:00Z`);
 
-      // Ideal working hours (9 AM to 6 PM)
-      const idealClockIn = new Date(`${date}T09:00:00Z`);
-      const idealClockOut = new Date(`${date}T18:00:00Z`);
-
-      // Calculate Late
-      let late = 0;
-      if (formattedClockIn > idealClockIn) {
-        late = formattedClockIn - idealClockIn; // Late time in milliseconds
-      }
-
-      // Calculate Early Leaving
-      let earlyLeaving = 0;
-      if (formattedClockOut < idealClockOut) {
-        earlyLeaving = idealClockOut - formattedClockOut; // Early leaving time in milliseconds
-      }
-
-      // Calculate Overtime
-      let overtime = 0;
-      if (formattedClockOut > idealClockOut) {
-        overtime = formattedClockOut - idealClockOut; // Overtime in milliseconds
-      }
-
-      // Convert late, earlyLeaving, overtime from milliseconds to ISO 8601 string format
-      const lateTime = late
-        ? new Date(late).toISOString()
-        : "1970-01-01T00:00:00Z";
-      const earlyLeavingTime = earlyLeaving
-        ? new Date(earlyLeaving).toISOString()
-        : "1970-01-01T00:00:00Z";
-      const overtimeTime = overtime
-        ? new Date(overtime).toISOString()
-        : "1970-01-01T00:00:00Z";
-
       return {
         employeeId: employee._id,
         date, // Use the date prop directly here
         status: isChecked ? "Present" : "Absent",
         clockIn: formattedClockIn.toISOString(),
         clockOut: formattedClockOut.toISOString(),
-        late: lateTime,
-        earlyLeaving: earlyLeavingTime,
-        overtime: overtimeTime,
       };
     });
 
@@ -172,7 +136,6 @@ const BulkAttendanceTable = ({ filteredEmployees, date }) => {
                                     className="form-control"
                                     name={`in-${employee.id}`}
                                     value={
-                                      // If clockIn exists, convert the UTC time from the backend to local time
                                       employee.attendance.clockIn
                                         ? new Date(
                                             new Date(
@@ -183,9 +146,9 @@ const BulkAttendanceTable = ({ filteredEmployees, date }) => {
                                           ).toLocaleTimeString("en-GB", {
                                             hour: "2-digit",
                                             minute: "2-digit",
-                                            hour12: false, // 24-hour format
+                                            hour12: false,
                                           })
-                                        : "09:00" // Default to 09:00 if no clockIn data is present
+                                        : "09:00"
                                     }
                                     // readOnly
                                   />
@@ -202,7 +165,6 @@ const BulkAttendanceTable = ({ filteredEmployees, date }) => {
                                     className="form-control"
                                     name={`out-${employee.id}`}
                                     value={
-                                      // If clockOut exists, convert the UTC time from the backend to local time
                                       employee.attendance.clockOut
                                         ? new Date(
                                             new Date(
@@ -215,9 +177,8 @@ const BulkAttendanceTable = ({ filteredEmployees, date }) => {
                                             minute: "2-digit",
                                             hour12: false, // 24-hour format
                                           })
-                                        : "18:00" // Default to 18:00 if no clockOut data is present
+                                        : "18:00"
                                     }
-                                    // readOnly
                                   />
                                 </div>
                               </div>
@@ -237,7 +198,7 @@ const BulkAttendanceTable = ({ filteredEmployees, date }) => {
                                     type="time"
                                     className="form-control timepicker"
                                     name={`in-${employee.id}`}
-                                    defaultValue="09:00" // Default time when no attendance data
+                                    defaultValue="09:00"
                                   />
                                 </div>
                                 <label
@@ -251,7 +212,7 @@ const BulkAttendanceTable = ({ filteredEmployees, date }) => {
                                     type="time"
                                     className="form-control timepicker"
                                     name={`out-${employee.id}`}
-                                    defaultValue="18:00" // Default time when no attendance data
+                                    defaultValue="18:00"
                                   />
                                 </div>
                               </div>
