@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 const CommonLeaveModal = ({ employee, onClose }) => {
   const { leaves, leaveStatus } = employee;
@@ -15,6 +15,23 @@ const CommonLeaveModal = ({ employee, onClose }) => {
       ? "Rejected Leave Detail"
       : "Pending Leave Detail";
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      const modalDialog = document.querySelector(".modal-dialog");
+
+      // Check if the click happened outside the modal dialog
+      if (modalDialog && !modalDialog.contains(event.target)) {
+        onClose();
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [onClose]);
+
   return (
     <>
       <div
@@ -24,7 +41,7 @@ const CommonLeaveModal = ({ employee, onClose }) => {
         role="dialog"
         aria-labelledby="exampleModalLabel"
         aria-modal="true"
-        style={{ display: "block" }}
+        style={{ display: "block", backgroundColor: " rgba(0, 0, 0, 0.5)" }}
       >
         <div className="modal-dialog modal-lg" role="document">
           <div className="modal-content">

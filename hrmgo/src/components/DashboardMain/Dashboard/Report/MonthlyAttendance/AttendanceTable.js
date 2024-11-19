@@ -1,92 +1,62 @@
 import React from "react";
 
-// Sample data structure for employees and their attendance
-const employees = [
-  {
-    name: "Julie Lynn",
-    attendance: Array(30).fill(""), // 30 days of empty attendance
-  },
-  {
-    name: "Lunea Todd",
-    attendance: Array(30).fill(""), // 30 days of empty attendance
-  },
-  {
-    name: "Ida F. Mullen",
-    attendance: Array(30).fill(""), // 30 days of empty attendance
-  },
-  {
-    name: "Abra Stevens",
-    attendance: Array(30).fill(""), // 30 days of empty attendance
-  },
-  {
-    name: "Julie Lynn",
-    attendance: Array(30).fill(""), // 30 days of empty attendance
-  },
-  {
-    name: "Lunea Todd",
-    attendance: Array(30).fill(""), // 30 days of empty attendance
-  },
-  {
-    name: "Ida F. Mullen",
-    attendance: Array(30).fill(""), // 30 days of empty attendance
-  },
-  {
-    name: "Abra Stevens",
-    attendance: Array(30).fill(""), // 30 days of empty attendance
-  },
-  {
-    name: "Julie Lynn",
-    attendance: Array(30).fill(""), // 30 days of empty attendance
-  },
-  {
-    name: "Lunea Todd",
-    attendance: Array(30).fill(""), // 30 days of empty attendance
-  },
-  {
-    name: "Ida F. Mullen",
-    attendance: Array(30).fill(""), // 30 days of empty attendance
-  },
-  {
-    name: "Abra Stevens",
-    attendance: Array(30).fill(""), // 30 days of empty attendance
-  },
-];
+const AttendanceTable = ({ attendanceData }) => {
+  const totalDaysInMonth = 30; // Adjust this value for months with fewer days
 
-const AttendanceTable = () => {
+  // Ensure attendanceData is an array
+  const employees = Array.isArray(attendanceData)
+    ? attendanceData
+    : [attendanceData].filter(Boolean);
+
   return (
-    <>
-      <div className="col">
-        <div className="card">
-          <div className="card-body table-border-style">
-            <div className="table-responsive py-4 attendance-table-responsive">
-              <table className="table">
-                <thead>
-                  <tr>
-                    <th className="active">Name</th>
-                    {/* Dynamically generate table header for dates */}
-                    {Array.from({ length: 30 }, (_, index) => (
-                      <th key={index}>{String(index + 1).padStart(2, "0")}</th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {/* Map through each employee to generate rows */}
-                  {employees.map((employee, index) => (
-                    <tr key={index}>
-                      <td>{employee.name}</td>
-                      {/* Map through each attendance for the employee */}
-                      {employee.attendance.map((day, dayIndex) => (
-                        <td key={dayIndex}>{day || ""}</td>
-                      ))}
-                    </tr>
+    <div className="col">
+      <div className="card">
+        <div className="card-body table-border-style">
+          <div className="table-responsive py-4 attendance-table-responsive">
+            <table className="table">
+              <thead>
+                <tr>
+                  <th className="active">Name</th>
+                  {/* Dynamically generate table headers for dates */}
+                  {Array.from({ length: totalDaysInMonth }, (_, index) => (
+                    <th key={index}>{String(index + 1).padStart(2, "0")}</th>
                   ))}
-                </tbody>
-              </table>
-            </div>
+                </tr>
+              </thead>
+              <tbody>
+                {/* Map through each employee to generate rows */}
+                {employees.map((employee) => (
+                  <tr key={employee.employeeId}>
+                    <td>{employee.employeeName}</td>
+                    {/* Generate attendance cells for each day */}
+                    {Array.from({ length: totalDaysInMonth }, (_, index) => {
+                      // Find attendance for the current date
+                      const dateString = `Nov ${String(index + 1).padStart(
+                        2,
+                        "0"
+                      )}, 2024`; // Replace "Nov" and "2024" with dynamic values as needed
+                      const attendanceRecord = employee.attendance.find(
+                        (record) => record.date === dateString
+                      );
+
+                      return (
+                        <td key={index}>
+                          {attendanceRecord?.status === "Present" ? (
+                            <i className="badge bg-success p-2">P</i>
+                          ) : (
+                            ""
+                          )}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

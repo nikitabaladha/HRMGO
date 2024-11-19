@@ -16,7 +16,6 @@ const Leave = () => {
       <LeaveHeader />
       <div class="row">
         <LeaveSearchForm onDataFetched={handleDataFetched} />
-
         <LeaveReport />
         <LeaveTable leaveData={leaveData} />
       </div>
