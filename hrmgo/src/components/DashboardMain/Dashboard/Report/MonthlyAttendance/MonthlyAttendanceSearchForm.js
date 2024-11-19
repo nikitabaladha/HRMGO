@@ -12,7 +12,7 @@ const MonthlyAttendanceSearchForm = ({ onDataFetched }) => {
   const [selectedDepartment, setSelectedDepartment] = useState("");
   const [employees, setEmployees] = useState([]);
   const [selectedEmployees, setSelectedEmployees] = useState([]);
-  const [selectedMonth, setSelectedMonth] = useState("");
+  const [selectedMonthYear, setSelectedMonthYear] = useState("");
 
   // Fetch branches
   useEffect(() => {
@@ -93,7 +93,7 @@ const MonthlyAttendanceSearchForm = ({ onDataFetched }) => {
       const queryParams = new URLSearchParams({
         branch: selectedBranch || "", // Include branch if selected
         department: selectedDepartment || "", // Include department if selected
-        month: selectedMonth || "", // Include month if selected
+        month: selectedMonthYear || "", // Include month and year both if selected
       });
 
       // Handle multiple employees by checking if selectedEmployees is an array
@@ -119,7 +119,7 @@ const MonthlyAttendanceSearchForm = ({ onDataFetched }) => {
         console.log("employeesData from form", employeesData);
 
         // Pass the extracted data to the callback
-        onDataFetched(employeesData);
+        onDataFetched(employeesData, selectedMonthYear);
       } else {
         console.error("Error fetching attendance data:", response);
       }
@@ -159,8 +159,8 @@ const MonthlyAttendanceSearchForm = ({ onDataFetched }) => {
                           name="month"
                           type="month"
                           id="month"
-                          value={selectedMonth}
-                          onChange={(e) => setSelectedMonth(e.target.value)}
+                          value={selectedMonthYear}
+                          onChange={(e) => setSelectedMonthYear(e.target.value)}
                         />
                       </div>
                     </div>

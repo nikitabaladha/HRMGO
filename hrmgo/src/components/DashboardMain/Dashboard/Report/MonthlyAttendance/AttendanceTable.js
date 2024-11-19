@@ -1,9 +1,18 @@
 import React from "react";
 
-const AttendanceTable = ({ attendanceData }) => {
-  const totalDaysInMonth = 31; // Adjust this value for months with fewer days
+const AttendanceTable = ({ attendanceData, selectedMonthYear }) => {
+  if (!selectedMonthYear) {
+    return null;
+  }
 
-  // Ensure attendanceData is an array
+  const [year, month] = selectedMonthYear.split("-").map(Number);
+
+  const monthName = new Intl.DateTimeFormat("en-US", { month: "short" }).format(
+    new Date(year, month - 1) // Adjust for zero-based month index
+  );
+
+  const totalDaysInMonth = new Date(year, month, 0).getDate();
+
   const employees = Array.isArray(attendanceData)
     ? attendanceData
     : [attendanceData].filter(Boolean);
@@ -17,32 +26,34 @@ const AttendanceTable = ({ attendanceData }) => {
               <thead>
                 <tr>
                   <th className="active">Name</th>
-                  {/* Dynamically generate table headers for dates */}
                   {Array.from({ length: totalDaysInMonth }, (_, index) => (
                     <th key={index}>{String(index + 1).padStart(2, "0")}</th>
                   ))}
                 </tr>
               </thead>
               <tbody>
-                {/* Map through each employee to generate rows */}
                 {employees.map((employee) => (
                   <tr key={employee.employeeId}>
                     <td>{employee.employeeName}</td>
-                    {/* Generate attendance cells for each day */}
                     {Array.from({ length: totalDaysInMonth }, (_, index) => {
-                      // Find attendance for the current date
-                      const dateString = `Nov ${String(index + 1).padStart(
-                        2,
-                        "0"
-                      )}, 2024`; // Replace "Nov" and "2024" with dynamic values as needed
+                      const dateString = `${monthName} ${String(
+                        index + 1
+                      ).padStart(2, "0")}, ${year}`;
+
                       const attendanceRecord = employee.attendance.find(
                         (record) => record.date === dateString
                       );
 
                       return (
                         <td key={index}>
-                          {attendanceRecord?.status === "Present" ? (
-                            <i className="badge bg-success p-2">P</i>
+                          {attendanceRecord ? (
+                            attendanceRecord.status === "Present" ? (
+                              <i className="badge bg-success p-2">P</i>
+                            ) : attendanceRecord.status === "Absent" ? (
+                              <i className="badge bg-danger p-2">A</i>
+                            ) : (
+                              ""
+                            )
                           ) : (
                             ""
                           )}
