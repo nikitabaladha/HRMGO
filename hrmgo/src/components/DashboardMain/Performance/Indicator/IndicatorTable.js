@@ -1,40 +1,46 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { TiEyeOutline } from "react-icons/ti";
 import { LuPencil } from "react-icons/lu";
 import { LuTrash2 } from "react-icons/lu";
+import React, { useEffect, useState } from "react";
+import getAPI from "../../../../api/getAPI.js";
+import moment from "moment";
 
 const IndicatorTable = () => {
-  // Sample data array with dynamic values
-  const indicators = [
-    {
-      id: 1,
-      branch: "China",
-      department: "Industrials",
-      designation: "Manager",
-      rating: 3.8,
-      addedBy: "WorkDo",
-      createdAt: "Nov 28, 2024",
-    },
-    {
-      id: 2,
-      branch: "China",
-      department: "Health care",
-      designation: "CEO",
-      rating: 3.2,
-      addedBy: "WorkDo",
-      createdAt: "Dec 8, 2024",
-    },
-    {
-      id: 3,
-      branch: "India",
-      department: "Telecommunications",
-      designation: "Telecom Specialist",
-      rating: 3.6,
-      addedBy: "WorkDo",
-      createdAt: "Nov 8, 2024",
-    },
-  ];
+  const [indicators, setIndicators] = useState([]);
+
+  useEffect(() => {
+    const fetchIndicatorData = async () => {
+      try {
+        const response = await getAPI("/performance-get-all", {}, true);
+
+        if (!response.hasError && Array.isArray(response.data.data)) {
+          const data = response.data.data;
+
+          console.log("Performance API called", data);
+
+          // Map API response directly to the indicators state
+          setIndicators(
+            data.map((item) => ({
+              branch: item.BranchName,
+              department: item.DepartmentName,
+              designation: item.Designation,
+              rating: item.OverAllRating,
+              addedBy: item.AddedByName,
+              createdAt: moment(item.CreatedAt).format("MMM DD, YYYY"),
+              id: item._id,
+            }))
+          );
+        } else {
+          console.error("Invalid response format or error in response");
+        }
+      } catch (err) {
+        console.error("Error fetching Indicator Data:", err);
+      }
+    };
+
+    fetchIndicatorData();
+  }, []);
 
   // Function to render the dynamic stars based on the rating
   const renderStars = (rating) => {
@@ -98,24 +104,21 @@ const IndicatorTable = () => {
                                 to="#"
                                 className="mx-3 btn btn-sm align-items-center"
                                 data-size="lg"
-                                data-url={`https://demo.workdo.io/hrmgo/indicator/${indicator.id}`}
                                 data-ajax-popup="true"
                                 data-bs-toggle="tooltip"
                                 title="Indicator Detail"
                                 data-bs-original-title="View"
                               >
                                 <span className="text-white">
-                                  {/* <i className="ti ti-eye" /> */}
                                   <TiEyeOutline />
                                 </span>
                               </Link>
                             </div>
                             <div className="action-btn bg-info me-2">
                               <Link
-                                to="#"
+                                to=""
                                 className="mx-3 btn btn-sm align-items-center"
                                 data-size="lg"
-                                data-url={`https://demo.workdo.io/hrmgo/indicator/${indicator.id}/edit`}
                                 data-ajax-popup="true"
                                 data-bs-toggle="tooltip"
                                 title="Edit Indicator"
@@ -129,7 +132,6 @@ const IndicatorTable = () => {
                             <div className="action-btn bg-danger">
                               <form
                                 method="POST"
-                                action={`https://demo.workdo.io/hrmgo/indicator/${indicator.id}`}
                                 acceptCharset="UTF-8"
                                 id={`delete-form-${indicator.id}`}
                               >
