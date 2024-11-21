@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import getAPI from "../../../../api/getAPI.js";
 import postAPI from "../../../../api/postAPI.js";
 
-import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CompetencyRating from "./CompetencyRating.js";
