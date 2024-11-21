@@ -12,23 +12,22 @@ const IndicatorTable = () => {
   useEffect(() => {
     const fetchIndicatorData = async () => {
       try {
-        const response = await getAPI("/performance-get-all", {}, true);
+        const response = await getAPI("/indicator", {}, true);
 
         if (!response.hasError && Array.isArray(response.data.data)) {
           const data = response.data.data;
 
-          console.log("Performance API called", data);
+          console.log("Indicator API called", data);
 
-          // Map API response directly to the indicators state
           setIndicators(
             data.map((item) => ({
-              branch: item.BranchName,
-              department: item.DepartmentName,
-              designation: item.Designation,
-              rating: item.OverAllRating,
-              addedBy: item.AddedByName,
-              createdAt: moment(item.CreatedAt).format("MMM DD, YYYY"),
-              id: item._id,
+              branch: item.branch,
+              department: item.department,
+              designation: item.designation,
+              rating: item.overAllRating,
+              addedBy: item.addedBy,
+              createdAt: moment(item.createdAt).format("MMM DD, YYYY"),
+              id: item.id,
             }))
           );
         } else {

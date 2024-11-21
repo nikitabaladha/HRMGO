@@ -1,6 +1,7 @@
 // HRMGO\hrmgo\src\components\DashboardMain\Appraisal\Appraisal\AppraisalHeader.js
 import React from "react";
 import { Link } from "react-router-dom";
+import { FaPlus } from "react-icons/fa";
 
 const AppraisalHeader = () => {
   return (
@@ -33,7 +34,7 @@ const AppraisalHeader = () => {
                   btn-sm btn-primary"
                   data-bs-original-title="Create"
                 >
-                  <i className="ti ti-plus" />
+                  <FaPlus />
                 </Link>
               </div>
             </div>
