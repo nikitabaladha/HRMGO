@@ -1,15 +1,26 @@
 import React from "react";
 import getAPI from "../../../../api/getAPI.js";
+import postAPI from "../../../../api/postAPI.js";
+
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-const AppraisalCreateModal = ({ closeModal }) => {
+import CompetencyRating from "./CompetencyRating.js";
+const IndicatorCreateModal = ({ closeModal }) => {
   const [branches, setBranches] = useState([]);
   const [selectedBranch, setSelectedBranch] = useState("");
   const [departments, setDepartments] = useState([]);
   const [selectedDepartment, setSelectedDepartment] = useState("");
   const [designations, setDesignation] = useState([]);
   const [selectedDesignation, setSelectedDesignation] = useState("");
+  const [competencyRatings, setCompetencyRatings] = useState({});
+
+  const handleRatingChange = (competency, rating) => {
+    setCompetencyRatings((prevRatings) => ({
+      ...prevRatings,
+      [competency]: rating,
+    }));
+  };
 
   const handleBranchChange = (e) => {
     const branchId = e.target.value;
@@ -84,6 +95,62 @@ const AppraisalCreateModal = ({ closeModal }) => {
     fetchBranchData();
   }, []);
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!selectedBranch || !selectedDepartment || !selectedDesignation) {
+      toast.error("Please select Branch, Department, and Designation.");
+      return;
+    }
+
+    // Group competencies into categories
+    const groupedCompetencies = {
+      organizational: [
+        { name: "Leadership", rating: competencyRatings.leadership || 0 },
+        {
+          name: "Project Management",
+          rating: competencyRatings.projectManagement || 0,
+        },
+      ],
+      technical: [
+        {
+          name: "Allocating Resources",
+          rating: competencyRatings.allocatingResources || 0,
+        },
+      ],
+      behavioural: [
+        {
+          name: "Business Process",
+          rating: competencyRatings.businessProcess || 0,
+        },
+        {
+          name: "Oral Communication",
+          rating: competencyRatings.oralCommunication || 0,
+        },
+      ],
+    };
+
+    const data = {
+      branchId: selectedBranch,
+      departmentId: selectedDepartment,
+      designationId: selectedDesignation,
+      addedById: "6729e81981218962cde61afc",
+      competencies: groupedCompetencies,
+    };
+
+    try {
+      const response = await postAPI("/indicator", data, true);
+      if (!response.hasError) {
+        toast.success("Indicator created successfully!");
+        closeModal(); // Close the modal on success
+      } else {
+        toast.error("Error creating indicator: " + response.message);
+      }
+    } catch (error) {
+      console.error("Error creating indicator: " + error.message);
+    }
+  };
+
   return (
     <>
       <div
@@ -120,6 +187,7 @@ const AppraisalCreateModal = ({ closeModal }) => {
                 id="ratingForm"
                 className="needs-validation"
                 noValidate=""
+                onSubmit={handleSubmit}
               >
                 <input
                   name="_token"
@@ -201,359 +269,27 @@ const AppraisalCreateModal = ({ closeModal }) => {
                       </div>
                     </div>
                   </div>
-                  <div className="row">
-                    <div className="col-md-12 mt-3">
-                      <h6>Organizational Competencies</h6>
-                      <hr className="mt-0" />
-                    </div>
-                    <div className="col-6">Leadership</div>
-                    <div className="col-6">
-                      <fieldset id="demo1" className="rate">
-                        <input
-                          className="stars"
-                          type="radio"
-                          id="technical-5-3"
-                          name="rating[3]"
-                          defaultValue={5}
-                        />
-                        <label
-                          className="full"
-                          htmlFor="technical-5-3"
-                          title="Awesome - 5 stars"
-                        />
-                        <input
-                          className="stars"
-                          type="radio"
-                          id="technical-4-3"
-                          name="rating[3]"
-                          defaultValue={4}
-                        />
-                        <label
-                          className="full"
-                          htmlFor="technical-4-3"
-                          title="Pretty good - 4 stars"
-                        />
-                        <input
-                          className="stars"
-                          type="radio"
-                          id="technical-3-3"
-                          name="rating[3]"
-                          defaultValue={3}
-                        />
-                        <label
-                          className="full"
-                          htmlFor="technical-3-3"
-                          title="Meh - 3 stars"
-                        />
-                        <input
-                          className="stars"
-                          type="radio"
-                          id="technical-2-3"
-                          name="rating[3]"
-                          defaultValue={2}
-                        />
-                        <label
-                          className="full"
-                          htmlFor="technical-2-3"
-                          title="Kinda bad - 2 stars"
-                        />
-                        <input
-                          className="stars"
-                          type="radio"
-                          id="technical-1-3"
-                          name="rating[3]"
-                          defaultValue={1}
-                        />
-                        <label
-                          className="full"
-                          htmlFor="technical-1-3"
-                          title="Sucks big time - 1 star"
-                        />
-                      </fieldset>
-                    </div>
-                    <div className="col-6">Project Management</div>
-                    <div className="col-6">
-                      <fieldset id="demo1" className="rate">
-                        <input
-                          className="stars"
-                          type="radio"
-                          id="technical-5-5"
-                          name="rating[5]"
-                          defaultValue={5}
-                        />
-                        <label
-                          className="full"
-                          htmlFor="technical-5-5"
-                          title="Awesome - 5 stars"
-                        />
-                        <input
-                          className="stars"
-                          type="radio"
-                          id="technical-4-5"
-                          name="rating[5]"
-                          defaultValue={4}
-                        />
-                        <label
-                          className="full"
-                          htmlFor="technical-4-5"
-                          title="Pretty good - 4 stars"
-                        />
-                        <input
-                          className="stars"
-                          type="radio"
-                          id="technical-3-5"
-                          name="rating[5]"
-                          defaultValue={3}
-                        />
-                        <label
-                          className="full"
-                          htmlFor="technical-3-5"
-                          title="Meh - 3 stars"
-                        />
-                        <input
-                          className="stars"
-                          type="radio"
-                          id="technical-2-5"
-                          name="rating[5]"
-                          defaultValue={2}
-                        />
-                        <label
-                          className="full"
-                          htmlFor="technical-2-5"
-                          title="Kinda bad - 2 stars"
-                        />
-                        <input
-                          className="stars"
-                          type="radio"
-                          id="technical-1-5"
-                          name="rating[5]"
-                          defaultValue={1}
-                        />
-                        <label
-                          className="full"
-                          htmlFor="technical-1-5"
-                          title="Sucks big time - 1 star"
-                        />
-                      </fieldset>
-                    </div>
-                    <div className="col-md-12 mt-3">
-                      <h6>Technical Competencies</h6>
-                      <hr className="mt-0" />
-                    </div>
-                    <div className="col-6">Allocating Resources</div>
-                    <div className="col-6">
-                      <fieldset id="demo1" className="rate">
-                        <input
-                          className="stars"
-                          type="radio"
-                          id="technical-5-1"
-                          name="rating[1]"
-                          defaultValue={5}
-                        />
-                        <label
-                          className="full"
-                          htmlFor="technical-5-1"
-                          title="Awesome - 5 stars"
-                        />
-                        <input
-                          className="stars"
-                          type="radio"
-                          id="technical-4-1"
-                          name="rating[1]"
-                          defaultValue={4}
-                        />
-                        <label
-                          className="full"
-                          htmlFor="technical-4-1"
-                          title="Pretty good - 4 stars"
-                        />
-                        <input
-                          className="stars"
-                          type="radio"
-                          id="technical-3-1"
-                          name="rating[1]"
-                          defaultValue={3}
-                        />
-                        <label
-                          className="full"
-                          htmlFor="technical-3-1"
-                          title="Meh - 3 stars"
-                        />
-                        <input
-                          className="stars"
-                          type="radio"
-                          id="technical-2-1"
-                          name="rating[1]"
-                          defaultValue={2}
-                        />
-                        <label
-                          className="full"
-                          htmlFor="technical-2-1"
-                          title="Kinda bad - 2 stars"
-                        />
-                        <input
-                          className="stars"
-                          type="radio"
-                          id="technical-1-1"
-                          name="rating[1]"
-                          defaultValue={1}
-                        />
-                        <label
-                          className="full"
-                          htmlFor="technical-1-1"
-                          title="Sucks big time - 1 star"
-                        />
-                      </fieldset>
-                    </div>
-                    <div className="col-md-12 mt-3">
-                      <h6>Behavioural Competencies</h6>
-                      <hr className="mt-0" />
-                    </div>
-                    <div className="col-6">Business Process</div>
-                    <div className="col-6">
-                      <fieldset id="demo1" className="rate">
-                        <input
-                          className="stars"
-                          type="radio"
-                          id="technical-5-2"
-                          name="rating[2]"
-                          defaultValue={5}
-                        />
-                        <label
-                          className="full"
-                          htmlFor="technical-5-2"
-                          title="Awesome - 5 stars"
-                        />
-                        <input
-                          className="stars"
-                          type="radio"
-                          id="technical-4-2"
-                          name="rating[2]"
-                          defaultValue={4}
-                        />
-                        <label
-                          className="full"
-                          htmlFor="technical-4-2"
-                          title="Pretty good - 4 stars"
-                        />
-                        <input
-                          className="stars"
-                          type="radio"
-                          id="technical-3-2"
-                          name="rating[2]"
-                          defaultValue={3}
-                        />
-                        <label
-                          className="full"
-                          htmlFor="technical-3-2"
-                          title="Meh - 3 stars"
-                        />
-                        <input
-                          className="stars"
-                          type="radio"
-                          id="technical-2-2"
-                          name="rating[2]"
-                          defaultValue={2}
-                        />
-                        <label
-                          className="full"
-                          htmlFor="technical-2-2"
-                          title="Kinda bad - 2 stars"
-                        />
-                        <input
-                          className="stars"
-                          type="radio"
-                          id="technical-1-2"
-                          name="rating[2]"
-                          defaultValue={1}
-                        />
-                        <label
-                          className="full"
-                          htmlFor="technical-1-2"
-                          title="Sucks big time - 1 star"
-                        />
-                      </fieldset>
-                    </div>
-                    <div className="col-6">Oral Communication</div>
-                    <div className="col-6">
-                      <fieldset id="demo1" className="rate">
-                        <input
-                          className="stars"
-                          type="radio"
-                          id="technical-5-4"
-                          name="rating[4]"
-                          defaultValue={5}
-                        />
-                        <label
-                          className="full"
-                          htmlFor="technical-5-4"
-                          title="Awesome - 5 stars"
-                        />
-                        <input
-                          className="stars"
-                          type="radio"
-                          id="technical-4-4"
-                          name="rating[4]"
-                          defaultValue={4}
-                        />
-                        <label
-                          className="full"
-                          htmlFor="technical-4-4"
-                          title="Pretty good - 4 stars"
-                        />
-                        <input
-                          className="stars"
-                          type="radio"
-                          id="technical-3-4"
-                          name="rating[4]"
-                          defaultValue={3}
-                        />
-                        <label
-                          className="full"
-                          htmlFor="technical-3-4"
-                          title="Meh - 3 stars"
-                        />
-                        <input
-                          className="stars"
-                          type="radio"
-                          id="technical-2-4"
-                          name="rating[4]"
-                          defaultValue={2}
-                        />
-                        <label
-                          className="full"
-                          htmlFor="technical-2-4"
-                          title="Kinda bad - 2 stars"
-                        />
-                        <input
-                          className="stars"
-                          type="radio"
-                          id="technical-1-4"
-                          name="rating[4]"
-                          defaultValue={1}
-                        />
-                        <label
-                          className="full"
-                          htmlFor="technical-1-4"
-                          title="Sucks big time - 1 star"
-                        />
-                      </fieldset>
-                    </div>
-                  </div>
+
+                  <CompetencyRating onRatingChange={handleRatingChange} />
                 </div>
                 <div className="modal-footer">
-                  <input
+                  <button
                     type="button"
                     defaultValue="Cancel"
                     className="btn btn-secondary"
                     data-bs-dismiss="modal"
                     onClick={closeModal}
-                  />
-                  <input
+                  >
+                    Cancel
+                  </button>
+
+                  <button
                     type="submit"
                     defaultValue="Create"
                     className="btn btn-primary"
-                  />
+                  >
+                    Create
+                  </button>
                 </div>
               </form>
             </div>
@@ -564,4 +300,4 @@ const AppraisalCreateModal = ({ closeModal }) => {
   );
 };
 
-export default AppraisalCreateModal;
+export default IndicatorCreateModal;
