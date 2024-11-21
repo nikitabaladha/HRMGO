@@ -2,8 +2,22 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { FaPlus } from "react-icons/fa";
+import { useState } from "react";
+import IndicatorCreateModal from "./IndicatorCreateModal";
 
 const IndicatorHeader = () => {
+  // State to control modal visibility
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // Function to open the modal
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  // Function to close the modal
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
   return (
     <>
       <div className="page-header">
@@ -23,7 +37,7 @@ const IndicatorHeader = () => {
             <div className="col">
               <div className="float-end ">
                 <Link
-                  to=""
+                  onClick={openModal}
                   data-ajax-popup="true"
                   data-size="lg"
                   data-title="Create New
@@ -41,6 +55,8 @@ const IndicatorHeader = () => {
           </div>
         </div>
       </div>
+
+      {isModalOpen && <IndicatorCreateModal closeModal={closeModal} />}
     </>
   );
 };

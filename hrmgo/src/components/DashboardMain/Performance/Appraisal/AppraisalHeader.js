@@ -2,8 +2,22 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { FaPlus } from "react-icons/fa";
+import { useState } from "react";
+import AppraisalCreateModal from "./AppraisalCreateModal";
 
 const AppraisalHeader = () => {
+  // State to control modal visibility
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // Function to open the modal
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  // Function to close the modal
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
   return (
     <>
       <div className="page-header">
@@ -22,8 +36,8 @@ const AppraisalHeader = () => {
             </div>
             <div className="col">
               <div className="float-end ">
-                <Link
-                  to=""
+                <button
+                  onClick={openModal}
                   data-ajax-popup="true"
                   data-size="lg"
                   data-title="Create New
@@ -35,12 +49,14 @@ const AppraisalHeader = () => {
                   data-bs-original-title="Create"
                 >
                   <FaPlus />
-                </Link>
+                </button>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+      {isModalOpen && <AppraisalCreateModal closeModal={closeModal} />}
     </>
   );
 };
