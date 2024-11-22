@@ -1,12 +1,61 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import putAPI from "../../../../api/putAPI.js";
 
-const IndicatorViewModal = ({ closeModal, indicator }) => {
-  console.log("Indicator from update", indicator);
+const IndicatorUpdateModal = ({ closeModal, indicator }) => {
+  // Initialize state to track ratings for each category
+  const [ratings, setRatings] = useState({
+    organizational: {},
+    technical: {},
+    behavioural: {},
+  });
 
+  // Initialize competencies when 'indicator' changes
+  useEffect(() => {
+    if (indicator) {
+      setRatings({
+        organizational: indicator.competencies?.organizational.reduce(
+          (acc, competency) => {
+            acc[competency.name] = competency.rating || 0;
+            return acc;
+          },
+          {}
+        ),
+        technical: indicator.competencies?.technical.reduce(
+          (acc, competency) => {
+            acc[competency.name] = competency.rating || 0;
+            return acc;
+          },
+          {}
+        ),
+        behavioural: indicator.competencies?.behavioural.reduce(
+          (acc, competency) => {
+            acc[competency.name] = competency.rating || 0;
+            return acc;
+          },
+          {}
+        ),
+      });
+    }
+  }, [indicator]);
+
+  // Ensure the component doesn't render if 'indicator' is not provided
   if (!indicator) return null;
 
-  const renderRating = (name, value) => {
+  // Handle rating change
+  const handleRatingChange = (category, competencyName, rating) => {
+    setRatings((prevState) => ({
+      ...prevState,
+      [category]: {
+        ...prevState[category],
+        [competencyName]: rating,
+      },
+    }));
+  };
+
+  // Render star rating input
+  const renderRating = (category, name, value) => {
     return (
       <fieldset id="demo1" className="rate">
         {[5, 4, 3, 2, 1].map((rating) => (
@@ -18,6 +67,7 @@ const IndicatorViewModal = ({ closeModal, indicator }) => {
               name={`rating[${name}]`}
               value={rating}
               checked={value === rating}
+              onChange={() => handleRatingChange(category, name, rating)} // Update state on selection
             />
             <label
               className="full"
@@ -28,6 +78,45 @@ const IndicatorViewModal = ({ closeModal, indicator }) => {
         ))}
       </fieldset>
     );
+  };
+
+  // Handle indicator update form submission
+  const handleUpdateIndicator = async (e) => {
+    e.preventDefault();
+
+    // Prepare the updated competencies data
+    const updatedCompetencies = {
+      organizational: Object.entries(ratings.organizational).map(
+        ([name, rating]) => ({ name, rating })
+      ),
+      technical: Object.entries(ratings.technical).map(([name, rating]) => ({
+        name,
+        rating,
+      })),
+      behavioural: Object.entries(ratings.behavioural).map(
+        ([name, rating]) => ({ name, rating })
+      ),
+    };
+
+    const updatedIndicator = { competencies: updatedCompetencies };
+
+    try {
+      const response = await putAPI(
+        `/indicator/${indicator.id}`,
+        updatedIndicator,
+        true
+      );
+
+      if (!response.hasError) {
+        toast.success("Indicator updated successfully!");
+        closeModal();
+      } else {
+        toast.error("Failed to update indicator.");
+      }
+    } catch (error) {
+      toast.error("An error occurred while updating indicator.");
+      console.error("error", error);
+    }
   };
 
   return (
@@ -44,7 +133,7 @@ const IndicatorViewModal = ({ closeModal, indicator }) => {
         <div className="modal-content">
           <div className="modal-header">
             <h5 className="modal-title" id="exampleModalLabel">
-              Indicator Detail
+              Edit Indicator
             </h5>
             <button
               type="button"
@@ -61,6 +150,7 @@ const IndicatorViewModal = ({ closeModal, indicator }) => {
               id="ratingForm"
               className="needs-validation"
               noValidate=""
+              onSubmit={handleUpdateIndicator}
             >
               <input name="_method" type="hidden" defaultValue="PUT" />
               <input name="_token" type="hidden" />
@@ -96,7 +186,12 @@ const IndicatorViewModal = ({ closeModal, indicator }) => {
                     <React.Fragment key={competency.name}>
                       <div className="col-6">{competency.name}</div>
                       <div className="col-6">
-                        {renderRating(competency.name, competency.rating)}
+                        {renderRating(
+                          "organizational",
+                          competency.name,
+                          ratings.organizational[competency.name] ||
+                            competency.rating
+                        )}
                       </div>
                     </React.Fragment>
                   ))}
@@ -110,7 +205,12 @@ const IndicatorViewModal = ({ closeModal, indicator }) => {
                     <React.Fragment key={competency.name}>
                       <div className="col-6">{competency.name}</div>
                       <div className="col-6">
-                        {renderRating(competency.name, competency.rating)}
+                        {renderRating(
+                          "technical",
+                          competency.name,
+                          ratings.technical[competency.name] ||
+                            competency.rating
+                        )}
                       </div>
                     </React.Fragment>
                   ))}
@@ -124,11 +224,34 @@ const IndicatorViewModal = ({ closeModal, indicator }) => {
                     <React.Fragment key={competency.name}>
                       <div className="col-6">{competency.name}</div>
                       <div className="col-6">
-                        {renderRating(competency.name, competency.rating)}
+                        {renderRating(
+                          "behavioural",
+                          competency.name,
+                          ratings.behavioural[competency.name] ||
+                            competency.rating
+                        )}
                       </div>
                     </React.Fragment>
                   ))}
                 </div>
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  defaultValue="Cancel"
+                  className="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                  onClick={closeModal}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  defaultValue="Update"
+                  className="btn btn-primary"
+                >
+                  Update
+                </button>
               </div>
             </form>
           </div>
@@ -138,4 +261,4 @@ const IndicatorViewModal = ({ closeModal, indicator }) => {
   );
 };
 
-export default IndicatorViewModal;
+export default IndicatorUpdateModal;
