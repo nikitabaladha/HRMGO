@@ -64,6 +64,16 @@ const IndicatorTable = () => {
     setIsIndicatorUpdateModalOpen(true); // Open the update modal
   };
 
+  const handleUpdateSuccess = (updatedIndicator) => {
+    // Update the indicators list with the updated indicator
+    setIndicators((prev) =>
+      prev.map((indicator) =>
+        indicator.id === updatedIndicator.id ? updatedIndicator : indicator
+      )
+    );
+    setIsIndicatorUpdateModalOpen(false);
+  };
+
   useEffect(() => {
     const fetchIndicatorData = async () => {
       try {
@@ -73,8 +83,6 @@ const IndicatorTable = () => {
           const data = response.data.data;
 
           console.log("Indicator API called", data);
-
-          // i am getting data here
 
           setIndicators(
             data.map((item) => ({
@@ -250,8 +258,9 @@ const IndicatorTable = () => {
       {/* Update Modal */}
       {isIndicatorUpdateModalOpen && (
         <IndicatorUpdateModal
-          closeModal={closeModal} // Pass closeModal to close the update modal
-          indicator={selectedIndicator} // Pass the selected indicator data
+          closeModal={closeModal}
+          indicator={selectedIndicator}
+          onUpdateSuccess={handleUpdateSuccess}
         />
       )}
     </>

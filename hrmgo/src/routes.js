@@ -57,7 +57,7 @@ const AppRoutes = ({ isAuthenticated, handleLogin }) => {
               element={<BulkAttendance />}
             />
             <Route path="performance/indicator" element={<Indicator />} />
-            {/* <Route path="performance/appraisal" element={<Appraisal />} /> */}
+            <Route path="performance/appraisal" element={<Appraisal />} />
           </Route>
 
           <Route path="*" element={<Navigate to="/dashboard" replace />} />

@@ -38,7 +38,11 @@ const IndicatorViewModal = ({ closeModal, indicator }) => {
       role="dialog"
       aria-labelledby="exampleModalLabel"
       aria-modal="true"
-      style={{ display: "block", paddingLeft: 0 }}
+      style={{
+        display: "block",
+        paddingLeft: 0,
+        backgroundColor: "rgba(0, 0, 0, 0.5)",
+      }}
     >
       <div className="modal-dialog modal-lg" role="document">
         <div className="modal-content">

@@ -5,6 +5,7 @@ import postAPI from "../../../../api/postAPI.js";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CompetencyRating from "./CompetencyRating.js";
+
 const IndicatorCreateModal = ({ closeModal }) => {
   const [branches, setBranches] = useState([]);
   const [selectedBranch, setSelectedBranch] = useState("");

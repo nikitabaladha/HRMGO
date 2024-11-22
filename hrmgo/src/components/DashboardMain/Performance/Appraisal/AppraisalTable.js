@@ -9,26 +9,27 @@ import moment from "moment";
 const AppraisalTable = () => {
   const [Appraisals, setAppraisals] = useState([]);
 
+  // Function to render dynamic stars based on the rating
   useEffect(() => {
     const fetchAppraisalData = async () => {
       try {
-        const response = await getAPI("/performance-get-all", {}, true);
+        const response = await getAPI("/appraisal", {}, true);
 
         if (!response.hasError && Array.isArray(response.data.data)) {
           const data = response.data.data;
 
-          console.log("Performance API called", data);
+          console.log("Appraisal get all API called", data);
 
           setAppraisals(
             data.map((item) => ({
-              branch: item.BranchName,
-              department: item.DepartmentName,
-              designation: item.Designation,
-              employee: item.EmployeeName,
-              targetRating: item.TargetRating,
-              overallRating: item.OverAllRating,
-              appraisalDate: moment(item.AppraisalDate).format("MMM DD, YYYY"), // Correct date format
-              id: item._id,
+              branch: item.branch,
+              department: item.department,
+              designation: item.designation,
+              employee: item.employee,
+              targetRating: item.targetRating,
+              overallRating: item.overallRating,
+              appraisalDate: moment(item.appraisalDate).format("MMM DD, YYYY"),
+              id: item.appraisalId, // Update this field if necessary
             }))
           );
         } else {
@@ -42,7 +43,6 @@ const AppraisalTable = () => {
     fetchAppraisalData();
   }, []);
 
-  // Function to render dynamic stars based on the rating
   const renderStars = (rating) => {
     const fullStars = Math.floor(rating);
     const halfStar = rating % 1 >= 0.5 ? 1 : 0;

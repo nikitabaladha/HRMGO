@@ -1,6 +1,64 @@
 import React from "react";
+import { useState } from "react";
+import { useEffect } from "react";
+import getAPI from "../../../../api/getAPI.js";
+import postAPI from "../../../../api/postAPI.js";
 import AppraisalRating from "./AppraisalRating.js";
 const AppraisalCreateModal = ({ closeModal }) => {
+  const [branches, setBranches] = useState([]);
+  const [selectedBranch, setSelectedBranch] = useState("");
+
+  const [employees, setEmployees] = useState([]);
+  const [selectedEmployee, setSelectedEmployee] = useState("");
+
+  useEffect(() => {
+    const fetchBranchData = async () => {
+      try {
+        const response = await getAPI(`/branch-get-all`, {}, true);
+        if (!response.hasError && Array.isArray(response.data.data)) {
+          setBranches(response.data.data);
+          console.log("Branches fetched :", response.data.data);
+        } else {
+          console.error("Invalid response format or error in response");
+        }
+      } catch (err) {
+        console.error("Error fetching branch data:", err);
+      }
+    };
+    fetchBranchData();
+  }, []);
+
+  const handleBranchChange = (e) => {
+    const branchId = e.target.value;
+    setSelectedBranch(branchId);
+
+    if (branchId) {
+      const fetchEmployeeByBranchId = async () => {
+        try {
+          const response = await getAPI(
+            `/employee-get-filter?branchId=${branchId}`,
+            {},
+            true,
+            true
+          );
+
+          console.log("Filtered employee", response);
+
+          if (!response.hasError && Array.isArray(response.data.data)) {
+            setEmployees(response.data.data);
+          } else {
+            console.error("Invalid response format or error in response");
+          }
+        } catch (err) {
+          console.error("Error fetching department data:", err);
+        }
+      };
+      fetchEmployeeByBranchId();
+    } else {
+      setEmployees([]);
+    }
+  };
+
   return (
     <>
       <div
@@ -10,7 +68,11 @@ const AppraisalCreateModal = ({ closeModal }) => {
         role="dialog"
         aria-labelledby="exampleModalLabel"
         aria-modal="true"
-        style={{ display: "block", paddingLeft: 0 }}
+        style={{
+          display: "block",
+          paddingLeft: 0,
+          backgroundColor: " rgba(0, 0, 0, 0.5)",
+        }}
       >
         <div className="modal-dialog modal-lg" role="document">
           <div className="modal-content">
@@ -23,6 +85,7 @@ const AppraisalCreateModal = ({ closeModal }) => {
                 className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
+                onClick={closeModal}
               />
             </div>
             <div className="body ">
@@ -44,23 +107,19 @@ const AppraisalCreateModal = ({ closeModal }) => {
                         </label>
                         <span className="text-danger">*</span>
                         <select
-                          name="brances"
-                          id="brances"
-                          className="form-control "
-                          required=""
+                          className="form-control select"
+                          id="branch_id"
+                          name="branch"
+                          value={selectedBranch}
+                          onChange={handleBranchChange}
                         >
-                          <option selected="" disabled="" value="">
-                            Select Branch
-                          </option>
-                          <option value={1}>China</option>
-                          <option value={2}>India</option>
-                          <option value={3}>Canada</option>
-                          <option value={4}>Greece</option>
-                          <option value={5}>Italy</option>
-                          <option value={6}>Japan</option>
-                          <option value={7}>Malaysia</option>
-                          <option value={8}>France</option>
-                        </select>
+                          <option value="">All</option>
+                          {branches.map((branch) => (
+                            <option key={branch._id} value={branch._id}>
+                              {branch.branchName}
+                            </option>
+                          ))}
+                        </select>{" "}
                       </div>
                     </div>
                     <div className="col-md-6 mt-2">
@@ -71,11 +130,21 @@ const AppraisalCreateModal = ({ closeModal }) => {
                         <span className="text-danger">*</span>
                         <div className="employee_div">
                           <select
+                            className="form-control select"
+                            id="employee_id"
                             name="employee"
-                            id="employee"
-                            className="form-control "
-                            required=""
-                          ></select>
+                            value={selectedEmployee}
+                            onChange={(e) =>
+                              setSelectedEmployee(e.target.value)
+                            }
+                          >
+                            <option value="">Select Employee</option>
+                            {employees.map((employee) => (
+                              <option key={employee._id} value={employee._id}>
+                                {employee.name}
+                              </option>
+                            ))}
+                          </select>
                         </div>
                       </div>
                     </div>
@@ -126,6 +195,7 @@ const AppraisalCreateModal = ({ closeModal }) => {
                     defaultValue="Cancel"
                     className="btn btn-secondary"
                     data-bs-dismiss="modal"
+                    onClick={closeModal}
                   />
                   <input
                     type="submit"

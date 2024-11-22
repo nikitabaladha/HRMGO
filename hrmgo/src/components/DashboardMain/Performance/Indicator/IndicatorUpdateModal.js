@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import putAPI from "../../../../api/putAPI.js";
 
-const IndicatorUpdateModal = ({ closeModal, indicator }) => {
+const IndicatorUpdateModal = ({ closeModal, indicator, onUpdateSuccess }) => {
   // Initialize state to track ratings for each category
   const [ratings, setRatings] = useState({
     organizational: {},
@@ -109,6 +109,7 @@ const IndicatorUpdateModal = ({ closeModal, indicator }) => {
 
       if (!response.hasError) {
         toast.success("Indicator updated successfully!");
+        onUpdateSuccess(response.data.data);
         closeModal();
       } else {
         toast.error("Failed to update indicator.");
@@ -127,7 +128,11 @@ const IndicatorUpdateModal = ({ closeModal, indicator }) => {
       role="dialog"
       aria-labelledby="exampleModalLabel"
       aria-modal="true"
-      style={{ display: "block", paddingLeft: 0 }}
+      style={{
+        display: "block",
+        paddingLeft: 0,
+        backgroundColor: "rgba(0, 0, 0, 0.5)",
+      }}
     >
       <div className="modal-dialog modal-lg" role="document">
         <div className="modal-content">
