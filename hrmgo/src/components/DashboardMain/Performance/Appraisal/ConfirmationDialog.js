@@ -4,19 +4,6 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function ConfirmationDialog({ onCancel }) {
-  const handleDelete = async (bookId) => {
-    try {
-      const response = await deleteAPI(`/book/${bookId}`);
-
-      if (response && !response.hasError) {
-        console.log("delete appraisal Response:", response.data.message);
-      } else {
-        console.error("Error deleting appraisal:", response.message);
-      }
-    } catch (error) {
-      console.error("Error deleting book:", error);
-    }
-  };
   useEffect(() => {
     const handleClickOutside = (event) => {
       const modalElement = document.getElementById("confirmation-dialog");
@@ -132,9 +119,6 @@ function ConfirmationDialog({ onCancel }) {
               className="swal2-confirm btn btn-success"
               aria-label=""
               style={{ display: "inline-block" }}
-              onClick={() => {
-                handleUpdateStatusDelete();
-              }}
             >
               Yes
             </button>

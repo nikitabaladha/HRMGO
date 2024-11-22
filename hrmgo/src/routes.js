@@ -14,7 +14,7 @@ import TimeSheet from "./components/DashboardMain/Timesheet/TimeSheet/TimeSheet.
 import MarkedAttendance from "./components/DashboardMain/Timesheet/Attendance/MarkedAttendance/MarkedAttendance.js";
 import BulkAttendance from "./components/DashboardMain/Timesheet/Attendance/BulkAttendance/BulkAttendance.js";
 import Indicator from "./components/DashboardMain/Performance/Indicator/Indicator.js";
-// import Appraisal from "./components/DashboardMain/Performance/Appraisal/Appraisal.js";
+import Appraisal from "./components/DashboardMain/Performance/Appraisal/Appraisal.js";
 
 const AppRoutes = ({ isAuthenticated, handleLogin }) => {
   return (
