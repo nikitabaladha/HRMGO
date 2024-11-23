@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import getAPI from "../../../../api/getAPI.js";
+import postAPI from "../../../../api/postAPI.js";
 import IndicatorRating from "./IndicatorRating.js";
 import CompetencyRating from "./CompetencyRating.js";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AppraisalCreateModal = ({ closeModal }) => {
   const [branches, setBranches] = useState([]);
@@ -10,6 +13,15 @@ const AppraisalCreateModal = ({ closeModal }) => {
   const [selectedEmployee, setSelectedEmployee] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
   const [indicatorData, setIndicatorData] = useState(null);
+  const [competencyRatings, setCompetencyRatings] = useState({});
+  const [remarks, setRemarks] = useState("");
+
+  const handleRatingChange = (competency, rating) => {
+    setCompetencyRatings((prevRatings) => ({
+      ...prevRatings,
+      [competency]: rating,
+    }));
+  };
 
   useEffect(() => {
     const fetchBranchData = async () => {
@@ -43,7 +55,6 @@ const AppraisalCreateModal = ({ closeModal }) => {
           );
 
           if (!response.hasError && Array.isArray(response.data.data)) {
-            console.log("Filtered employee:", response.data.data);
             setEmployees(response.data.data);
           } else {
             console.error("Invalid response format or error in response");
@@ -92,13 +103,9 @@ const AppraisalCreateModal = ({ closeModal }) => {
         if (!response.hasError && response.data && response.data.data) {
           const indicatorData = response.data.data;
 
-          // Log the fetched indicator data
-          console.log("Indicator data fetched successfully:", indicatorData);
-
           setIndicatorData(indicatorData);
 
-          // now i want that as soon as the indicator data is fetched i want to display the Appraisal Rating below the form
-          // With passing the indicator data to display the indicator data
+          // this has indicatorId
         } else {
           console.error("Unexpected response format or error in response");
         }
@@ -110,6 +117,78 @@ const AppraisalCreateModal = ({ closeModal }) => {
     handleAutoSearch();
   }, [selectedEmployee, selectedDate, employees]);
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // Validation: Ensure branch and employee are selected
+    if (!selectedBranch || !selectedEmployee || !indicatorData) {
+      toast.error(
+        "Please select a branch, employee, and date before submitting."
+      );
+      return;
+    }
+
+    const selectedEmployeeData = employees.find(
+      (employee) => employee._id === selectedEmployee
+    );
+
+    if (!selectedEmployeeData) {
+      console.error("Selected employee data not found.");
+      return;
+    }
+
+    const { branchId, employeeId } = selectedEmployeeData;
+
+    const appraisalCompetencies = {
+      organizational: [
+        { name: "Leadership", rating: competencyRatings.leadership || 0 },
+        {
+          name: "Project Management",
+          rating: competencyRatings.projectManagement || 0,
+        },
+      ],
+      technical: [
+        {
+          name: "Allocating Resources",
+          rating: competencyRatings.allocatingResources || 0,
+        },
+      ],
+      behavioural: [
+        {
+          name: "Business Process",
+          rating: competencyRatings.businessProcess || 0,
+        },
+        {
+          name: "Oral Communication",
+          rating: competencyRatings.oralCommunication || 0,
+        },
+      ],
+    };
+
+    const data = {
+      branchId: selectedBranch,
+      employeeId: selectedEmployee,
+      remarks,
+      appraisalCompetencies: appraisalCompetencies,
+      indicatorId: indicatorData._id,
+    };
+
+    console.log("Competencies Data from appraisal create:", data.competencies);
+    console.log("data", data);
+
+    try {
+      const response = await postAPI("/appraisal", data, true);
+      if (!response.hasError) {
+        toast.success("Appraisal created successfully!");
+        closeModal();
+      } else {
+        toast.error("Error creating appraisal: " + response.message);
+      }
+    } catch (error) {
+      console.error("Error creating appraisal: " + error.message);
+      toast.error("Error creating appraisal. Please try again.");
+    }
+  };
   return (
     <>
       <div
@@ -146,6 +225,7 @@ const AppraisalCreateModal = ({ closeModal }) => {
                 id="ratingForm"
                 className="needs-validation"
                 noValidate=""
+                onSubmit={handleSubmit}
               >
                 <input name="_token" type="hidden" />
                 <div className="modal-body">
@@ -230,7 +310,8 @@ const AppraisalCreateModal = ({ closeModal }) => {
                           name="remark"
                           cols={50}
                           id="remark"
-                          defaultValue={""}
+                          value={remarks}
+                          onChange={(e) => setRemarks(e.target.value)}
                         />
                       </div>
                     </div>
@@ -238,7 +319,9 @@ const AppraisalCreateModal = ({ closeModal }) => {
                   {indicatorData && (
                     <>
                       <IndicatorRating indicatorData={indicatorData} />
-                      <CompetencyRating />
+                      <CompetencyRating onRatingChange={handleRatingChange} />
+
+                      {/* i want to store data in backend using this CompetencyRating */}
                     </>
                   )}
                 </div>

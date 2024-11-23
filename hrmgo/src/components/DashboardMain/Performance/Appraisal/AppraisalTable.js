@@ -29,7 +29,7 @@ const AppraisalTable = () => {
               targetRating: item.targetRating,
               overallRating: item.overallRating,
               appraisalDate: moment(item.appraisalDate).format("MMM DD, YYYY"),
-              id: item.appraisalId, // Update this field if necessary
+              id: item.appraisalId,
             }))
           );
         } else {

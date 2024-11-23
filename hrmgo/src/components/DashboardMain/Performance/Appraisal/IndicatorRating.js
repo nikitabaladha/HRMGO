@@ -2,7 +2,7 @@ import React from "react";
 import "react-toastify/dist/ReactToastify.css";
 
 const AppraisalRating = ({ indicatorData }) => {
-  console.log("Indicator from update", indicatorData);
+  console.log("Indicator from Appraisal", indicatorData);
 
   if (!indicatorData) return null;
 
