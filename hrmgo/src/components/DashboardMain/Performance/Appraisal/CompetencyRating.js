@@ -20,6 +20,11 @@ const CompetencyRating = ({ onRatingChange }) => {
 
   return (
     <div className="row">
+      <div className="modal-header">
+        <h5 className="modal-title" id="exampleModalLabel">
+          Appraisal
+        </h5>
+      </div>
       {/* Organizational Competencies Header */}
       <div className="col-md-12 mt-3">
         <h6>Organizational Competencies</h6>

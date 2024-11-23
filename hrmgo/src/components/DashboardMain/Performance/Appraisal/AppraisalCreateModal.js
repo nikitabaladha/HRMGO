@@ -1,15 +1,15 @@
-import React from "react";
-import { useState } from "react";
-import { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import getAPI from "../../../../api/getAPI.js";
-import postAPI from "../../../../api/postAPI.js";
-import AppraisalRating from "./AppraisalRating.js";
+import IndicatorRating from "./IndicatorRating.js";
+import CompetencyRating from "./CompetencyRating.js";
+
 const AppraisalCreateModal = ({ closeModal }) => {
   const [branches, setBranches] = useState([]);
   const [selectedBranch, setSelectedBranch] = useState("");
-
   const [employees, setEmployees] = useState([]);
   const [selectedEmployee, setSelectedEmployee] = useState("");
+  const [selectedDate, setSelectedDate] = useState("");
+  const [indicatorData, setIndicatorData] = useState(null);
 
   useEffect(() => {
     const fetchBranchData = async () => {
@@ -17,7 +17,7 @@ const AppraisalCreateModal = ({ closeModal }) => {
         const response = await getAPI(`/branch-get-all`, {}, true);
         if (!response.hasError && Array.isArray(response.data.data)) {
           setBranches(response.data.data);
-          console.log("Branches fetched :", response.data.data);
+          console.log("Branches fetched:", response.data.data);
         } else {
           console.error("Invalid response format or error in response");
         }
@@ -42,15 +42,14 @@ const AppraisalCreateModal = ({ closeModal }) => {
             true
           );
 
-          console.log("Filtered employee", response);
-
           if (!response.hasError && Array.isArray(response.data.data)) {
+            console.log("Filtered employee:", response.data.data);
             setEmployees(response.data.data);
           } else {
             console.error("Invalid response format or error in response");
           }
         } catch (err) {
-          console.error("Error fetching department data:", err);
+          console.error("Error fetching employee data:", err);
         }
       };
       fetchEmployeeByBranchId();
@@ -58,6 +57,58 @@ const AppraisalCreateModal = ({ closeModal }) => {
       setEmployees([]);
     }
   };
+
+  const handleEmployeeChange = (e) => {
+    const employeeId = e.target.value;
+    setSelectedEmployee(employeeId);
+  };
+
+  useEffect(() => {
+    const handleAutoSearch = async () => {
+      if (!selectedEmployee || !selectedDate) return;
+
+      const selectedEmployeeData = employees.find(
+        (employee) => employee._id === selectedEmployee
+      );
+
+      if (!selectedEmployeeData) {
+        console.error("No employee selected or data not found.");
+        return;
+      }
+
+      const { branchId, departmentId, designationId } = selectedEmployeeData;
+
+      // Format date as YYYY-MM
+      const formattedDate = new Date(selectedDate).toISOString().slice(0, 7);
+
+      try {
+        const response = await getAPI(
+          `indicator-by-query?branchId=${branchId}&departmentId=${departmentId}&designationId=${designationId}&createdAt=${formattedDate}`,
+          {},
+          true,
+          true
+        );
+
+        if (!response.hasError && response.data && response.data.data) {
+          const indicatorData = response.data.data;
+
+          // Log the fetched indicator data
+          console.log("Indicator data fetched successfully:", indicatorData);
+
+          setIndicatorData(indicatorData);
+
+          // now i want that as soon as the indicator data is fetched i want to display the Appraisal Rating below the form
+          // With passing the indicator data to display the indicator data
+        } else {
+          console.error("Unexpected response format or error in response");
+        }
+      } catch (err) {
+        console.error("Error fetching indicator data:", err);
+      }
+    };
+
+    handleAutoSearch();
+  }, [selectedEmployee, selectedDate, employees]);
 
   return (
     <>
@@ -119,7 +170,7 @@ const AppraisalCreateModal = ({ closeModal }) => {
                               {branch.branchName}
                             </option>
                           ))}
-                        </select>{" "}
+                        </select>
                       </div>
                     </div>
                     <div className="col-md-6 mt-2">
@@ -134,9 +185,7 @@ const AppraisalCreateModal = ({ closeModal }) => {
                             id="employee_id"
                             name="employee"
                             value={selectedEmployee}
-                            onChange={(e) =>
-                              setSelectedEmployee(e.target.value)
-                            }
+                            onChange={handleEmployeeChange}
                           >
                             <option value="">Select Employee</option>
                             {employees.map((employee) => (
@@ -158,13 +207,14 @@ const AppraisalCreateModal = ({ closeModal }) => {
                         </label>
                         <span className="text-danger">*</span>
                         <input
-                          className="form-control "
+                          className="form-control"
                           autoComplete="off"
                           required="required"
                           id="current_month"
                           name="appraisal_date"
                           type="month"
-                          defaultValue=""
+                          value={selectedDate}
+                          onChange={(e) => setSelectedDate(e.target.value)}
                         />
                       </div>
                     </div>
@@ -185,9 +235,12 @@ const AppraisalCreateModal = ({ closeModal }) => {
                       </div>
                     </div>
                   </div>
-                  <div className="row" id="stares">
-                    <AppraisalRating />
-                  </div>
+                  {indicatorData && (
+                    <>
+                      <IndicatorRating indicatorData={indicatorData} />
+                      <CompetencyRating />
+                    </>
+                  )}
                 </div>
                 <div className="modal-footer">
                   <input
