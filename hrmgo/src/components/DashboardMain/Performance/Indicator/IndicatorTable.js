@@ -16,6 +16,7 @@ const IndicatorTable = () => {
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
   const [isIndicatorUpdateModalOpen, setIsIndicatorUpdateModalOpen] =
     useState(false);
+
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [indicatorIdToDelete, setIndicatorIdToDelete] = useState(null);
   // Function to open the modal

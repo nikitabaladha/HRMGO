@@ -1,7 +1,6 @@
 import React from "react";
-import "react-toastify/dist/ReactToastify.css";
 
-const AppraisalRating = ({ indicatorData }) => {
+const IndicatorRating = ({ indicatorData }) => {
   console.log("Indicator from Appraisal", indicatorData);
 
   if (!indicatorData) return null;
@@ -17,6 +16,7 @@ const AppraisalRating = ({ indicatorData }) => {
               id={`${name}-${rating}`}
               name={`rating[${name}]`}
               value={rating}
+              disabled
               checked={value === rating}
             />
             <label
@@ -31,64 +31,50 @@ const AppraisalRating = ({ indicatorData }) => {
   };
 
   return (
-    <div className="row">
-      <div className="modal-dialog modal-lg" role="document">
-        <div className="modal-content">
-          <div className="modal-header">
-            <h5 className="modal-title" id="exampleModalLabel">
-              Indicator
-            </h5>
-          </div>
-          <div className="body">
-            <input name="_method" type="hidden" defaultValue="PUT" />
-            <input name="_token" type="hidden" />
-            <div className="modal-body">
-              <div className="row">
-                {/* Organizational Competencies */}
-                <div className="col-md-12 mt-3">
-                  <h6>Organizational Competencies</h6>
-                  <hr className="mt-0" />
+    <div className="col-md-4">
+      <div className="modal-header">
+        <h5
+          className="modal-title"
+          id="exampleModalLabel"
+          style={{ marginBottom: "30px" }}
+        >
+          Indicator
+        </h5>
+      </div>
+      <div className="body">
+        <input name="_method" type="hidden" defaultValue="PUT" />
+        <input name="_token" type="hidden" />
+        <div className="modal-body">
+          <div className="row">
+            {indicatorData.competencies?.organizational?.map((competency) => (
+              <React.Fragment key={competency.name}>
+                <div className="col-md-12">
+                  {renderRating(competency.name, competency.rating)}
                 </div>
-                {indicatorData.competencies?.organizational?.map(
-                  (competency) => (
-                    <React.Fragment key={competency.name}>
-                      <div className="col-6">{competency.name}</div>
-                      <div className="col-6">
-                        {renderRating(competency.name, competency.rating)}
-                      </div>
-                    </React.Fragment>
-                  )
-                )}
+              </React.Fragment>
+            ))}
 
-                {/* Technical Competencies */}
-                <div className="col-md-12 mt-3">
-                  <h6>Technical Competencies</h6>
-                  <hr className="mt-0" />
-                </div>
-                {indicatorData.competencies?.technical?.map((competency) => (
-                  <React.Fragment key={competency.name}>
-                    <div className="col-6">{competency.name}</div>
-                    <div className="col-6">
-                      {renderRating(competency.name, competency.rating)}
-                    </div>
-                  </React.Fragment>
-                ))}
-
-                {/* Behavioural Competencies */}
-                <div className="col-md-12 mt-3">
-                  <h6>Behavioural Competencies</h6>
-                  <hr className="mt-0" />
-                </div>
-                {indicatorData.competencies?.behavioural?.map((competency) => (
-                  <React.Fragment key={competency.name}>
-                    <div className="col-6">{competency.name}</div>
-                    <div className="col-6">
-                      {renderRating(competency.name, competency.rating)}
-                    </div>
-                  </React.Fragment>
-                ))}
-              </div>
+            <div className="col-md-12 mt-5">
+              <hr className="mt-0" />
             </div>
+            {indicatorData.competencies?.technical?.map((competency) => (
+              <React.Fragment key={competency.name}>
+                <div className="col-md-12">
+                  {renderRating(competency.name, competency.rating)}
+                </div>
+              </React.Fragment>
+            ))}
+
+            <div className="col-md-12 mt-5">
+              <hr className="mt-0" />
+            </div>
+            {indicatorData.competencies?.behavioural?.map((competency) => (
+              <React.Fragment key={competency.name}>
+                <div className="col-md-12">
+                  {renderRating(competency.name, competency.rating)}
+                </div>
+              </React.Fragment>
+            ))}
           </div>
         </div>
       </div>
@@ -96,4 +82,4 @@ const AppraisalRating = ({ indicatorData }) => {
   );
 };
 
-export default AppraisalRating;
+export default IndicatorRating;

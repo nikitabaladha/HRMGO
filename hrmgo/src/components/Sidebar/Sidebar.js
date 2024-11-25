@@ -521,45 +521,6 @@ const Sidebar = ({ sidebarVisible, toggleSidebar }) => {
     setActiveSubMenu(activeSubMenu === subMenuId ? null : subMenuId);
   };
 
-  // const renderSubMenu = (subMenu) => (
-  //   <ul className="dash-submenu">
-  //     {subMenu.map((item) => (
-  //       <li key={item.id} className="dash-item">
-  //         {item.subMenu ? (
-  //           <Link
-  //             to=""
-  //             className="dash-link"
-  //             onClick={() => toggleSubMenu(item.id)}
-  //           >
-  //             <span className="dash-mtext">{item.label}</span>
-  //             <span
-  //               className={`dash-arrow ${
-  //                 activeSubMenu === item.id ? "active" : ""
-  //               }`}
-  //               style={{
-  //                 transform:
-  //                   activeSubMenu === item.id
-  //                     ? "rotate(90deg)"
-  //                     : "rotate(0deg)",
-  //                 transition: "transform 0.3s ease",
-  //               }}
-  //             >
-  //               <IoIosArrowForward />
-  //             </span>
-  //           </Link>
-  //         ) : (
-  //           <Link to={item.link} className="dash-link">
-  //             {item.label}
-  //           </Link>
-  //         )}
-  //         {item.subMenu &&
-  //           activeSubMenu === item.id &&
-  //           renderSubMenu(item.subMenu)}
-  //       </li>
-  //     ))}
-  //   </ul>
-  // );
-
   const renderSubMenu = (subMenu) => (
     <ul className="dash-submenu">
       {subMenu.map((item) => (
