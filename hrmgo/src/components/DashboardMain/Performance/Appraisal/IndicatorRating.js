@@ -42,8 +42,6 @@ const IndicatorRating = ({ indicatorData }) => {
         </h5>
       </div>
       <div className="body">
-        <input name="_method" type="hidden" defaultValue="PUT" />
-        <input name="_token" type="hidden" />
         <div className="modal-body">
           <div className="row">
             {indicatorData.competencies?.organizational?.map((competency) => (

@@ -1,7 +1,7 @@
 import React from "react";
 import "react-toastify/dist/ReactToastify.css";
 
-const IndicatorViewModal = ({ closeModal, indicator }) => {
+const IndicatorDetailModal = ({ closeModal, indicator }) => {
   console.log("Indicator from update", indicator);
 
   if (!indicator) return null;
@@ -142,4 +142,4 @@ const IndicatorViewModal = ({ closeModal, indicator }) => {
   );
 };
 
-export default IndicatorViewModal;
+export default IndicatorDetailModal;
