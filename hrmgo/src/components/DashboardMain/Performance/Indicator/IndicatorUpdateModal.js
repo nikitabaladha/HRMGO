@@ -4,14 +4,12 @@ import "react-toastify/dist/ReactToastify.css";
 import putAPI from "../../../../api/putAPI.js";
 
 const IndicatorUpdateModal = ({ closeModal, indicator, onUpdateSuccess }) => {
-  // Initialize state to track ratings for each category
   const [ratings, setRatings] = useState({
     organizational: {},
     technical: {},
     behavioural: {},
   });
 
-  // Initialize competencies when 'indicator' changes
   useEffect(() => {
     if (indicator) {
       setRatings({
@@ -40,10 +38,8 @@ const IndicatorUpdateModal = ({ closeModal, indicator, onUpdateSuccess }) => {
     }
   }, [indicator]);
 
-  // Ensure the component doesn't render if 'indicator' is not provided
   if (!indicator) return null;
 
-  // Handle rating change
   const handleRatingChange = (category, competencyName, rating) => {
     setRatings((prevState) => ({
       ...prevState,
@@ -54,7 +50,6 @@ const IndicatorUpdateModal = ({ closeModal, indicator, onUpdateSuccess }) => {
     }));
   };
 
-  // Render star rating input
   const renderRating = (category, name, value) => {
     return (
       <fieldset id="demo1" className="rate">
@@ -80,11 +75,9 @@ const IndicatorUpdateModal = ({ closeModal, indicator, onUpdateSuccess }) => {
     );
   };
 
-  // Handle indicator update form submission
   const handleUpdateIndicator = async (e) => {
     e.preventDefault();
 
-    // Prepare the updated competencies data
     const updatedCompetencies = {
       organizational: Object.entries(ratings.organizational).map(
         ([name, rating]) => ({ name, rating })
@@ -182,7 +175,6 @@ const IndicatorUpdateModal = ({ closeModal, indicator, onUpdateSuccess }) => {
                 </div>
 
                 <div className="row">
-                  {/* Organizational Competencies */}
                   <div className="col-md-12 mt-3">
                     <h6>Organizational Competencies</h6>
                     <hr className="mt-0" />
@@ -201,7 +193,6 @@ const IndicatorUpdateModal = ({ closeModal, indicator, onUpdateSuccess }) => {
                     </React.Fragment>
                   ))}
 
-                  {/* Technical Competencies */}
                   <div className="col-md-12 mt-3">
                     <h6>Technical Competencies</h6>
                     <hr className="mt-0" />
@@ -220,7 +211,6 @@ const IndicatorUpdateModal = ({ closeModal, indicator, onUpdateSuccess }) => {
                     </React.Fragment>
                   ))}
 
-                  {/* Behavioural Competencies */}
                   <div className="col-md-12 mt-3">
                     <h6>Behavioural Competencies</h6>
                     <hr className="mt-0" />

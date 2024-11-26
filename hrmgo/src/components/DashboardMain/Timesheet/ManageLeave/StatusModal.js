@@ -16,8 +16,6 @@ const StatusModal = ({ leave, onClose, onStatusUpdate }) => {
         true
       );
 
-      console.log("status update", status);
-
       if (!response.hasError) {
         console.log(`Leave status updated to ${status}:`, response.data);
         onStatusUpdate(leave.leaveId, status);
@@ -37,7 +35,6 @@ const StatusModal = ({ leave, onClose, onStatusUpdate }) => {
     const handleClickOutside = (event) => {
       const modalContent = document.querySelector(".modal-content");
 
-      // Check if the click was outside the modal content
       if (modalContent && !modalContent.contains(event.target)) {
         onClose();
       }

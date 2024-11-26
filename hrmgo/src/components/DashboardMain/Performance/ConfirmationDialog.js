@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import deleteAPI from "../../../../api/deleteAPI.js";
+import deleteAPI from "../../../api/deleteAPI.js";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -16,7 +16,6 @@ function ConfirmationDialog({
       let successMessage = "";
       let errorMessage = "";
 
-      // Determine the type of delete operation and set appropriate values
       if (deleteType === "indicator") {
         if (!indicatorId) {
           console.error("Indicator ID is missing.");
@@ -41,14 +40,12 @@ function ConfirmationDialog({
         return;
       }
 
-      // Make the API call to delete the resource
       const response = await deleteAPI(endpoint, {}, true);
 
       if (!response.hasError) {
         console.log(`${deleteType} deleted successfully`, response.data);
         toast.success(successMessage);
 
-        // Callbacks after successful deletion
         if (deleteType === "indicator" && typeof onDeleted === "function") {
           onDeleted(indicatorId);
         } else if (
@@ -58,7 +55,7 @@ function ConfirmationDialog({
           onDeleted(appraisalId);
         }
 
-        onClose(); // Close the dialog
+        onClose();
       } else {
         console.error(errorMessage, response.message);
         toast.error(`${errorMessage}: ${response.message}`);

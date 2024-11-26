@@ -501,11 +501,10 @@ const Sidebar = ({ sidebarVisible, toggleSidebar }) => {
         !sidebarRef.current.contains(event.target) &&
         sidebarVisible
       ) {
-        toggleSidebar(); // Close the sidebar if clicking outside
+        toggleSidebar();
       }
     };
 
-    // Add event listener for mouse clicks
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
@@ -528,7 +527,7 @@ const Sidebar = ({ sidebarVisible, toggleSidebar }) => {
           {item.subMenu ? (
             <div
               className="dash-link"
-              onClick={() => toggleSubMenu(item.id)} // Toggle submenu
+              onClick={() => toggleSubMenu(item.id)}
               role="button"
               tabIndex={0}
               onKeyPress={(e) => {
@@ -567,9 +566,8 @@ const Sidebar = ({ sidebarVisible, toggleSidebar }) => {
   );
   return (
     <>
-      {" "}
       <nav
-        ref={sidebarRef} // Attach ref here
+        ref={sidebarRef}
         className={`dash-sidebar light-sidebar transprent-bg ${
           sidebarVisible ? "mob-sidebar-active" : ""
         }`}
@@ -697,10 +695,7 @@ const Sidebar = ({ sidebarVisible, toggleSidebar }) => {
       </nav>
       {/* Overlay: Visible only when sidebarVisible is true */}
       {sidebarVisible && (
-        <div
-          className="dash-menu-overlay"
-          onClick={toggleSidebar} // Close sidebar when overlay is clicked
-        ></div>
+        <div className="dash-menu-overlay" onClick={toggleSidebar}></div>
       )}
     </>
   );

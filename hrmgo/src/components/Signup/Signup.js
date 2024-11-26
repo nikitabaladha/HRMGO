@@ -4,7 +4,7 @@ import { toast, ToastContainer } from "react-toastify";
 
 import postAPI from "../../api/postAPI.js";
 
-import "./custom-login.css";
+import "../custom-login.css";
 
 import background1 from "../../uploads/svg/login-1.svg";
 import background2 from "../../uploads/svg/login-2.svg";

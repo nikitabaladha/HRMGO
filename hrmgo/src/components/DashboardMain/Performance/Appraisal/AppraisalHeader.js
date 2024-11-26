@@ -6,15 +6,12 @@ import { useState } from "react";
 import AppraisalCreateModal from "./AppraisalCreateModal";
 
 const AppraisalHeader = () => {
-  // State to control modal visibility
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Function to open the modal
   const openModal = () => {
     setIsModalOpen(true);
   };
 
-  // Function to close the modal
   const closeModal = () => {
     setIsModalOpen(false);
   };

@@ -6,7 +6,7 @@ import React, { useEffect, useState } from "react";
 import getAPI from "../../../../api/getAPI.js";
 import moment from "moment";
 import AppraisalDetailModal from "./AppraisalDetailModal.js";
-import ConfirmationDialog from "../Indicator/ConfirmationDialog.js";
+import ConfirmationDialog from "../ConfirmationDialog.js";
 import AppraisalUpdateModal from "./AppraisalUpdateModal.js";
 
 const AppraisalTable = () => {
@@ -54,15 +54,12 @@ const AppraisalTable = () => {
   // Function to open the modal
   const openViewModal = async (appraisal) => {
     try {
-      // Fetching the indicator details based on its ID
       const response = await getAPI(`/appraisal/${appraisal.id}`, {}, true);
 
       if (!response.hasError && response.data.data) {
-        // Set the specific indicator data
         console.log("Appraisal by ID: ", response.data.data);
 
-        // data successfully fatched here but not able see in modal why
-        setSelectedAppraisal(response.data.data); // Set the data to selectedIndicator
+        setSelectedAppraisal(response.data.data);
         setIsDetailModalOpen(true);
       } else {
         console.error("Error fetching appraisal detail");
@@ -74,12 +71,11 @@ const AppraisalTable = () => {
 
   const openUpdateModal = async (appraisal) => {
     try {
-      // Fetching the appraisal details based on its ID
       const response = await getAPI(`/appraisal/${appraisal.id}`, {}, true);
 
       if (!response.hasError && response.data.data) {
         console.log("Appraisal by ID: ", response.data.data);
-        setSelectedAppraisal(response.data.data); // Set the data to selectedAppraisal
+        setSelectedAppraisal(response.data.data);
         setIsUpdateModalOpen(true);
       } else {
         console.error("Error fetching appraisal detail");
@@ -254,12 +250,15 @@ const AppraisalTable = () => {
           </div>
         </div>
       </div>
+
+      {/* Detail Dialog */}
       {isDetailModalOpen && (
         <AppraisalDetailModal
           closeModal={closeModal}
           appraisal={selectedAppraisal}
         />
       )}
+
       {/* Confirmation Dialog */}
       {isDeleteDialogOpen && (
         <ConfirmationDialog
@@ -269,8 +268,8 @@ const AppraisalTable = () => {
           deleteType="appraisal"
         />
       )}
-      {/* Update Modal */}
 
+      {/* Update Modal */}
       {isUpdateModalOpen && (
         <AppraisalUpdateModal
           closeModal={closeModal}

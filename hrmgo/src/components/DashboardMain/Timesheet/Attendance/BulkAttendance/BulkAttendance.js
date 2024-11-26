@@ -13,7 +13,7 @@ const BulkAttendance = () => {
     setFilteredEmployees(data);
     setBranchId(branchId);
     setDepartmentId(departmentId);
-    setDate(selectedDate); // Ensure selected date is passed correctly
+    setDate(selectedDate);
   };
 
   useEffect(() => {

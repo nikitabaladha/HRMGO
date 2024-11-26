@@ -5,8 +5,6 @@ import ViewIndicator from "./ViewIndicator";
 import CompetencyTag from "./CompetencyTag";
 
 const AppraisalDetailModal = ({ appraisal, closeModal }) => {
-  console.log("Appraisal from appraisal detail modal", appraisal);
-
   if (!appraisal) {
     return null;
   }

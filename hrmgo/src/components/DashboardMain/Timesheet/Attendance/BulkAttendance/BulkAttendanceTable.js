@@ -28,7 +28,7 @@ const BulkAttendanceTable = ({ filteredEmployees, date }) => {
 
       return {
         employeeId: employee._id,
-        date, // Use the date prop directly here
+        date,
         status: isChecked ? "Present" : "Absent",
         clockIn: formattedClockIn.toISOString(),
         clockOut: formattedClockOut.toISOString(),
@@ -122,8 +122,6 @@ const BulkAttendanceTable = ({ filteredEmployees, date }) => {
                             </div>
                           </div>
 
-                          {/* Check if attendance is already available */}
-
                           {employee.attendance ? (
                             <div className="col-md-8">
                               <div className="row">
@@ -150,7 +148,6 @@ const BulkAttendanceTable = ({ filteredEmployees, date }) => {
                                           })
                                         : "09:00"
                                     }
-                                    // readOnly
                                   />
                                 </div>
                                 <label
@@ -175,7 +172,7 @@ const BulkAttendanceTable = ({ filteredEmployees, date }) => {
                                           ).toLocaleTimeString("en-GB", {
                                             hour: "2-digit",
                                             minute: "2-digit",
-                                            hour12: false, // 24-hour format
+                                            hour12: false,
                                           })
                                         : "18:00"
                                     }

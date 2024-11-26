@@ -65,29 +65,29 @@ const ManageLeaveTable = () => {
 
   // Handle delete confirmation
   const handleDeleteConfirmation = ({ leaveId }) => {
-    setLeaveId(leaveId); // Set the leaveId to delete
-    setIsDeleteDialogOpen(true); // Open the delete dialog
-    setIsStatusModalOpen(false); // Close StatusModal if it's open
-    setIsUpdateModalOpen(false); // Close UpdateModal if it's open
+    setLeaveId(leaveId);
+    setIsDeleteDialogOpen(true);
+    setIsStatusModalOpen(false);
+    setIsUpdateModalOpen(false);
   };
 
   const handleUpdateConfirmation = (leave) => {
     setSelectedLeave(leave);
-    setIsUpdateModalOpen(true); // Open the update modal
-    setIsStatusModalOpen(false); // Close StatusModal if it's open
-    setIsDeleteDialogOpen(false); // Close DeleteDialog if it's open
+    setIsUpdateModalOpen(true);
+    setIsStatusModalOpen(false);
+    setIsDeleteDialogOpen(false);
   };
 
   const handleLeaveDeleted = (deletedLeaveId) => {
     setLeaveData((prevData) =>
       prevData.filter((leave) => leave.leaveId !== deletedLeaveId)
     );
-    setIsDeleteDialogOpen(false); // Close the dialog
+    setIsDeleteDialogOpen(false);
   };
 
   // Handle cancellation of delete
   const handleCancelDelete = () => {
-    setIsDeleteDialogOpen(false); // Close the dialog without deleting
+    setIsDeleteDialogOpen(false);
   };
 
   const handleUpdateSuccess = (updatedLeave) => {
@@ -149,9 +149,9 @@ const ManageLeaveTable = () => {
                             <Link
                               onClick={() => {
                                 setSelectedLeave(leave);
-                                setIsStatusModalOpen(true); // Open StatusModal
-                                setIsUpdateModalOpen(false); // Close UpdateModal
-                                setIsDeleteDialogOpen(false); // Close DeleteDialog
+                                setIsStatusModalOpen(true);
+                                setIsUpdateModalOpen(false);
+                                setIsDeleteDialogOpen(false);
                               }}
                               className="mx-3 btn btn-sm align-items-center"
                               title="Manage Leave"

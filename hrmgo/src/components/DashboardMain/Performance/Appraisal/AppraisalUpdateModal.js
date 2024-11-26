@@ -13,14 +13,12 @@ import "react-toastify/dist/ReactToastify.css";
 const AppraisalUpdateModal = ({ closeModal, appraisal, onUpdateSuccess }) => {
   console.log("AppraisalUpdateModal", appraisal);
 
-  // Initialize state to track ratings for each category
   const [ratings, setRatings] = useState({
     organizational: {},
     technical: {},
     behavioural: {},
   });
 
-  // Initialize competencies when 'indicator' changes
   useEffect(() => {
     if (appraisal) {
       setRatings({
@@ -49,10 +47,8 @@ const AppraisalUpdateModal = ({ closeModal, appraisal, onUpdateSuccess }) => {
     }
   }, [appraisal]);
 
-  // Ensure the component doesn't render if 'indicator' is not provided
   if (!appraisal) return null;
 
-  // Handle rating change
   const handleRatingChange = (category, competencyName, rating) => {
     setRatings((prevState) => ({
       ...prevState,
@@ -63,7 +59,6 @@ const AppraisalUpdateModal = ({ closeModal, appraisal, onUpdateSuccess }) => {
     }));
   };
 
-  // Render star rating input
   const renderRating = (category, name, value) => {
     return (
       <fieldset id="demo1" className="rate">
@@ -76,7 +71,7 @@ const AppraisalUpdateModal = ({ closeModal, appraisal, onUpdateSuccess }) => {
               name={`rating[${name}]`}
               value={rating}
               checked={value === rating}
-              onChange={() => handleRatingChange(category, name, rating)} // Update state on selection
+              onChange={() => handleRatingChange(category, name, rating)}
             />
             <label
               className="full"
@@ -89,12 +84,9 @@ const AppraisalUpdateModal = ({ closeModal, appraisal, onUpdateSuccess }) => {
     );
   };
 
-  // Handle indicator update form submission
-
   const handleUpdateAppraisal = async (e) => {
     e.preventDefault();
 
-    // Prepare the updated competencies data
     const updatedCompetencies = {
       organizational: Object.entries(ratings.organizational).map(
         ([name, rating]) => ({ name, rating })
@@ -108,7 +100,6 @@ const AppraisalUpdateModal = ({ closeModal, appraisal, onUpdateSuccess }) => {
       ),
     };
 
-    // Correct the property name to 'appraisalCompetencies' as expected by the backend
     const updatedIndicator = { appraisalCompetencies: updatedCompetencies };
 
     try {
@@ -184,7 +175,6 @@ const AppraisalUpdateModal = ({ closeModal, appraisal, onUpdateSuccess }) => {
                     <div className="col-md-12 mt-3">
                       <div className="info text-sm font-style">
                         <strong>Appraisal Date : </strong>
-                        {/* i want date in this formate  */}
 
                         <span>
                           {moment(appraisal.appraisalDate).format(
@@ -268,8 +258,6 @@ const AppraisalUpdateModal = ({ closeModal, appraisal, onUpdateSuccess }) => {
                         </div>
                       </div>
                     </div>
-
-                    {/* View indicator must be shown here but its not working to show  */}
                   </div>
                 </div>
                 <div className="modal-footer">

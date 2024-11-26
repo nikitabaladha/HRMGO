@@ -2,8 +2,6 @@ import React from "react";
 import "react-toastify/dist/ReactToastify.css";
 
 const IndicatorDetailModal = ({ closeModal, indicator }) => {
-  console.log("Indicator from update", indicator);
-
   if (!indicator) return null;
 
   const renderRating = (name, value) => {
@@ -91,7 +89,6 @@ const IndicatorDetailModal = ({ closeModal, indicator }) => {
                 </div>
 
                 <div className="row">
-                  {/* Organizational Competencies */}
                   <div className="col-md-12 mt-3">
                     <h6>Organizational Competencies</h6>
                     <hr className="mt-0" />
@@ -105,7 +102,6 @@ const IndicatorDetailModal = ({ closeModal, indicator }) => {
                     </React.Fragment>
                   ))}
 
-                  {/* Technical Competencies */}
                   <div className="col-md-12 mt-3">
                     <h6>Technical Competencies</h6>
                     <hr className="mt-0" />
@@ -119,7 +115,6 @@ const IndicatorDetailModal = ({ closeModal, indicator }) => {
                     </React.Fragment>
                   ))}
 
-                  {/* Behavioural Competencies */}
                   <div className="col-md-12 mt-3">
                     <h6>Behavioural Competencies</h6>
                     <hr className="mt-0" />

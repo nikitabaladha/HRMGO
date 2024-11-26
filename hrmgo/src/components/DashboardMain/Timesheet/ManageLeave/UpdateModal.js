@@ -56,7 +56,6 @@ const UpdateModal = ({ leave, onClose, onUpdateSuccess }) => {
     const handleClickOutside = (event) => {
       const modalContent = document.querySelector(".modal-content");
 
-      // Check if the click was outside the modal content
       if (modalContent && !modalContent.contains(event.target)) {
         onClose();
       }

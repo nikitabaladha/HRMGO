@@ -20,13 +20,11 @@ const CompetencyRating = ({ onRatingChange }) => {
 
   return (
     <div className="row">
-      {/* Organizational Competencies Header */}
       <div className="col-md-12 mt-3">
         <h6>Organizational Competencies</h6>
         <hr className="mt-0" />
       </div>
 
-      {/* Leadership */}
       <div className="col-6">Leadership</div>
       <div className="col-6">
         <fieldset className="rate">
@@ -60,7 +58,6 @@ const CompetencyRating = ({ onRatingChange }) => {
         </fieldset>
       </div>
 
-      {/* Project Management */}
       <div className="col-6">Project Management</div>
       <div className="col-6">
         <fieldset className="rate">
@@ -94,13 +91,11 @@ const CompetencyRating = ({ onRatingChange }) => {
         </fieldset>
       </div>
 
-      {/* Technical Competencies Header */}
       <div className="col-md-12 mt-3">
         <h6>Technical Competencies</h6>
         <hr className="mt-0" />
       </div>
 
-      {/* Allocating Resources */}
       <div className="col-6">Allocating Resources</div>
       <div className="col-6">
         <fieldset className="rate">
@@ -134,13 +129,11 @@ const CompetencyRating = ({ onRatingChange }) => {
         </fieldset>
       </div>
 
-      {/* Behavioural Competencies Header */}
       <div className="col-md-12 mt-3">
         <h6>Behavioural Competencies</h6>
         <hr className="mt-0" />
       </div>
 
-      {/* Business Process */}
       <div className="col-6">Business Process</div>
       <div className="col-6">
         <fieldset className="rate">
@@ -174,7 +167,6 @@ const CompetencyRating = ({ onRatingChange }) => {
         </fieldset>
       </div>
 
-      {/* Oral Communication */}
       <div className="col-6">Oral Communication</div>
       <div className="col-6">
         <fieldset className="rate">

@@ -2,8 +2,6 @@ import React from "react";
 import "react-toastify/dist/ReactToastify.css";
 
 const ViewAppraisal = ({ appraisal }) => {
-  console.log("Appraisal from appraisal detail modal for view", appraisal);
-
   if (!appraisal) {
     return null;
   }
@@ -17,15 +15,15 @@ const ViewAppraisal = ({ appraisal }) => {
             <input
               className="stars"
               type="radio"
-              id={`${name}-${rating}-${type}`} // Added type for uniqueness
-              name={`rating[${name}-${type}]`} // Modified name to be unique for each type
+              id={`${name}-${rating}-${type}`}
+              name={`rating[${name}-${type}]`}
               value={rating}
               disabled
               checked={value === rating}
             />
             <label
               className="full"
-              htmlFor={`${name}-${rating}-${type}`} // Added type for uniqueness
+              htmlFor={`${name}-${rating}-${type}`}
               title={`${rating} star${rating > 1 ? "s" : ""}`}
             />
           </React.Fragment>

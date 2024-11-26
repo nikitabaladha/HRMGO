@@ -6,15 +6,12 @@ import { useState } from "react";
 import IndicatorCreateModal from "./IndicatorCreateModal";
 
 const IndicatorHeader = () => {
-  // State to control modal visibility
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Function to open the modal
   const openModal = () => {
     setIsModalOpen(true);
   };
 
-  // Function to close the modal
   const closeModal = () => {
     setIsModalOpen(false);
   };

@@ -15,7 +15,6 @@ import "./assets/css/customizer.css";
 import "./assets/css/plugins/style.css";
 import "./assets/css/plugins/main.css";
 import "./css/custom.css";
-
 import Swal from "sweetalert2";
 
 import "react-toastify/dist/ReactToastify.css";

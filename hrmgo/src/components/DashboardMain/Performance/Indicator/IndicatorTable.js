@@ -7,28 +7,26 @@ import getAPI from "../../../../api/getAPI.js";
 import moment from "moment";
 import IndicatorDetailModal from "./IndicatorDetailModal.js";
 import IndicatorUpdateModal from "./IndicatorUpdateModal.js";
-import ConfirmationDialog from "./ConfirmationDialog.js";
+import ConfirmationDialog from "../ConfirmationDialog.js";
+
 const IndicatorTable = () => {
   const [indicators, setIndicators] = useState([]);
   const [selectedIndicator, setSelectedIndicator] = useState(null);
 
-  // State to control modal visibility
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
   const [isIndicatorUpdateModalOpen, setIsIndicatorUpdateModalOpen] =
     useState(false);
 
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [indicatorIdToDelete, setIndicatorIdToDelete] = useState(null);
-  // Function to open the modal
+
   const openModal = async (indicator) => {
     try {
-      // Fetching the indicator details based on its ID
       const response = await getAPI(`/indicator/${indicator.id}`, {}, true);
 
       if (!response.hasError && response.data.data) {
-        // Set the specific indicator data
         console.log("Indicator by ID: ", response.data.data);
-        setSelectedIndicator(response.data.data); // Set the data to selectedIndicator
+        setSelectedIndicator(response.data.data);
         setIsDetailModalOpen(true);
       } else {
         console.error("Error fetching indicator detail");
@@ -38,7 +36,6 @@ const IndicatorTable = () => {
     }
   };
 
-  // Function to close the modal
   const closeModal = () => {
     setIsDetailModalOpen(false);
     setIsIndicatorUpdateModalOpen(false);
@@ -61,12 +58,11 @@ const IndicatorTable = () => {
 
   const handleUpdate = (indicator) => {
     console.log("handleUpdate called");
-    setSelectedIndicator(indicator); // Store the indicator data
-    setIsIndicatorUpdateModalOpen(true); // Open the update modal
+    setSelectedIndicator(indicator);
+    setIsIndicatorUpdateModalOpen(true);
   };
 
   const handleUpdateSuccess = (updatedIndicator) => {
-    // Update the indicators list with the updated indicator
     setIndicators((prev) =>
       prev.map((indicator) =>
         indicator.id === updatedIndicator.id ? updatedIndicator : indicator
@@ -108,7 +104,6 @@ const IndicatorTable = () => {
     fetchIndicatorData();
   }, []);
 
-  // Function to render the dynamic stars based on the rating
   const renderStars = (rating) => {
     const fullStars = Math.floor(rating);
     const halfStar = rating % 1 >= 0.5 ? 1 : 0;
@@ -242,6 +237,7 @@ const IndicatorTable = () => {
           </div>
         </div>
       </div>
+      {/* Detail Dialog */}
       {isDetailModalOpen && (
         <IndicatorDetailModal
           closeModal={closeModal}

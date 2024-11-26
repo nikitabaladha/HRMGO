@@ -75,7 +75,7 @@ const IndicatorCreateModal = ({ closeModal }) => {
       };
       fetchDesignationByDepartmentId();
     } else {
-      setDesignation([]); // Reset designations if no department is selected
+      setDesignation([]);
     }
   };
 
@@ -103,7 +103,6 @@ const IndicatorCreateModal = ({ closeModal }) => {
       return;
     }
 
-    // Group competencies into categories
     const groupedCompetencies = {
       organizational: [
         { name: "Leadership", rating: competencyRatings.leadership || 0 },
@@ -142,7 +141,7 @@ const IndicatorCreateModal = ({ closeModal }) => {
       const response = await postAPI("/indicator", data, true);
       if (!response.hasError) {
         toast.success("Indicator created successfully!");
-        closeModal(); // Close the modal on success
+        closeModal();
       } else {
         toast.error("Error creating indicator: " + response.message);
       }

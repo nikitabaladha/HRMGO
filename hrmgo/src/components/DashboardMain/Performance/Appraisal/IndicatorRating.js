@@ -1,8 +1,6 @@
 import React from "react";
 
 const IndicatorRating = ({ indicatorData }) => {
-  console.log("Indicator from Appraisal", indicatorData);
-
   if (!indicatorData) return null;
 
   const renderRating = (name, value) => {

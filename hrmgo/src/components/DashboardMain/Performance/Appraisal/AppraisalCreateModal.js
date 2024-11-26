@@ -90,7 +90,6 @@ const AppraisalCreateModal = ({ closeModal }) => {
 
       const { branchId, departmentId, designationId } = selectedEmployeeData;
 
-      // Format date as YYYY-MM
       const formattedDate = new Date(selectedDate).toISOString().slice(0, 7);
 
       try {
@@ -105,8 +104,6 @@ const AppraisalCreateModal = ({ closeModal }) => {
           const indicatorData = response.data.data;
 
           setIndicatorData(indicatorData);
-
-          // this has indicatorId
         } else {
           console.error("Unexpected response format or error in response");
         }
@@ -121,7 +118,6 @@ const AppraisalCreateModal = ({ closeModal }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validation: Ensure branch and employee are selected
     if (!selectedBranch || !selectedEmployee || !indicatorData) {
       toast.error(
         "Please select a branch, employee, and date before submitting."

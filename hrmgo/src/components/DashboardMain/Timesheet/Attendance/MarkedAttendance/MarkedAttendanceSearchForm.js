@@ -62,10 +62,8 @@ const MarkedAttendanceSearchForm = ({ onDataFetched }) => {
   const handleSearch = async (e) => {
     e.preventDefault();
     try {
-      // Determine the date based on searchType
       const date = searchType === "daily" ? selectedDate : selectedMonth;
 
-      // API call with branch, department, date, and searchType as query parameters
       const response = await getAPI(
         `/marked-attendance-get-all?branch=${selectedBranch}&department=${selectedDepartment}&date=${date}&type=${searchType}`,
         {},
@@ -74,7 +72,7 @@ const MarkedAttendanceSearchForm = ({ onDataFetched }) => {
       );
 
       if (!response.hasError && Array.isArray(response.data.data)) {
-        onDataFetched(response.data.data); // Pass fetched data to the parent component
+        onDataFetched(response.data.data);
       } else {
         console.error("Invalid response format or error in response");
       }

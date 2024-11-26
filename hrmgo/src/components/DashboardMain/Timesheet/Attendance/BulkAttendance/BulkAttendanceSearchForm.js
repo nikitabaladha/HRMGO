@@ -61,7 +61,6 @@ const BulkAttendanceSearchForm = ({ onDataFetched }) => {
   const handleSearch = async (e) => {
     e.preventDefault();
 
-    // Format the selected date using moment.js if it's available
     const formattedDate = selectedDate
       ? format(new Date(selectedDate), "yyyy-MM-dd")
       : "";

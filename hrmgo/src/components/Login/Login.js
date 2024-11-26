@@ -4,7 +4,7 @@ import { toast, ToastContainer } from "react-toastify";
 
 import postAPI from "../../api/postAPI.js";
 
-import "./custom-login.css";
+import "../custom-login.css";
 
 import background1 from "../../uploads/svg/login-1.svg";
 import background2 from "../../uploads/svg/login-2.svg";
@@ -76,11 +76,7 @@ const Login = ({ onLogin }) => {
               <div className="card-body">
                 <h2 className="mb-3 f-w-600">Login</h2>
                 <div className="custom-login-form">
-                  <form
-                    onSubmit={handleSubmit}
-                    // class="needs-validation was-validated"
-                    // noValidate=""
-                  >
+                  <form onSubmit={handleSubmit}>
                     <div className="form-group mb-3">
                       <label className="form-label">Email</label>
                       <input
