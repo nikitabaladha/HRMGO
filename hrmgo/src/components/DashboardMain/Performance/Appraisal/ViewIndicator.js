@@ -2,13 +2,13 @@ import React from "react";
 import "react-toastify/dist/ReactToastify.css";
 
 const ViewIndicator = ({ appraisal }) => {
-  console.log("Appraisal from appraisal detail modal", appraisal);
+  console.log("This is view Indicator Modal", appraisal);
 
   if (!appraisal) {
     return null;
   }
 
-  console.log("Appraisal data in ViewIndicator:", appraisal);
+  console.log("Appraisal data in ViewIndicator for view:", appraisal);
 
   const renderRating = (name, value, type = "appraisal") => {
     return (

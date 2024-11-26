@@ -6,12 +6,16 @@ import React, { useEffect, useState } from "react";
 import getAPI from "../../../../api/getAPI.js";
 import moment from "moment";
 import AppraisalDetailModal from "./AppraisalDetailModal.js";
+import ConfirmationDialog from "../Indicator/ConfirmationDialog.js";
+import AppraisalUpdateModal from "./AppraisalUpdateModal.js";
 
 const AppraisalTable = () => {
   const [Appraisals, setAppraisals] = useState([]);
-
-  const [selectedAppraisal, setSelectedAppraisal] = useState(null); // State for selected appraisal
-  const [isDetailModalOpen, setIsDetailModalOpen] = useState(false); // State for modal visibility
+  const [selectedAppraisal, setSelectedAppraisal] = useState(null);
+  const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [appraisalIdToDelete, setAppraisalIdToDelete] = useState(null);
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
 
   // Function to render dynamic stars based on the rating
   useEffect(() => {
@@ -48,7 +52,7 @@ const AppraisalTable = () => {
   }, []);
 
   // Function to open the modal
-  const openModal = async (appraisal) => {
+  const openViewModal = async (appraisal) => {
     try {
       // Fetching the indicator details based on its ID
       const response = await getAPI(`/appraisal/${appraisal.id}`, {}, true);
@@ -68,9 +72,51 @@ const AppraisalTable = () => {
     }
   };
 
+  const openUpdateModal = async (appraisal) => {
+    try {
+      // Fetching the appraisal details based on its ID
+      const response = await getAPI(`/appraisal/${appraisal.id}`, {}, true);
+
+      if (!response.hasError && response.data.data) {
+        console.log("Appraisal by ID: ", response.data.data);
+        setSelectedAppraisal(response.data.data); // Set the data to selectedAppraisal
+        setIsUpdateModalOpen(true);
+      } else {
+        console.error("Error fetching appraisal detail");
+      }
+    } catch (err) {
+      console.error("Error fetching Appraisal Detail:", err);
+    }
+  };
+
+  const handleUpdateSuccess = (updateAppraisal) => {
+    setAppraisals((prev) =>
+      prev.map((appraisal) =>
+        appraisal.id === updateAppraisal.id ? updateAppraisal : appraisal
+      )
+    );
+    setIsUpdateModalOpen(false);
+  };
+
   const closeModal = () => {
     setIsDetailModalOpen(false);
-    setSelectedAppraisal(null); // Reset selected appraisal data
+    setIsUpdateModalOpen(false);
+    setSelectedAppraisal(null);
+  };
+
+  const openDeleteDialog = (id) => {
+    setAppraisalIdToDelete(id);
+    setIsDeleteDialogOpen(true);
+  };
+
+  const handleDeleteCancel = () => {
+    setIsDeleteDialogOpen(false);
+    setAppraisalIdToDelete(null);
+  };
+
+  const handleDeleteSuccess = (id) => {
+    setAppraisals((prev) => prev.filter((appraisal) => appraisal.id !== id));
+    setIsDeleteDialogOpen(false);
   };
 
   const renderStars = (rating) => {
@@ -134,7 +180,7 @@ const AppraisalTable = () => {
                             <span>
                               <div className="action-btn bg-warning me-2">
                                 <Link
-                                  onClick={() => openModal(Appraisal)}
+                                  onClick={() => openViewModal(Appraisal)}
                                   className="mx-3 btn btn-sm align-items-center"
                                   data-size="lg"
                                   data-ajax-popup="true"
@@ -156,6 +202,7 @@ const AppraisalTable = () => {
                                   data-bs-toggle="tooltip"
                                   title="Edit Appraisal"
                                   data-bs-original-title="Edit"
+                                  onClick={() => openUpdateModal(Appraisal)}
                                 >
                                   <span className="text-white">
                                     <LuPencil />
@@ -185,6 +232,9 @@ const AppraisalTable = () => {
                                     title="Delete"
                                     data-bs-original-title="Delete"
                                     aria-label="Delete"
+                                    onClick={() =>
+                                      openDeleteDialog(Appraisal.id)
+                                    }
                                   >
                                     <span className="text-white">
                                       <LuTrash2 />
@@ -208,6 +258,24 @@ const AppraisalTable = () => {
         <AppraisalDetailModal
           closeModal={closeModal}
           appraisal={selectedAppraisal}
+        />
+      )}
+      {/* Confirmation Dialog */}
+      {isDeleteDialogOpen && (
+        <ConfirmationDialog
+          onClose={handleDeleteCancel}
+          appraisalId={appraisalIdToDelete}
+          onDeleted={handleDeleteSuccess}
+          deleteType="appraisal"
+        />
+      )}
+      {/* Update Modal */}
+
+      {isUpdateModalOpen && (
+        <AppraisalUpdateModal
+          closeModal={closeModal}
+          appraisal={selectedAppraisal}
+          onUpdateSuccess={handleUpdateSuccess}
         />
       )}
     </>

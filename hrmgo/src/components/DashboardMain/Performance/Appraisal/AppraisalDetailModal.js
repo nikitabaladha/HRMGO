@@ -18,7 +18,7 @@ const AppraisalDetailModal = ({ appraisal, closeModal }) => {
         id="commonModal"
         tabIndex={-1}
         aria-labelledby="exampleModalLabel"
-        style={{ display: "block" }}
+        style={{ display: "block", backgroundColor: "rgba(0, 0, 0, 0.5)" }}
         aria-modal="true"
         role="dialog"
       >

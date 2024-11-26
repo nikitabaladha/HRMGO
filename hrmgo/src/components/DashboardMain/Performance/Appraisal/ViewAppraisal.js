@@ -2,7 +2,7 @@ import React from "react";
 import "react-toastify/dist/ReactToastify.css";
 
 const ViewAppraisal = ({ appraisal }) => {
-  console.log("Appraisal from appraisal detail modal", appraisal);
+  console.log("Appraisal from appraisal detail modal for view", appraisal);
 
   if (!appraisal) {
     return null;

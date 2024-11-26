@@ -3,23 +3,69 @@ import deleteAPI from "../../../../api/deleteAPI.js";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-function ConfirmationDialog({ onClose, indicatorId, onDeleted }) {
+function ConfirmationDialog({
+  onClose,
+  indicatorId,
+  onDeleted,
+  deleteType,
+  appraisalId,
+}) {
   const handleDelete = async () => {
     try {
-      const response = await deleteAPI(`/indicator/${indicatorId}`, {}, true);
+      let endpoint = "";
+      let successMessage = "";
+      let errorMessage = "";
+
+      // Determine the type of delete operation and set appropriate values
+      if (deleteType === "indicator") {
+        if (!indicatorId) {
+          console.error("Indicator ID is missing.");
+          toast.error("Indicator ID is required.");
+          return;
+        }
+        endpoint = `/indicator/${indicatorId}`;
+        successMessage = "Indicator successfully deleted!";
+        errorMessage = "Failed to delete indicator.";
+      } else if (deleteType === "appraisal") {
+        if (!appraisalId) {
+          console.error("Appraisal ID is missing.");
+          toast.error("Appraisal ID is required.");
+          return;
+        }
+        endpoint = `/appraisal/${appraisalId}`;
+        successMessage = "Appraisal successfully deleted!";
+        errorMessage = "Failed to delete appraisal.";
+      } else {
+        console.error("Invalid delete type.");
+        toast.error("Invalid delete type.");
+        return;
+      }
+
+      // Make the API call to delete the resource
+      const response = await deleteAPI(endpoint, {}, true);
 
       if (!response.hasError) {
-        console.log(`Indicator deleted successfully`, response.data);
-        toast.success("Indicator successfully deleted!");
+        console.log(`${deleteType} deleted successfully`, response.data);
+        toast.success(successMessage);
+
+        // Callbacks after successful deletion
+        if (deleteType === "indicator" && typeof onDeleted === "function") {
+          onDeleted(indicatorId);
+        } else if (
+          deleteType === "appraisal" &&
+          typeof onDeleted === "function"
+        ) {
+          onDeleted(appraisalId);
+        }
+
         onClose(); // Close the dialog
-        onDeleted(indicatorId); // Notify the parent component about the deletion
       } else {
-        console.error("Error deleting indicator:", response.message);
-        toast.error(`Failed to delete: ${response.message}`);
+        console.error(errorMessage, response.message);
+        toast.error(`${errorMessage}: ${response.message}`);
       }
     } catch (error) {
-      console.error("Error while deleting indicator:", error);
-      toast.error("An error occurred while deleting the indicator.");
+      console.error(`Error while deleting ${deleteType}:`, error);
+      toast.error(`An error occurred while deleting the ${deleteType}.`);
     }
   };
 
@@ -41,121 +87,115 @@ function ConfirmationDialog({ onClose, indicatorId, onDeleted }) {
   }, [onClose]);
 
   return (
-    <>
+    <div
+      id="confirmation-dialog"
+      className="swal2-container swal2-center swal2-backdrop-show"
+      style={{ overflowY: "auto" }}
+    >
       <div
-        id="confirmation-dialog"
-        className="swal2-container swal2-center swal2-backdrop-show"
-        style={{ overflowY: "auto" }}
+        aria-labelledby="swal2-title"
+        aria-describedby="swal2-html-container"
+        className="swal2-popup swal2-modal swal2-icon-warning swal2-show"
+        tabIndex={-1}
+        role="dialog"
+        aria-live="assertive"
+        aria-modal="true"
+        style={{ display: "grid" }}
       >
-        <div
-          aria-labelledby="swal2-title"
-          aria-describedby="swal2-html-container"
-          className="swal2-popup swal2-modal swal2-icon-warning swal2-show"
-          tabIndex={-1}
-          role="dialog"
-          aria-live="assertive"
-          aria-modal="true"
-          style={{ display: "grid" }}
+        <button
+          type="button"
+          className="swal2-close"
+          aria-label="Close this dialog"
+          style={{ display: "none" }}
         >
+          ×
+        </button>
+        <ul className="swal2-progress-steps" style={{ display: "none" }} />
+        <div
+          className="swal2-icon swal2-warning swal2-icon-show"
+          style={{ display: "flex" }}
+        >
+          <div className="swal2-icon-content">!</div>
+        </div>
+        <img
+          className="swal2-image"
+          style={{ display: "none" }}
+          alt="Description"
+        />
+
+        <h2
+          className="swal2-title"
+          id="swal2-title"
+          style={{ display: "block" }}
+        >
+          Are you sure?
+        </h2>
+        <div
+          className="swal2-html-container"
+          id="swal2-html-container"
+          style={{ display: "block" }}
+        >
+          This action can not be undone. Do you want to continue?
+        </div>
+        <input className="swal2-input" style={{ display: "none" }} />
+        <input type="file" className="swal2-file" style={{ display: "none" }} />
+        <div className="swal2-range" style={{ display: "none" }}>
+          <input type="range" />
+          <output />
+        </div>
+        <select className="swal2-select" style={{ display: "none" }} />
+        <div className="swal2-radio" style={{ display: "none" }} />
+        <label
+          htmlFor="swal2-checkbox"
+          className="swal2-checkbox"
+          style={{ display: "none" }}
+        >
+          <input type="checkbox" />
+          <span className="swal2-label" />
+        </label>
+        <textarea
+          className="swal2-textarea"
+          style={{ display: "none" }}
+          defaultValue={""}
+        />
+        <div
+          className="swal2-validation-message"
+          id="swal2-validation-message"
+          style={{ display: "none" }}
+        />
+        <div className="swal2-actions" style={{ display: "flex" }}>
           <button
             type="button"
-            className="swal2-close"
-            aria-label="Close this dialog"
-            style={{ display: "none" }}
+            className="swal2-cancel btn btn-danger"
+            aria-label=""
+            style={{ display: "inline-block" }}
+            onClick={onClose}
           >
-            ×
+            No
           </button>
-          <ul className="swal2-progress-steps" style={{ display: "none" }} />
-          <div
-            className="swal2-icon swal2-warning swal2-icon-show"
-            style={{ display: "flex" }}
-          >
-            <div className="swal2-icon-content">!</div>
-          </div>
-          <img
-            className="swal2-image"
-            style={{ display: "none" }}
-            alt="Description"
-          />
 
-          <h2
-            className="swal2-title"
-            id="swal2-title"
-            style={{ display: "block" }}
+          <button
+            type="button"
+            className="swal2-confirm btn btn-success"
+            aria-label=""
+            style={{ display: "inline-block" }}
+            onClick={() => {
+              handleDelete();
+            }}
           >
-            Are you sure?
-          </h2>
+            Yes
+          </button>
+          <div className="swal2-loader" />
+        </div>
+        <div className="swal2-footer" style={{ display: "none" }} />
+        <div className="swal2-timer-progress-bar-container">
           <div
-            className="swal2-html-container"
-            id="swal2-html-container"
-            style={{ display: "block" }}
-          >
-            This action can not be undone. Do you want to continue?
-          </div>
-          <input className="swal2-input" style={{ display: "none" }} />
-          <input
-            type="file"
-            className="swal2-file"
+            className="swal2-timer-progress-bar"
             style={{ display: "none" }}
           />
-          <div className="swal2-range" style={{ display: "none" }}>
-            <input type="range" />
-            <output />
-          </div>
-          <select className="swal2-select" style={{ display: "none" }} />
-          <div className="swal2-radio" style={{ display: "none" }} />
-          <label
-            htmlFor="swal2-checkbox"
-            className="swal2-checkbox"
-            style={{ display: "none" }}
-          >
-            <input type="checkbox" />
-            <span className="swal2-label" />
-          </label>
-          <textarea
-            className="swal2-textarea"
-            style={{ display: "none" }}
-            defaultValue={""}
-          />
-          <div
-            className="swal2-validation-message"
-            id="swal2-validation-message"
-            style={{ display: "none" }}
-          />
-          <div className="swal2-actions" style={{ display: "flex" }}>
-            <button
-              type="button"
-              className="swal2-cancel btn btn-danger"
-              aria-label=""
-              style={{ display: "inline-block" }}
-              onClick={onClose}
-            >
-              No
-            </button>
-
-            <button
-              type="button"
-              className="swal2-confirm btn btn-success"
-              aria-label=""
-              style={{ display: "inline-block" }}
-              onClick={() => {
-                handleDelete();
-              }}
-            >
-              Yes
-            </button>
-            <div className="swal2-loader" />
-          </div>
-          <div className="swal2-footer" style={{ display: "none" }} />
-          <div className="swal2-timer-progress-bar-container">
-            <div
-              className="swal2-timer-progress-bar"
-              style={{ display: "none" }}
-            />
-          </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

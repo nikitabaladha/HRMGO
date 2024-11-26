@@ -254,6 +254,7 @@ const IndicatorTable = () => {
           onClose={handleDeleteCancel}
           indicatorId={indicatorIdToDelete}
           onDeleted={handleDeleteSuccess}
+          deleteType="indicator"
         />
       )}
       {/* Update Modal */}
